@@ -70,21 +70,21 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout> {
             case Content: {
                 // 如果不缓存 或者 content == null 时，都直接调用 render 去创建一个新的
                 if (!cache() || content == null)
-                    content = renderLoading();
+                    content = renderContent();
                 frameWidget.addChild(content);
                 break;
             }
             case Empty: {
                 // 如果不缓存 或者 empty == null 时，都直接调用 render 去创建一个新的
                 if (!cache() || empty == null)
-                    empty = renderLoading();
+                    empty = renderEmpty();
                 frameWidget.addChild(empty);
                 break;
             }
             case Error: {
                 // 如果不缓存 或者 error == null 时，都直接调用 render 去创建一个新的
                 if (!cache() || error == null)
-                    error = renderLoading();
+                    error = renderError();
                 frameWidget.addChild(error);
                 break;
             }
