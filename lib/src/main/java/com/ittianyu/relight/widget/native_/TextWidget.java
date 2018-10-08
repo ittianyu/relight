@@ -1,4 +1,4 @@
-package com.ittianyu.relight.widget.atomic;
+package com.ittianyu.relight.widget.native_;
 
 import android.content.Context;
 import android.util.TypedValue;

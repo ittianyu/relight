@@ -1,14 +1,13 @@
 package com.ittianyu.relight.widget.stateful.lcee;
 
+import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.widget.FrameLayout;
 
 import com.ittianyu.relight.widget.Widget;
-import com.ittianyu.relight.widget.atomic.FrameWidget;
+import com.ittianyu.relight.widget.native_.FrameWidget;
 import com.ittianyu.relight.widget.stateful.AsyncState;
 import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
-
-import android.arch.lifecycle.Lifecycle;
 
 public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout> {
     protected Status status = Status.Loading;

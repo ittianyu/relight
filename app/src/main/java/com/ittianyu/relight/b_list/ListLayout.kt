@@ -14,9 +14,9 @@ import com.ittianyu.relight.common.ProjectItem
 import com.ittianyu.relight.common.ProjectsAdapter
 import com.ittianyu.relight.utils.StateUtils
 import com.ittianyu.relight.widget.Widget
-import com.ittianyu.relight.widget.atomic.*
-import com.ittianyu.relight.widget.atomic.RelativeWidget.Prop
-import com.ittianyu.relight.widget.atomic.RelativeWidget.WidgetAndProps
+import com.ittianyu.relight.widget.native_.*
+import com.ittianyu.relight.widget.native_.RelativeWidget.Prop
+import com.ittianyu.relight.widget.native_.RelativeWidget.WidgetAndProps
 import com.ittianyu.relight.widget.stateful.AsyncState
 import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget
 

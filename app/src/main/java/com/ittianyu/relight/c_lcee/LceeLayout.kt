@@ -10,9 +10,9 @@ import android.view.View
 import com.ittianyu.relight.common.ProjectItem
 import com.ittianyu.relight.common.ProjectsAdapter
 import com.ittianyu.relight.widget.Widget
-import com.ittianyu.relight.widget.atomic.BaseAndroidWidget
-import com.ittianyu.relight.widget.atomic.FrameWidget
-import com.ittianyu.relight.widget.atomic.RecyclerWidget
+import com.ittianyu.relight.widget.native_.BaseAndroidWidget
+import com.ittianyu.relight.widget.native_.FrameWidget
+import com.ittianyu.relight.widget.native_.RecyclerWidget
 import com.ittianyu.relight.widget.stateful.lcee.CommonEmptyWidget
 import com.ittianyu.relight.widget.stateful.lcee.CommonLoadingWidget
 import com.ittianyu.relight.widget.stateful.lcee.LceeWidget

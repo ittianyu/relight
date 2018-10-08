@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import com.ittianyu.relight.widget.Widget;
-import com.ittianyu.relight.widget.atomic.BaseAndroidWidget;
+import com.ittianyu.relight.widget.native_.BaseAndroidWidget;
 import com.ittianyu.relight.widget.stateless.StatelessWidget;
 
 public abstract class StatefulWidget<T extends View> implements Widget<T> {

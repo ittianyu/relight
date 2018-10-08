@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 /**
- * call in order when first create:
+ * call in order when first render:
  *      1. #createView
  *      2. #initView
  *      3. bindEvent

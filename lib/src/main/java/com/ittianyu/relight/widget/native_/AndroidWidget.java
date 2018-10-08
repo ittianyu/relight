@@ -1,4 +1,4 @@
-package com.ittianyu.relight.widget.atomic;
+package com.ittianyu.relight.widget.native_;
 
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
@@ -18,7 +18,7 @@ public abstract class AndroidWidget<T extends View> implements AndroidRender<T>,
         this.lifecycle = lifecycle;
         view = createView(context);
         if (view == null)
-            throw new IllegalStateException("can't create view");
+            throw new IllegalStateException("can't render view");
     }
 
     @Override

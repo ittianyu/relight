@@ -1,13 +1,12 @@
-package com.ittianyu.relight.widget.atomic;
+package com.ittianyu.relight.widget.native_;
 
+import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.ittianyu.relight.widget.Widget;
-
-import android.arch.lifecycle.Lifecycle;
 
 public class RelativeWidget extends ViewGroupWidget<RelativeLayout> {
     protected WidgetAndProps[] childrenAndProps;

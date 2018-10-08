@@ -6,8 +6,8 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.ittianyu.relight.widget.Widget;
-import com.ittianyu.relight.widget.atomic.BaseAndroidWidget;
-import com.ittianyu.relight.widget.atomic.FrameWidget;
+import com.ittianyu.relight.widget.native_.BaseAndroidWidget;
+import com.ittianyu.relight.widget.native_.FrameWidget;
 import com.ittianyu.relight.widget.stateless.StatelessWidget;
 
 import android.arch.lifecycle.Lifecycle;

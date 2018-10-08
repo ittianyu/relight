@@ -15,8 +15,8 @@ public class UserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(WidgetUtils.create(this, UserLayoutStateless.class, UserModel.getInstance().getUser()));
-        setContentView(WidgetUtils.create(this, UserLayoutStateful.class));
+//        setContentView(WidgetUtils.render(this, UserLayoutStateless.class, UserModel.getInstance().getUser()));
+        setContentView(WidgetUtils.render(this, UserLayoutStateful.class));
     }
 
 }
