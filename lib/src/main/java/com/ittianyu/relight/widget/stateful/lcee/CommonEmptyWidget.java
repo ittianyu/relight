@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.ittianyu.relight.widget.Widget;
-import com.ittianyu.relight.widget.atomic.FrameWidget;
-import com.ittianyu.relight.widget.atomic.TextWidget;
+import com.ittianyu.relight.widget.native_.FrameWidget;
+import com.ittianyu.relight.widget.native_.TextWidget;
 import com.ittianyu.relight.widget.stateless.StatelessWidget;
 
 import android.arch.lifecycle.Lifecycle;

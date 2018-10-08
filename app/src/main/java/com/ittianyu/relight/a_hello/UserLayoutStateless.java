@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.ittianyu.relight.R;
 import com.ittianyu.relight.widget.Widget;
-import com.ittianyu.relight.widget.atomic.AndroidWidget;
+import com.ittianyu.relight.widget.native_.AndroidWidget;
 import com.ittianyu.relight.widget.stateless.LifecycleStatelessWidget;
 
 public class UserLayoutStateless extends LifecycleStatelessWidget<View> {

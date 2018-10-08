@@ -1,5 +1,6 @@
-package com.ittianyu.relight.widget.atomic;
+package com.ittianyu.relight.widget.native_;
 
+import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.view.ViewGroup;
 
@@ -10,8 +11,6 @@ import com.ittianyu.relight.widget.stateless.StatelessWidget;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import android.arch.lifecycle.Lifecycle;
 
 public abstract class ViewGroupWidget<T extends ViewGroup> extends BaseAndroidWidget<T> {
     protected List<Widget> children = new LinkedList<>();

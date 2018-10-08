@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.ittianyu.relight.R;
 import com.ittianyu.relight.utils.StateUtils;
-import com.ittianyu.relight.widget.atomic.AndroidWidget;
+import com.ittianyu.relight.widget.native_.AndroidWidget;
 import com.ittianyu.relight.widget.stateful.AsyncState;
 import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
 

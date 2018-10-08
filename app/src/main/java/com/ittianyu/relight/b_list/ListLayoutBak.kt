@@ -10,7 +10,7 @@ import com.ittianyu.relight.c_lcee.LceeModel
 import com.ittianyu.relight.common.ProjectItem
 import com.ittianyu.relight.common.ProjectsAdapter
 import com.ittianyu.relight.utils.StateUtils
-import com.ittianyu.relight.widget.atomic.AndroidWidget
+import com.ittianyu.relight.widget.native_.AndroidWidget
 import com.ittianyu.relight.widget.stateful.AsyncState
 import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget
 import org.jetbrains.anko.UI

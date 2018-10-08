@@ -1,5 +1,6 @@
-package com.ittianyu.relight.widget.atomic;
+package com.ittianyu.relight.widget.native_;
 
+import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.View;
@@ -10,8 +11,6 @@ import com.ittianyu.relight.utils.ViewUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.ParameterizedType;
-
-import android.arch.lifecycle.Lifecycle;
 
 public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T> {
     public static final int matchParent = ViewGroup.LayoutParams.MATCH_PARENT;

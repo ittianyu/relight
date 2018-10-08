@@ -1,5 +1,6 @@
-package com.ittianyu.relight.widget.atomic;
+package com.ittianyu.relight.widget.native_;
 
+import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,8 +8,6 @@ import android.widget.LinearLayout;
 
 import com.ittianyu.relight.utils.ViewUtils;
 import com.ittianyu.relight.widget.Widget;
-
-import android.arch.lifecycle.Lifecycle;
 
 public class LinearWidget extends ViewGroupWidget<LinearLayout> {
     public static final int horizontal = 0;

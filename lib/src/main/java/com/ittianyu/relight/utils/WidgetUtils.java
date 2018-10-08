@@ -1,16 +1,15 @@
 package com.ittianyu.relight.utils;
 
+import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.ittianyu.relight.view.AndroidRender;
 import com.ittianyu.relight.widget.Widget;
-import com.ittianyu.relight.widget.atomic.AndroidWidget;
+import com.ittianyu.relight.widget.native_.AndroidWidget;
 
 import java.lang.reflect.Constructor;
-
-import android.support.v7.app.AppCompatActivity;
-import android.arch.lifecycle.Lifecycle;
 
 public class WidgetUtils {
 
@@ -47,7 +46,7 @@ public class WidgetUtils {
         return () -> view;
     }
 
-    public static <T extends View> T create(AppCompatActivity activity, Class<? extends Widget<T>> widgetClass, Object... params) {
+    public static <T extends View> T render(AppCompatActivity activity, Class<? extends Widget<T>> widgetClass, Object... params) {
         Class[] clazzs = new Class[params.length + 2];
         clazzs[0] = Context.class;
         clazzs[1] = Lifecycle.class;
