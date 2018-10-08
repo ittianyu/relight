@@ -11,6 +11,10 @@ import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
 
 public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout> {
     protected Status status = Status.Loading;
+    private Widget loading;
+    private Widget content;
+    private Widget empty;
+    private Widget error;
 
     public LceeWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
@@ -21,6 +25,14 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout> {
     abstract protected Widget renderEmpty();
     abstract protected Widget renderError();
 
+    /**
+     * default cache the l c e e widget.
+     * If false, will create a new widget when status changed
+     * @return
+     */
+    protected boolean cache() {
+        return true;
+    }
 
     @Override
     protected AsyncState<FrameLayout> createState(Context context) {
@@ -49,19 +61,31 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout> {
         frameWidget.removeAllChildren();
         switch (status) {
             case Loading: {
-                frameWidget.addChild(renderLoading());
+                // 如果不缓存 或者 loading == null 时，都直接调用 render 去创建一个新的
+                if (!cache() || loading == null)
+                    loading = renderLoading();
+                frameWidget.addChild(loading);
                 break;
             }
             case Content: {
-                frameWidget.addChild(renderContent());
+                // 如果不缓存 或者 content == null 时，都直接调用 render 去创建一个新的
+                if (!cache() || content == null)
+                    content = renderLoading();
+                frameWidget.addChild(content);
                 break;
             }
             case Empty: {
-                frameWidget.addChild(renderEmpty());
+                // 如果不缓存 或者 empty == null 时，都直接调用 render 去创建一个新的
+                if (!cache() || empty == null)
+                    empty = renderLoading();
+                frameWidget.addChild(empty);
                 break;
             }
             case Error: {
-                frameWidget.addChild(renderError());
+                // 如果不缓存 或者 error == null 时，都直接调用 render 去创建一个新的
+                if (!cache() || error == null)
+                    error = renderLoading();
+                frameWidget.addChild(error);
                 break;
             }
         }

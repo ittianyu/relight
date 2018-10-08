@@ -116,12 +116,12 @@ android {
 
 添加 maven 仓库
 ```
-	allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
+allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
 	}
+}
 ```
 
 添加依赖
@@ -129,7 +129,7 @@ android {
 def support_version = '28.0.0'
 def lifecycle_version = '1.1.1'
 
-implementation 'com.github.ittianyu:relight:0.0.2'
+implementation 'com.github.ittianyu:relight:0.0.3'
 implementation "com.android.support:appcompat-v7:$support_version"
 implementation "com.android.support:design:$support_version"
 
@@ -406,4 +406,49 @@ initView -> initProps -> updateProps
 
 updaetView 中，调用 children 的 updateView 或 setState 或 update 方法
 
+
+## To Do List ##
+
+#### 框架 ####
+
+- [x] 基础框架
+- [x] 异步支持
+- [ ] 完善 BaseAndroidWidget 基础属性 和 api
+- [ ] startActivity 支持
+- [ ] anko 支持
+
+
+#### 基础控件 ####
+
+- [x] FrameWidget
+- [x] LinearWidget
+- [x] RelativeWidget
+- [x] RecyclerWidget
+- [x] TextWidget
+- [ ] ButtonWidget
+- [ ] ToolBarWidget
+- [ ] ImageWidget
+- [ ] EditWidget
+- [ ] FloatingActionButtonWidget
+- [ ] DrawerWidget
+
+#### 高级控件 ####
+
+- [x] LceeWidget
+- [ ] List
+- [ ] Route 和 Navigator
+
+
+#### 文档 ####
+
+- [x] 优势
+- [x] 快速开始
+- [x] Widgets
+- [x] 异步线程策略
+- [x] 内部结构
+- [x] To Do List
+- [ ] 入门教程
+- [ ] 高级教程
+- [ ] 目录
+- [ ] 英文版
 
