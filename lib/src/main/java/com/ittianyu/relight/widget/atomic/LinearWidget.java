@@ -1,0 +1,56 @@
+package com.ittianyu.relight.widget.atomic;
+
+import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+
+import com.ittianyu.relight.utils.ViewUtils;
+import com.ittianyu.relight.widget.Widget;
+
+import android.arch.lifecycle.Lifecycle;
+
+public class LinearWidget extends ViewGroupWidget<LinearLayout> {
+    public static final int horizontal = 0;
+    public static final int vertical = 1;
+
+    protected int orientation = horizontal;
+    protected int gravity = -1;
+
+    public LinearWidget(Context context, Lifecycle lifecycle, Widget... children) {
+        super(context, lifecycle, children);
+    }
+
+    @Override
+    public LinearLayout createView(Context context) {
+        return new LinearLayout(context);
+    }
+
+    @Override
+    public void updateProps(LinearLayout view) {
+        super.updateProps(view);
+        // set orientation
+        view.setOrientation(orientation);
+
+        view.setGravity(gravity);
+
+        // update children layout params
+        for (Widget widget : children) {
+            if (widget instanceof BaseAndroidWidget) {
+                View v = widget.render();
+                ViewGroup.LayoutParams layoutParams = v.getLayoutParams();
+                if (layoutParams instanceof LinearLayout.LayoutParams) {
+                    // layout_gravity
+                    int layoutGravity = ((BaseAndroidWidget) widget).layoutGravity;
+                    ViewUtils.setLayoutGravity((LinearLayout.LayoutParams) layoutParams, v, layoutGravity);
+                    // weight
+                    int weight = ((BaseAndroidWidget) widget).weight;
+                    if (weight != -1) {
+                        ViewUtils.setWeight((LinearLayout.LayoutParams) layoutParams, v, layoutGravity);
+                    }
+                }
+            }
+        }
+    }
+
+}
