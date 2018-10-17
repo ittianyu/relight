@@ -16,23 +16,23 @@ public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T>
     public static final int matchParent = ViewGroup.LayoutParams.MATCH_PARENT;
     public static final int wrapContent = ViewGroup.LayoutParams.WRAP_CONTENT;
 
-    protected int id;
-    protected int marginStart;
-    protected int marginEnd;
-    protected int marginTop;
-    protected int marginBottom;
-    protected int margin;
-    protected int paddingStart;
-    protected int paddingEnd;
-    protected int paddingTop;
-    protected int paddingBottom;
-    protected int padding;
-    protected int width = wrapContent;
-    protected int height = wrapContent;
-    protected int layoutGravity = -1;
-    protected int weight = -1;
-    protected int visibility = View.VISIBLE;
-    protected View.OnClickListener onClickListener;
+    public int id;
+    public int marginStart;
+    public int marginEnd;
+    public int marginTop;
+    public int marginBottom;
+    public int margin;
+    public int paddingStart;
+    public int paddingEnd;
+    public int paddingTop;
+    public int paddingBottom;
+    public int padding;
+    public int width = wrapContent;
+    public int height = wrapContent;
+    public int layoutGravity = -1;
+    public int weight = -1;
+    public int visibility = View.VISIBLE;
+    public View.OnClickListener onClickListener;
 
     public BaseAndroidWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
