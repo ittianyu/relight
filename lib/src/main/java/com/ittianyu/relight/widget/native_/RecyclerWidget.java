@@ -5,8 +5,8 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
 public class RecyclerWidget extends BaseAndroidWidget<RecyclerView> {
-    protected RecyclerView.LayoutManager layoutManager;
-    protected RecyclerView.Adapter adapter;
+    public RecyclerView.LayoutManager layoutManager;
+    public RecyclerView.Adapter adapter;
 
     public RecyclerWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
