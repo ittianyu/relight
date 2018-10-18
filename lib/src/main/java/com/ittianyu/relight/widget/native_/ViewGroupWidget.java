@@ -73,11 +73,17 @@ public abstract class ViewGroupWidget<T extends ViewGroup> extends BaseAndroidWi
     }
 
     public ViewGroupWidget<T> addChildren(Widget... children) {
+        return addChildren(false, children);
+    }
+
+    public ViewGroupWidget<T> addChildren(boolean updateProps,Widget... children) {
         for (Widget widget : children) {
             addChild(widget, false);
         }
-        updateChildrenProps();
-        updateProps(view);
+        if (updateProps){
+            updateChildrenProps();
+            updateProps(view);
+        }
         return this;
     }
 
