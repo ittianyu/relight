@@ -51,9 +51,9 @@ public abstract class ViewGroupWidget<T extends ViewGroup> extends BaseAndroidWi
             if (widget instanceof BaseAndroidWidget) {
                 ((BaseAndroidWidget) widget).updateProps(widget.render());
             } else if (widget instanceof StatelessWidget) {
-                ((StatelessWidget) widget).update(widget);
+                ((StatelessWidget) widget).updateProps(widget);
             } else if (widget instanceof StatefulWidget) {
-                ((StatefulWidget) widget).setState(null);
+                ((StatefulWidget) widget).updateProps(widget);
             }
         }
     }
