@@ -22,7 +22,7 @@ public abstract class ViewGroupWidget<T extends ViewGroup> extends BaseAndroidWi
         if (null == children)
             children = new Widget[0];
 
-        addChildren(children);
+        addChildren(false, true, children);
     }
 
     @Override
@@ -73,15 +73,21 @@ public abstract class ViewGroupWidget<T extends ViewGroup> extends BaseAndroidWi
     }
 
     public ViewGroupWidget<T> addChildren(Widget... children) {
-        return addChildren(false, children);
+        return addChildren(true, children);
     }
 
-    public ViewGroupWidget<T> addChildren(boolean updateProps,Widget... children) {
+    public ViewGroupWidget<T> addChildren(boolean updateProps, Widget... children) {
+        return addChildren(updateProps, updateProps, children);
+    }
+
+    public ViewGroupWidget<T> addChildren(boolean updateProps, boolean updateChildrenProps, Widget... children) {
         for (Widget widget : children) {
             addChild(widget, false);
         }
-        if (updateProps){
+        if (updateChildrenProps) {
             updateChildrenProps();
+        }
+        if (updateProps) {
             updateProps(view);
         }
         return this;
