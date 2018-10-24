@@ -19,9 +19,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".a_hello.UserActivity" />
-        <activity android:name=".b_list.ListActivity" />
-        <activity android:name=".c_lcee.LceeActivity" />
     </application>
 
 </manifest>
