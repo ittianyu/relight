@@ -2,9 +2,9 @@ package com.ittianyu.relight.widget.stateful;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.view.View;
 
 import com.ittianyu.relight.thread.ThreadPool;
+import com.ittianyu.relight.widget.Widget;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -20,11 +20,15 @@ import java.util.concurrent.Future;
  * <p>
  * You can call dispose to stop the state operations and release resources.
  *
- * @param <V>
  */
-public abstract class AsyncState<V extends View> implements State<V> {
+public abstract class AsyncState<T extends Widget> implements State<T> {
     private Handler handler = new Handler(Looper.getMainLooper());
     private List<Future> results = new LinkedList<>();
+    private OnUpdateListener onUpdateListener;
+
+    public void setOnUpdateListener(OnUpdateListener onUpdateListener) {
+        this.onUpdateListener = onUpdateListener;
+    }
 
     @Override
     public void dispose() {
@@ -51,6 +55,12 @@ public abstract class AsyncState<V extends View> implements State<V> {
         AsyncTask task = new AsyncTask(handler, func, new UpdateTask(this));
         Future<?> result = ThreadPool.get().submit(task);
         results.add(result);
+    }
+
+    @Override
+    public void update() {
+        if (onUpdateListener != null)
+            onUpdateListener.update();
     }
 
     private static class AsyncTask implements Runnable {
@@ -87,4 +97,7 @@ public abstract class AsyncState<V extends View> implements State<V> {
         }
     }
 
+    static interface OnUpdateListener {
+        void update();
+    }
 }

@@ -1,7 +1,6 @@
 package com.ittianyu.relight.widget.stateful;
 
 import android.content.Context;
-import android.view.View;
 
 import com.ittianyu.relight.widget.Widget;
 
@@ -13,9 +12,8 @@ import com.ittianyu.relight.widget.Widget;
  * 4. update
  * 5. didUpdate
  *
- * @param <V>
  */
-public interface State<V extends View> {
+public interface State<T extends Widget> {
 
     default void dispose() {
     }
@@ -41,7 +39,7 @@ public interface State<V extends View> {
         didUpdate();
     }
 
-    default Widget<V> build(Context context) {
+    default T build(Context context) {
         return null;
     }
 

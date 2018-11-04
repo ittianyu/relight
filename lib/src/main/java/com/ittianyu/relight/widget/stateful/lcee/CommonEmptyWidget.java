@@ -1,19 +1,17 @@
 package com.ittianyu.relight.widget.stateful.lcee;
 
+import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.FrameWidget;
 import com.ittianyu.relight.widget.native_.TextWidget;
 import com.ittianyu.relight.widget.stateless.StatelessWidget;
 
-import android.arch.lifecycle.Lifecycle;
-
-public class CommonEmptyWidget extends StatelessWidget<FrameLayout> {
+public class CommonEmptyWidget extends StatelessWidget<FrameLayout, FrameWidget> {
     protected Lifecycle lifecycle;
     protected String text;
     protected View.OnClickListener onClickListener;
@@ -35,7 +33,7 @@ public class CommonEmptyWidget extends StatelessWidget<FrameLayout> {
     }
 
     @Override
-    protected Widget<FrameLayout> build(Context context) {
+    protected FrameWidget build(Context context) {
         textWidget = new TextWidget(context, lifecycle) {
             @Override
             protected void initProps() {
@@ -46,7 +44,12 @@ public class CommonEmptyWidget extends StatelessWidget<FrameLayout> {
                 layoutGravity = Gravity.CENTER;
             }
         };
-        return new FrameWidget(context, lifecycle, textWidget).matchParent().setOnClickListener(onClickListener);
+        return new FrameWidget(context, lifecycle, textWidget);
+    }
+
+    @Override
+    public void initWidget(FrameWidget widget) {
+        widget.matchParent().setOnClickListener(onClickListener);
     }
 
     public CommonEmptyWidget setText(String text) {

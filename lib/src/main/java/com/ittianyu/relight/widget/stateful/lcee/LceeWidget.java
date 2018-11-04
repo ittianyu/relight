@@ -4,12 +4,13 @@ import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.widget.FrameLayout;
 
+import com.ittianyu.relight.utils.StateUtils;
 import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.FrameWidget;
 import com.ittianyu.relight.widget.stateful.AsyncState;
 import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
 
-public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout> {
+public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, FrameWidget> {
     protected Status status = Status.Loading;
     private Widget loading;
     private Widget content;
@@ -35,19 +36,13 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout> {
     }
 
     @Override
-    protected AsyncState<FrameLayout> createState(Context context) {
-        return new AsyncState<FrameLayout>() {
-            @Override
-            public Widget<FrameLayout> build(Context context) {
-                return new FrameWidget(context, lifecycle).matchParent();
-            }
+    protected AsyncState<FrameWidget> createState(Context context) {
+        return StateUtils.create(new FrameWidget(context, lifecycle));
+    }
 
-            @Override
-            public void update() {
-                updateWidget();
-            }
-
-        };
+    @Override
+    public void updateWidget(FrameWidget widget) {
+        updateWidget();
     }
 
     @Override

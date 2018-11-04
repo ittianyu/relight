@@ -1,4 +1,6 @@
 
+![](./images/mvvm.png)
+
 ## 优势 ##
 
 #### 轻量 ####
@@ -129,7 +131,7 @@ allprojects {
 def support_version = '28.0.0'
 def lifecycle_version = '1.1.1'
 
-implementation 'com.github.ittianyu:relight:0.0.3'
+implementation 'com.github.ittianyu:relight:0.0.4'
 implementation "com.android.support:appcompat-v7:$support_version"
 implementation "com.android.support:design:$support_version"
 
@@ -369,8 +371,26 @@ ThreadPool.set(executorService);
 #### StatelessWidget ####
 需要实现一个 Widget<T> build() 方法，来完成 Widget 的构建
 
+```
+render -> build -> initWidget -> widget.render
+```
+
+#### state ####
+
+```
+setState -> willUpdate -> update -> didUpdate
+
+onDestroy -> dispose
+```
+
 #### StatefulWidget ####
 需要实现一个 State<T> createState(Context context) 方法 来构建一个 State 对象
+
+```
+render -> createState -> state.init -> state.build -> initWidget -> widget.render
+
+state.setState -> state.update -> update -> updateWidget
+```
 
 #### AndroidWidget ####
 带有 Android 常用的构建方法 和 生命周期
@@ -402,22 +422,19 @@ initView -> initProps -> updateProps
 
 #### ViewGroupWidget ####
 
-构造方法 -> addChildren -> updateChildrenProps && updateProps 
+构造方法 -> addChildren -> updateChildrenProps -> updateProps 
 
 updaetView 中，调用 children 的 updateView 或 setState 或 update 方法
 
-
 ## 入门教程 ##
 
-#### 1. BaseAndroidWidget ####
+#### [1. AndroidWidget](./docs/1.AndroidWidget.md) ####
 
-目的：学习 BaseAndroidWidget 的简单用法。
-计划：用 xml 方式创建 view 进行渲染
+目的：学习 AndroidWidget 的简单用法。
 
-#### 2. LifecycleStatefulWidget ####
+#### [2. LifecycleStatefulWidget](./docs/2.LifecycleStatefulWidget.md) ####
 
 目的：学习 LifecycleStatefulWidget 的简单用法。
-计划：使用 StateUtils 去创建 state，传入第一篇中写好的 widget 进行渲染。为 view 添加一个点击事件，在事件中，调用 setState 修改数据，实现UI刷新。
 
 #### 3. TextWidget ####
 

@@ -3,19 +3,22 @@ package com.ittianyu.relight.widget.stateless;
 import android.content.Context;
 import android.view.View;
 
+import com.ittianyu.relight.widget.ContainerWidget;
 import com.ittianyu.relight.widget.Widget;
+import com.ittianyu.relight.widget.native_.AndroidWidget;
 import com.ittianyu.relight.widget.native_.BaseAndroidWidget;
 import com.ittianyu.relight.widget.stateful.StatefulWidget;
 
-public abstract class StatelessWidget<T extends View> implements Widget<T> {
+public abstract class StatelessWidget<V extends View, T extends Widget<V>>
+        implements Widget<V>, ContainerWidget<V, T> {
     protected Context context;
-    protected Widget<T> widget;
+    protected T widget;
 
     public StatelessWidget(Context context) {
         this.context = context;
     }
 
-    protected abstract Widget<T> build(Context context);
+    protected abstract T build(Context context);
 
     public void update(Widget widget) {
         // stateless 的实例 widget 并不是直接渲染的 widget，所以这里对里面的实际 widget 进行获取
@@ -23,8 +26,8 @@ public abstract class StatelessWidget<T extends View> implements Widget<T> {
             widget = ((StatelessWidget) widget).widget;
         }
 
-        if (widget instanceof BaseAndroidWidget) {
-            ((BaseAndroidWidget) widget).updateView(widget.render());
+        if (widget instanceof AndroidWidget) {
+            ((AndroidWidget) widget).updateView(widget.render());
         } else if (widget instanceof StatefulWidget) {
             ((StatefulWidget) widget).setState(null);
         } else if (widget instanceof StatelessWidget) {
@@ -48,9 +51,11 @@ public abstract class StatelessWidget<T extends View> implements Widget<T> {
     }
 
     @Override
-    public T render() {
-        if (null == widget)
+    public V render() {
+        if (null == widget) {
             widget = build(context);
+            initWidget(widget);
+        }
         return widget.render();
     }
 }
