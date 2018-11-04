@@ -320,6 +320,47 @@ public class UserActivity extends AppCompatActivity {
 }
 ```
 
+## 入门教程 ##
+
+#### [1. AndroidWidget](./docs/1.AndroidWidget.md) ####
+
+目的：学习 AndroidWidget 的简单用法。
+
+#### [2. LifecycleStatefulWidget](./docs/2.LifecycleStatefulWidget.md) ####
+
+目的：学习 LifecycleStatefulWidget 的简单用法。
+
+#### 3. TextWidget ####
+
+目的：学习 TextWidget 的简单用法，熟悉非 xml 的方式写界面
+计划：把上一步的 state 中传入的 widget 改成 自己 new 的 TextWidget，进行基本属性的设置。
+
+#### 4. LinearWidget ####
+
+目的：学习 LinearWidget 的简单用法
+计划：往 LinearWidget 中加入 2 个 TextWidget。
+
+#### 5. FrameWidget ####
+
+目的：学习 FrameWidget 的简单用法
+计划：往 FrameWidget 中加入 2 个 TextWidget。
+
+#### 6. RelativeWidget ####
+
+目的：学习 RelativeWidget 的简单用法
+计划：往 RelativeWidget 中加入 3 个 TextWidget。
+
+#### 7. setStateAsync ####
+
+目的：学习 在 setStateAsync 的使用。
+计划：在第2篇的基础上，把数据源改成耗时操作，setState 改成 setStateAsync。
+
+#### 8. LceeWidget ####
+
+目的：学习 LceeWidget 的使用。
+计划：创建一个 widget 继承 LceeWidget，分别渲染 4中状态的页面，点击内容 Widget 触发重新加载数据。
+
+
 ## Widgets ##
 
 本框架将 Widget 大致分为 3 大类。
@@ -426,46 +467,6 @@ initView -> initProps -> updateProps
 
 updaetView 中，调用 children 的 updateView 或 setState 或 update 方法
 
-## 入门教程 ##
-
-#### [1. AndroidWidget](./docs/1.AndroidWidget.md) ####
-
-目的：学习 AndroidWidget 的简单用法。
-
-#### [2. LifecycleStatefulWidget](./docs/2.LifecycleStatefulWidget.md) ####
-
-目的：学习 LifecycleStatefulWidget 的简单用法。
-
-#### 3. TextWidget ####
-
-目的：学习 TextWidget 的简单用法，熟悉非 xml 的方式写界面
-计划：把上一步的 state 中传入的 widget 改成 自己 new 的 TextWidget，进行基本属性的设置。
-
-#### 4. LinearWidget ####
-
-目的：学习 LinearWidget 的简单用法
-计划：往 LinearWidget 中加入 2 个 TextWidget。
-
-#### 5. FrameWidget ####
-
-目的：学习 FrameWidget 的简单用法
-计划：往 FrameWidget 中加入 2 个 TextWidget。
-
-#### 6. RelativeWidget ####
-
-目的：学习 RelativeWidget 的简单用法
-计划：往 RelativeWidget 中加入 3 个 TextWidget。
-
-#### 7. setStateAsync ####
-
-目的：学习 在 setStateAsync 的使用。
-计划：在第2篇的基础上，把数据源改成耗时操作，setState 改成 setStateAsync。
-
-#### 8. LceeWidget ####
-
-目的：学习 LceeWidget 的使用。
-计划：创建一个 widget 继承 LceeWidget，分别渲染 4中状态的页面，点击内容 Widget 触发重新加载数据。
-
 ## To Do List ##
 
 #### 框架 ####
@@ -474,7 +475,7 @@ updaetView 中，调用 children 的 updateView 或 setState 或 update 方法
 - [x] 异步支持
 - [ ] 完善 BaseAndroidWidget 基础属性 和 api
 - [ ] startActivity 支持
-- [ ] anko 支持
+- [ ] anko 支持(开发时可视化支持)
 
 
 #### 基础控件 ####
@@ -502,10 +503,10 @@ updaetView 中，调用 children 的 updateView 或 setState 或 update 方法
 
 - [x] 优势
 - [x] 快速开始
+- [ ] 入门教程
 - [x] Widgets
 - [x] 异步线程策略
 - [x] 内部结构
-- [ ] 入门教程
 - [ ] 高级教程
 - [ ] 目录
 - [ ] 英文版
