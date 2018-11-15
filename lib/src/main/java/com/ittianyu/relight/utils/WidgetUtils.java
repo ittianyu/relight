@@ -13,7 +13,7 @@ import java.lang.reflect.Constructor;
 
 public class WidgetUtils {
 
-    public static <T extends View> AndroidWidget<T> createAndroidWidget(Context context, AndroidRender<T> androidRender, Lifecycle lifecycle) {
+    public static <T extends View> AndroidWidget<T> createAndroidWidget(Context context, final AndroidRender<T> androidRender, Lifecycle lifecycle) {
         return new AndroidWidget<T>(context, lifecycle) {
             @Override
             public T createView(Context context) {
@@ -42,8 +42,13 @@ public class WidgetUtils {
         };
     }
 
-    public static <T extends View> Widget<T> create(T view) {
-        return () -> view;
+    public static <T extends View> Widget<T> create(final T view) {
+        return new Widget<T>() {
+            @Override
+            public T render() {
+                return view;
+            }
+        };
     }
 
     public static <T extends View> T render(AppCompatActivity activity, Class<? extends Widget<T>> widgetClass, Object... params) {
@@ -58,9 +63,7 @@ public class WidgetUtils {
         Object[] ps = new Object[params.length + 2];
         ps[0] = activity;
         ps[1] = activity.getLifecycle();
-        for (int i = 0; i < params.length; i++) {
-            ps[i + 2] = params[i];
-        }
+        System.arraycopy(params, 0, ps, 2, params.length);
         try {
             Constructor<? extends Widget<T>> constructor = widgetClass.getConstructor(clazzs);
             Widget<T> widget = constructor.newInstance(ps);

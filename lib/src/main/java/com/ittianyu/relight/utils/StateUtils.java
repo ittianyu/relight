@@ -12,7 +12,7 @@ import com.ittianyu.relight.widget.stateful.StatefulWidget;
 import com.ittianyu.relight.widget.stateless.StatelessWidget;
 
 public class StateUtils {
-    public static <V extends View> AsyncState<AndroidWidget<V>> create(AndroidRender<V> androidRender, Lifecycle lifecycle) {
+    public static <V extends View> AsyncState<AndroidWidget<V>> create(final AndroidRender<V> androidRender, final Lifecycle lifecycle) {
         return new AsyncState<AndroidWidget<V>>() {
             private AndroidWidget<V> widget;
 
@@ -30,7 +30,7 @@ public class StateUtils {
         };
     }
 
-    public static <V extends View, T extends Widget<V>> AsyncState<T> create(T widget) {
+    public static <V extends View, T extends Widget<V>> AsyncState<T> create(final T widget) {
         return new AsyncState<T>() {
             @Override
             public T build(Context context) {
@@ -41,6 +41,7 @@ public class StateUtils {
             public void update() {
                 super.update();
                 if (widget instanceof AndroidWidget) {
+                    //noinspection unchecked
                     ((AndroidWidget) widget).updateView(widget.render());
                 } else if (widget instanceof StatelessWidget) {
                     ((StatelessWidget) widget).update(widget);

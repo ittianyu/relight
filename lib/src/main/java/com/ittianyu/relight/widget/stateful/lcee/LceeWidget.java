@@ -21,10 +21,10 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
         super(context, lifecycle);
     }
 
-    abstract protected Widget renderLoading();
-    abstract protected Widget renderContent();
-    abstract protected Widget renderEmpty();
-    abstract protected Widget renderError();
+    protected abstract Widget renderLoading();
+    protected abstract Widget renderContent();
+    protected abstract Widget renderEmpty();
+    protected abstract Widget renderError();
 
     /**
      * default cache the l c e e widget.
@@ -47,7 +47,6 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
 
     @Override
     public void onStart() {
-        super.onStart();
         updateWidget();
     }
 
@@ -107,20 +106,26 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
         updateStatus(Status.Error);
     }
 
-    public void updateStatus(Status status) {
-        setState(() -> {
-            this.status = status;
+    public void updateStatus(final Status status) {
+        setState(new Runnable() {
+            @Override
+            public void run() {
+                LceeWidget.this.status = status;
+            }
         });
     }
 
     protected void onStatusChanged(Status status) {
         if (status == Status.Loading) {
-            setStateAsync(() -> {
-                try {
-                    this.status = onLoadData();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    this.status = Status.Error;
+            setStateAsync(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        LceeWidget.this.status = LceeWidget.this.onLoadData();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        LceeWidget.this.status = Status.Error;
+                    }
                 }
             });
         }

@@ -4,9 +4,10 @@ import com.ittianyu.relight.common.bean.UserBean;
 
 import java.util.Random;
 
-public class UserDataSource {
-    private static UserDataSource instance = new UserDataSource();
-    public static UserDataSource getInstance() {
+public class UserMemoryDataSource {
+    private static UserMemoryDataSource instance = new UserMemoryDataSource();
+
+    public static UserMemoryDataSource getInstance() {
         return instance;
     }
 

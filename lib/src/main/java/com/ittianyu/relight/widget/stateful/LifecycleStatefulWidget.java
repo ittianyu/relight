@@ -18,7 +18,28 @@ public abstract class LifecycleStatefulWidget<V extends View, T extends Widget<V
     }
 
     @Override
+    public void onResume() {
+
+    }
+
+    @Override
+    public void onPause() {
+
+    }
+
+    @Override
+    public void onStart() {
+
+    }
+
+    @Override
+    public void onStop() {
+
+    }
+
+    @Override
     public void onDestroy() {
         state.dispose();
     }
+
 }

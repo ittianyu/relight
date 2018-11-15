@@ -21,7 +21,7 @@ import java.util.concurrent.Future;
  * You can call dispose to stop the state operations and release resources.
  *
  */
-public abstract class AsyncState<T extends Widget> implements State<T> {
+public abstract class AsyncState<T extends Widget> extends State<T> {
     private Handler handler = new Handler(Looper.getMainLooper());
     private List<Future> results = new LinkedList<>();
     private OnUpdateListener onUpdateListener;

@@ -19,8 +19,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 }
 
@@ -39,8 +39,6 @@ dependencies {
 
     //     Support library depends on this lightweight import
     implementation "android.arch.lifecycle:runtime:$lifecycle_version"
-    // alternately - if using Java8, use the following instead of compiler
-    implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
 
     implementation project(':lib')
 //    implementation 'com.github.ittianyu:relight:0.0.4'
@@ -49,4 +47,8 @@ dependencies {
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
     // Optional, if you use support library fragments:
     debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.2'
+
+    implementation 'com.lzy.net:okgo:3.0.4'
+    implementation 'com.alibaba:fastjson:1.1.70.android'
+
 }

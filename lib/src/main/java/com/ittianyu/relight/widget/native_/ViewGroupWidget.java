@@ -31,9 +31,9 @@ public abstract class ViewGroupWidget<T extends ViewGroup> extends BaseAndroidWi
 
     @Override
     public void updateView(T view) {
-        super.updateView(view);
         for (Widget widget : children) {
             if (widget instanceof AndroidRender) {
+                //noinspection unchecked
                 ((AndroidRender) widget).updateView(widget.render());
             } else if (widget instanceof StatefulWidget) {
                 ((StatefulWidget) widget).setState(null);

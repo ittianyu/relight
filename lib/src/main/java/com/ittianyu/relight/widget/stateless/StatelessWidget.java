@@ -6,7 +6,6 @@ import android.view.View;
 import com.ittianyu.relight.widget.ContainerWidget;
 import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.AndroidWidget;
-import com.ittianyu.relight.widget.native_.BaseAndroidWidget;
 import com.ittianyu.relight.widget.stateful.StatefulWidget;
 
 public abstract class StatelessWidget<V extends View, T extends Widget<V>>
@@ -27,6 +26,7 @@ public abstract class StatelessWidget<V extends View, T extends Widget<V>>
         }
 
         if (widget instanceof AndroidWidget) {
+            //noinspection unchecked
             ((AndroidWidget) widget).updateView(widget.render());
         } else if (widget instanceof StatefulWidget) {
             ((StatefulWidget) widget).setState(null);
@@ -41,9 +41,7 @@ public abstract class StatelessWidget<V extends View, T extends Widget<V>>
             widget = ((StatelessWidget) widget).widget;
         }
 
-        if (widget instanceof BaseAndroidWidget) {
-            ((BaseAndroidWidget) widget).updateProps(widget.render());
-        } else if (widget instanceof StatefulWidget) {
+        if (widget instanceof StatefulWidget) {
             ((StatefulWidget) widget).updateProps(widget);
         } else if (widget instanceof StatelessWidget) {
             ((StatelessWidget) widget).updateProps(widget);

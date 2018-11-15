@@ -11,37 +11,40 @@ import com.ittianyu.relight.widget.Widget;
  * 3. willUpdate
  * 4. update
  * 5. didUpdate
- *
  */
-public interface State<T extends Widget> {
+public abstract class State<T extends Widget> {
 
-    default void dispose() {
+    protected void dispose() {
     }
 
-    default void init() {
+    protected void init() {
     }
 
-    default void willUpdate() {
+    protected void willUpdate() {
     }
 
-    default void didUpdate() {
+    protected void didUpdate() {
     }
 
     /**
      * run func in main thread.
+     *
      * @param func
      */
-    default void setState(Runnable func) {
+    public void setState(Runnable func) {
         willUpdate();
-        if (null != func)
+        if (null != func) {
             func.run();
+        }
         update();
         didUpdate();
     }
 
-    default T build(Context context) {
+    protected T build(Context context) {
         return null;
     }
 
-    default void update() {}
+    protected void update() {
+    }
+
 }

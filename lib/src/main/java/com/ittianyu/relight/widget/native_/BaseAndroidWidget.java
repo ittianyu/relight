@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.ittianyu.relight.utils.DensityUtils;
 import com.ittianyu.relight.utils.ViewUtils;
@@ -38,7 +39,7 @@ public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T>
         super(context, lifecycle);
     }
 
-    abstract protected void initProps();
+    protected abstract void initProps();
 
     public BaseAndroidWidget<T> id(int id) {
         this.id = id;
@@ -240,8 +241,6 @@ public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T>
 
     @Override
     public void initView(T view) {
-        super.initView(view);
-
         initProps();
         updateProps(view);
     }
@@ -267,6 +266,7 @@ public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T>
     @Override
     public T createView(Context context) {
         try {
+            //noinspection unchecked
             Class<T> clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
             Constructor<T> constructor = clazz.getConstructor(Context.class);
             return constructor.newInstance(context);

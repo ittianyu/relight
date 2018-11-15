@@ -104,18 +104,6 @@ class UserLayout extends AndroidWidget<View> {
 ## 快速开始 ##
 
 #### 引入库 ####
-添加 java8 支持
-```
-android {
-...
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-...
-}
-```
-
 添加 maven 仓库
 ```
 allprojects {
@@ -137,8 +125,6 @@ implementation "com.android.support:design:$support_version"
 
 //     Support library depends on this lightweight import
 implementation "android.arch.lifecycle:runtime:$lifecycle_version"
-// alternately - if using Java8, use the following instead of compiler
-implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
 ```
 
 #### hello relight ####

@@ -26,7 +26,6 @@ public class UserWidget extends AndroidWidget<View> {
 
     @Override
     public void initView(View view) {
-        super.initView(view);
         tvId = view.findViewById(R.id.tv_id);
         tvName = view.findViewById(R.id.tv_name);
     }
@@ -34,7 +33,7 @@ public class UserWidget extends AndroidWidget<View> {
     @Override
     public void updateView(View view) {
         super.updateView(view);
-        tvId.setText(user.getId() + "");
+        tvId.setText(String.valueOf(user.getId()));
         tvName.setText(user.getName());
     }
 }

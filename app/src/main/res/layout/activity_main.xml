@@ -14,24 +14,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="onClick"
-            android:textAllCaps="false"
-            android:text="1. AndroidWidget" />
+            android:text="1. AndroidWidget"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/_2_LifecycleStatefulWidget"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="onClick"
-            android:textAllCaps="false"
-            android:text="2. LifecycleStatefulWidget" />
+            android:text="2. LifecycleStatefulWidget"
+            android:textAllCaps="false" />
 
         <Button
-            android:id="@+id/_3_TextWidget"
+            android:id="@+id/AsyncLoadData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="onClick"
-            android:textAllCaps="false"
-            android:text="3. TextWidget" />
+            android:text="3. AsyncLoadData"
+            android:textAllCaps="false" />
 
     </LinearLayout>
 

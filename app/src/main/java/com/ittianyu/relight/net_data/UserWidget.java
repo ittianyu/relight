@@ -1,4 +1,4 @@
-package com.ittianyu.relight._2;
+package com.ittianyu.relight.net_data;
 
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
@@ -14,9 +14,8 @@ public class UserWidget extends AndroidWidget<View> {
     private TextView tvName;
     private UserBean user;
 
-    public UserWidget(Context context, Lifecycle lifecycle, UserBean user) {
+    public UserWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
-        this.user = user;
     }
 
     @Override
@@ -32,7 +31,9 @@ public class UserWidget extends AndroidWidget<View> {
 
     @Override
     public void updateView(View view) {
-        super.updateView(view);
+        if (user == null) {
+            return;
+        }
         tvId.setText(String.valueOf(user.getId()));
         tvName.setText(user.getName());
     }
@@ -44,4 +45,5 @@ public class UserWidget extends AndroidWidget<View> {
     public void setUser(UserBean user) {
         this.user = user;
     }
+
 }

@@ -52,6 +52,7 @@ public abstract class StatefulWidget<V extends View, T extends Widget<V>> implem
         }
 
         if (widget instanceof BaseAndroidWidget) {
+            //noinspection unchecked
             ((BaseAndroidWidget) widget).updateProps(widget.render());
         } else if (widget instanceof StatefulWidget) {
             ((StatefulWidget) widget).updateProps(widget);
