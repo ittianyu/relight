@@ -19,7 +19,6 @@ import java.util.concurrent.Future;
  * 5. didUpdate
  * <p>
  * You can call dispose to stop the state operations and release resources.
- *
  */
 public abstract class AsyncState<T extends Widget> extends State<T> {
     private Handler handler = new Handler(Looper.getMainLooper());
@@ -59,8 +58,9 @@ public abstract class AsyncState<T extends Widget> extends State<T> {
 
     @Override
     public void update() {
-        if (onUpdateListener != null)
+        if (onUpdateListener != null) {
             onUpdateListener.update();
+        }
     }
 
     private static class AsyncTask implements Runnable {
@@ -97,7 +97,7 @@ public abstract class AsyncState<T extends Widget> extends State<T> {
         }
     }
 
-    static interface OnUpdateListener {
+    interface OnUpdateListener {
         void update();
     }
 }

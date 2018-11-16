@@ -5,13 +5,13 @@ import android.content.Context;
 import android.view.View;
 
 import com.ittianyu.relight.common.bean.UserBean;
-import com.ittianyu.relight.common.datasource.UserMemoryDataSource;
+import com.ittianyu.relight.common.datasource.UserDataSource;
 import com.ittianyu.relight.utils.StateUtils;
 import com.ittianyu.relight.widget.stateful.AsyncState;
 import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
 
 public class StatefulUserWidget extends LifecycleStatefulWidget<View, UserWidget> {
-    private UserBean user = UserMemoryDataSource.getInstance().getUser();
+    private UserBean user = UserDataSource.getInstance().getUser();
 
     public StatefulUserWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
@@ -30,7 +30,7 @@ public class StatefulUserWidget extends LifecycleStatefulWidget<View, UserWidget
                 setState(new Runnable() {
                     @Override
                     public void run() {
-                        user = UserMemoryDataSource.getInstance().getUser();
+                        user = UserDataSource.getInstance().getUser();
                     }
                 });
             }

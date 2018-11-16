@@ -2,7 +2,10 @@ package com.ittianyu.relight;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 import android.support.multidex.MultiDex;
+import android.text.TextUtils;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
@@ -10,6 +13,14 @@ import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.SPCookieStore;
 import com.lzy.okgo.https.HttpsUtils;
 import com.lzy.okgo.model.HttpHeaders;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
+import com.scwang.smartrefresh.layout.api.RefreshFooter;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.squareup.leakcanary.LeakCanary;
 
 import java.util.concurrent.TimeUnit;
@@ -30,6 +41,7 @@ public class MainApplication extends Application {
         }
         LeakCanary.install(this);
         initHttpClient();
+        initSmartRefresh();
     }
 
     @Override
@@ -60,6 +72,30 @@ public class MainApplication extends Application {
                 .setRetryCount(1)
                 .setCacheMode(CacheMode.DEFAULT)
                 .addCommonHeaders(new HttpHeaders("Charset", "UTF-8"));
+    }
+
+    public void initSmartRefresh() {
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
+            @NonNull
+            @Override
+            public RefreshHeader createRefreshHeader(@NonNull Context context, @NonNull RefreshLayout layout) {
+                ClassicsHeader header = new ClassicsHeader(context);
+                header.setTextSizeTitle(12);
+                header.setDrawableSize(20);
+                return header;
+            }
+        });
+        ClassicsFooter.REFRESH_FOOTER_ALLLOADED = "别拉啦！我也是有底线的~";
+        SmartRefreshLayout.setDefaultRefreshFooterCreator(new DefaultRefreshFooterCreator() {
+            @NonNull
+            @Override
+            public RefreshFooter createRefreshFooter(@NonNull Context context, @NonNull RefreshLayout layout) {
+                ClassicsFooter footer = new ClassicsFooter(context);
+                footer.setTextSizeTitle(12);
+                footer.setDrawableSize(20);
+                return footer;
+            }
+        });
     }
 
 }

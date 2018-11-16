@@ -18,7 +18,7 @@ public abstract class StatefulWidget<V extends View, T extends Widget<V>> implem
         this.context = context;
     }
 
-    abstract protected AsyncState<T> createState(Context context);
+    protected abstract AsyncState<T> createState(Context context);
 
     @Override
     public V render() {

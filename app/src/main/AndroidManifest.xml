@@ -23,7 +23,7 @@
         </activity>
         <activity android:name="._1.WidgetActivity" />
         <activity android:name="._2.WidgetActivity" />
-        <activity android:name=".net_data.WidgetActivity" />
+        <activity android:name=".lcee.GirlListActivity" />
     </application>
 
 </manifest>

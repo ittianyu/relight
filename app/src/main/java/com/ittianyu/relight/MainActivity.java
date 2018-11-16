@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.ittianyu.relight.lcee.GirlListActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -22,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id._2_LifecycleStatefulWidget:
                 start(com.ittianyu.relight._2.WidgetActivity.class);
                 break;
-            case R.id.AsyncLoadData:
-                start(com.ittianyu.relight.net_data.WidgetActivity.class);
+            case R.id._3_LceeWidget:
+                start(GirlListActivity.class);
                 break;
         }
     }
