@@ -6,70 +6,54 @@ package com.ittianyu.relight.lcee.bean;
  * Created by liyujiang on 2018/11/16 15:31
  */
 public class GirlItemBean extends JavaBean {
-    private String thumbURL;
-    private String middleURL;
-    private String largeTnImageUrl;
-    private String objURL;
-    private String fromURLHost;
-    private int width;
-    private int height;
+    private String _id;
+    private String createdAt;
+    private String desc;
+    private String publishedAt;
+    private String source;
     private String type;
-    private int is_gif;
+    private String url;
+    private boolean used;
+    private String who;
 
-    public String getThumbURL() {
-        return thumbURL;
+    public String get_id() {
+        return _id;
     }
 
-    public void setThumbURL(String thumbURL) {
-        this.thumbURL = thumbURL;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
-    public String getMiddleURL() {
-        return middleURL;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setMiddleURL(String middleURL) {
-        this.middleURL = middleURL;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public String getLargeTnImageUrl() {
-        return largeTnImageUrl;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setLargeTnImageUrl(String largeTnImageUrl) {
-        this.largeTnImageUrl = largeTnImageUrl;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
-    public String getObjURL() {
-        return objURL;
+    public String getPublishedAt() {
+        return publishedAt;
     }
 
-    public void setObjURL(String objURL) {
-        this.objURL = objURL;
+    public void setPublishedAt(String publishedAt) {
+        this.publishedAt = publishedAt;
     }
 
-    public String getFromURLHost() {
-        return fromURLHost;
+    public String getSource() {
+        return source;
     }
 
-    public void setFromURLHost(String fromURLHost) {
-        this.fromURLHost = fromURLHost;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
+    public void setSource(String source) {
+        this.source = source;
     }
 
     public String getType() {
@@ -80,12 +64,28 @@ public class GirlItemBean extends JavaBean {
         this.type = type;
     }
 
-    public int getIs_gif() {
-        return is_gif;
+    public String getUrl() {
+        return url;
     }
 
-    public void setIs_gif(int is_gif) {
-        this.is_gif = is_gif;
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public boolean isUsed() {
+        return used;
+    }
+
+    public void setUsed(boolean used) {
+        this.used = used;
+    }
+
+    public String getWho() {
+        return who;
+    }
+
+    public void setWho(String who) {
+        this.who = who;
     }
 
 }

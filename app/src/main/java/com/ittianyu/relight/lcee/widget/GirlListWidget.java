@@ -30,7 +30,9 @@ public class GirlListWidget extends AndroidWidget<View> implements BaseQuickAdap
     @Override
     public void initView(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.girl_list);
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
+        final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        recyclerView.setLayoutManager(layoutManager);
         adapter.setOnItemClickListener(this);
         recyclerView.setAdapter(adapter);
     }
