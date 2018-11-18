@@ -31,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id._5_FrameWidget:
                 start(com.ittianyu.relight._5.WidgetActivity.class);
                 break;
+            case R.id._6_RelativeWidget:
+                start(com.ittianyu.relight._6.WidgetActivity.class);
+                break;
 
         }
     }

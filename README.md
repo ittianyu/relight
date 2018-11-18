@@ -337,17 +337,14 @@ public class UserActivity extends AppCompatActivity {
 #### [4. LinearWidget](./docs/4.LinearWidget.md) ####
 
 目的：学习 LinearWidget 的简单用法。
-计划：往 LinearWidget 中加入 2 个 TextWidget。
 
 #### [5. FrameWidget](./docs/5.FrameWidget.md) ####
 
 目的：学习 FrameWidget 的简单用法
-计划：往 FrameWidget 中加入 2 个 TextWidget。
 
-#### 6. RelativeWidget ####
+#### [6. RelativeWidget](./docs/5.RelativeWidget.md) ####
 
 目的：学习 RelativeWidget 的简单用法
-计划：往 RelativeWidget 中加入 3 个 TextWidget。
 
 #### 7. setStateAsync ####
 

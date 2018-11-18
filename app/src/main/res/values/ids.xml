@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tw_id" type="id"/>
+    <item name="tw_name" type="id"/>
+</resources>
