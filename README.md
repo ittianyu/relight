@@ -348,7 +348,7 @@ public class UserActivity extends AppCompatActivity {
 
 #### [7. setStateAsync](./docs/7.setStateAsync.md) ####
 
-目的：学习 在 setStateAsync 的使用。
+目的：学习 setStateAsync 的使用。
 
 ## 进阶教程 ##
 
