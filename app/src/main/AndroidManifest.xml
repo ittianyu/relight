@@ -21,6 +21,7 @@
         </activity>
         <activity android:name="._1.WidgetActivity"></activity>
         <activity android:name="._2.WidgetActivity" />
+        <activity android:name="._3.WidgetActivity" />
     </application>
 
 </manifest>

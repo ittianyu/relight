@@ -131,7 +131,7 @@ allprojects {
 def support_version = '28.0.0'
 def lifecycle_version = '1.1.1'
 
-implementation 'com.github.ittianyu:relight:0.0.4'
+implementation 'com.github.ittianyu:relight:master-SNAPSHOT'
 implementation "com.android.support:appcompat-v7:$support_version"
 implementation "com.android.support:design:$support_version"
 

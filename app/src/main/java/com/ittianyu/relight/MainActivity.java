@@ -22,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id._2_LifecycleStatefulWidget:
                 start(com.ittianyu.relight._2.WidgetActivity.class);
                 break;
+            case R.id._3_TextWidget:
+                start(com.ittianyu.relight._3.WidgetActivity.class);
+                break;
 
         }
     }

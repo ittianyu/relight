@@ -49,7 +49,7 @@ public class CommonEmptyWidget extends StatelessWidget<FrameLayout, FrameWidget>
 
     @Override
     public void initWidget(FrameWidget widget) {
-        widget.matchParent().setOnClickListener(onClickListener);
+        widget.matchParent().onClickListener(onClickListener);
     }
 
     public CommonEmptyWidget setText(String text) {
@@ -60,7 +60,7 @@ public class CommonEmptyWidget extends StatelessWidget<FrameLayout, FrameWidget>
 
     public CommonEmptyWidget setOnClickListener(View.OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
-        ((FrameWidget) widget).setOnClickListener(onClickListener);
+        ((FrameWidget) widget).onClickListener(onClickListener);
         return this;
     }
 }
