@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/_1_AndroidWidget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:textAllCaps="false"
+            android:text="1. AndroidWidget" />
+
+        <Button
+            android:id="@+id/_2_LifecycleStatefulWidget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:textAllCaps="false"
+            android:text="2. LifecycleStatefulWidget" />
+
+        <Button
+            android:id="@+id/_3_TextWidget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:textAllCaps="false"
+            android:text="3. TextWidget" />
+
+        <Button
+            android:id="@+id/_4_LinearWidget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:textAllCaps="false"
+            android:text="4. LinearWidget" />
+
+        <Button
+            android:id="@+id/_5_FrameWidget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:textAllCaps="false"
+            android:text="5. FrameWidget" />
+
+        <Button
+            android:id="@+id/_6_RelativeWidget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:textAllCaps="false"
+            android:text="6. RelativeWidget" />
+
+        <Button
+            android:id="@+id/_7_setStateAsync"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:textAllCaps="false"
+            android:text="7. setStateAsync" />
+
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,4 +1,4 @@
-package com.ittianyu.relight._2;
+package com.ittianyu.relight.base._3;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

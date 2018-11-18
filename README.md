@@ -346,15 +346,17 @@ public class UserActivity extends AppCompatActivity {
 
 目的：学习 RelativeWidget 的简单用法
 
-#### 7. setStateAsync ####
+#### [7. setStateAsync](./docs/7.setStateAsync.md) ####
 
 目的：学习 在 setStateAsync 的使用。
-计划：在第2篇的基础上，把数据源改成耗时操作，setState 改成 setStateAsync。
 
-#### 8. LceeWidget ####
+## 进阶教程 ##
+
+#### 1. LceeWidget ####
 
 目的：学习 LceeWidget 的使用。
 计划：创建一个 widget 继承 LceeWidget，分别渲染 4中状态的页面，点击内容 Widget 触发重新加载数据。
+
 
 
 ## Widgets ##
@@ -499,11 +501,11 @@ updaetView 中，调用 children 的 updateView 或 setState 或 update 方法
 
 - [x] 优势
 - [x] 快速开始
-- [ ] 入门教程
+- [x] 入门教程
+- [ ] 进阶教程
 - [x] Widgets
 - [x] 异步线程策略
 - [x] 内部结构
-- [ ] 高级教程
 - [ ] 目录
 - [ ] 英文版
 - [x] To Do List

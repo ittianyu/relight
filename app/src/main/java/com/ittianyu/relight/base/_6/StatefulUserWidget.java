@@ -1,4 +1,4 @@
-package com.ittianyu.relight._6;
+package com.ittianyu.relight.base._6;
 
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
