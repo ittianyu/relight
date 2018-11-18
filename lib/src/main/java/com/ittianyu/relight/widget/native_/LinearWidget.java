@@ -25,13 +25,25 @@ public class LinearWidget extends ViewGroupWidget<LinearLayout> {
         return new LinearLayout(context);
     }
 
+    public LinearWidget orientation(int orientation) {
+        this.orientation = orientation;
+        view.setOrientation(orientation);
+        return this;
+    }
+
+    public LinearWidget gravity(int gravity) {
+        this.gravity = gravity;
+        view.setGravity(gravity);
+        return this;
+    }
+
     @Override
     public void updateProps(LinearLayout view) {
         super.updateProps(view);
         // set orientation
-        view.setOrientation(orientation);
+        orientation(orientation);
 
-        view.setGravity(gravity);
+        gravity(gravity);
 
         // update children layout params
         for (Widget widget : children) {

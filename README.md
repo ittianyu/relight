@@ -332,11 +332,11 @@ public class UserActivity extends AppCompatActivity {
 
 #### [3. TextWidget](./docs/3.TextWidget.md) ####
 
-目的：学习 TextWidget 的简单用法，熟悉非 xml 的方式写界面
+目的：学习 TextWidget 的简单用法，熟悉非 xml 的方式写界面。
 
-#### 4. LinearWidget ####
+#### [4. LinearWidget](./docs/4.LinearWidget.md) ####
 
-目的：学习 LinearWidget 的简单用法
+目的：学习 LinearWidget 的简单用法。
 计划：往 LinearWidget 中加入 2 个 TextWidget。
 
 #### 5. FrameWidget ####

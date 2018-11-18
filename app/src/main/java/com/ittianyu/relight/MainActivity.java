@@ -25,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id._3_TextWidget:
                 start(com.ittianyu.relight._3.WidgetActivity.class);
                 break;
+            case R.id._4_LinearWidget:
+                start(com.ittianyu.relight._4.WidgetActivity.class);
+                break;
 
         }
     }
