@@ -342,7 +342,7 @@ public class UserActivity extends AppCompatActivity {
 
 目的：学习 FrameWidget 的简单用法
 
-#### [6. RelativeWidget](./docs/5.RelativeWidget.md) ####
+#### [6. RelativeWidget](./docs/6.RelativeWidget.md) ####
 
 目的：学习 RelativeWidget 的简单用法
 
