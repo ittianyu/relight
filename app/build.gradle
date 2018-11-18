@@ -42,8 +42,8 @@ dependencies {
     // alternately - if using Java8, use the following instead of compiler
     implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
 
-//    implementation project(':lib')
-    implementation 'com.github.ittianyu:relight:master-SNAPSHOT'
+    implementation project(':lib')
+//    implementation 'com.github.ittianyu:relight:master-SNAPSHOT'
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.2'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'

@@ -330,10 +330,9 @@ public class UserActivity extends AppCompatActivity {
 
 目的：学习 LifecycleStatefulWidget 的简单用法。
 
-#### 3. TextWidget ####
+#### [3. TextWidget](./docs/3.TextWidget.md) ####
 
 目的：学习 TextWidget 的简单用法，熟悉非 xml 的方式写界面
-计划：把上一步的 state 中传入的 widget 改成 自己 new 的 TextWidget，进行基本属性的设置。
 
 #### 4. LinearWidget ####
 
