@@ -41,6 +41,14 @@
             android:textAllCaps="false"
             android:text="4. LinearWidget" />
 
+        <Button
+            android:id="@+id/_5_FrameWidget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:textAllCaps="false"
+            android:text="5. FrameWidget" />
+
 
     </LinearLayout>
 

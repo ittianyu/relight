@@ -23,6 +23,7 @@
         <activity android:name="._2.WidgetActivity" />
         <activity android:name="._3.WidgetActivity" />
         <activity android:name="._4.WidgetActivity" />
+        <activity android:name="._5.WidgetActivity" />
     </application>
 
 </manifest>

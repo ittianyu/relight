@@ -188,6 +188,16 @@ public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T>
         return this;
     }
 
+    public BaseAndroidWidget<T> layoutGravity(int layoutGravity) {
+        this.layoutGravity = layoutGravity;
+        return this;
+    }
+
+    public BaseAndroidWidget<T> weight(int weight) {
+        this.weight = weight;
+        return this;
+    }
+
     private void updateMargin() {
         ViewUtils.setMargin(view, marginStart, marginTop, marginEnd, marginBottom);
     }
