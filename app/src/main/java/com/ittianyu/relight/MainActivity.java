@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.ittianyu.relight.base.BaseTutorialActivity;
 import com.ittianyu.relight.lcee.GirlListActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,11 +19,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id._1_AndroidWidget:
-                start(com.ittianyu.relight._1.WidgetActivity.class);
+            case R.id.BaseTutorial:
+                start(BaseTutorialActivity.class);
                 break;
-            case R.id._2_LifecycleStatefulWidget:
-                start(com.ittianyu.relight._2.WidgetActivity.class);
+            case R.id.MediumTutorial:
+
                 break;
             case R.id._3_LceeWidget:
                 start(GirlListActivity.class);

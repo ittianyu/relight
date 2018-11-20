@@ -119,7 +119,7 @@ allprojects {
 def support_version = '28.0.0'
 def lifecycle_version = '1.1.1'
 
-implementation 'com.github.ittianyu:relight:0.0.4'
+implementation 'com.github.ittianyu:relight:master-SNAPSHOT'
 implementation "com.android.support:appcompat-v7:$support_version"
 implementation "com.android.support:design:$support_version"
 
@@ -316,35 +316,33 @@ public class UserActivity extends AppCompatActivity {
 
 目的：学习 LifecycleStatefulWidget 的简单用法。
 
-#### 3. TextWidget ####
+#### [3. TextWidget](./docs/3.TextWidget.md) ####
 
-目的：学习 TextWidget 的简单用法，熟悉非 xml 的方式写界面
-计划：把上一步的 state 中传入的 widget 改成 自己 new 的 TextWidget，进行基本属性的设置。
+目的：学习 TextWidget 的简单用法，熟悉非 xml 的方式写界面。
 
-#### 4. LinearWidget ####
+#### [4. LinearWidget](./docs/4.LinearWidget.md) ####
 
-目的：学习 LinearWidget 的简单用法
-计划：往 LinearWidget 中加入 2 个 TextWidget。
+目的：学习 LinearWidget 的简单用法。
 
-#### 5. FrameWidget ####
+#### [5. FrameWidget](./docs/5.FrameWidget.md) ####
 
 目的：学习 FrameWidget 的简单用法
-计划：往 FrameWidget 中加入 2 个 TextWidget。
 
-#### 6. RelativeWidget ####
+#### [6. RelativeWidget](./docs/6.RelativeWidget.md) ####
 
 目的：学习 RelativeWidget 的简单用法
-计划：往 RelativeWidget 中加入 3 个 TextWidget。
 
-#### 7. setStateAsync ####
+#### [7. setStateAsync](./docs/7.setStateAsync.md) ####
 
-目的：学习 在 setStateAsync 的使用。
-计划：在第2篇的基础上，把数据源改成耗时操作，setState 改成 setStateAsync。
+目的：学习 setStateAsync 的使用。
 
-#### 8. LceeWidget ####
+## 进阶教程 ##
+
+#### 1. LceeWidget ####
 
 目的：学习 LceeWidget 的使用。
 计划：创建一个 widget 继承 LceeWidget，分别渲染 4中状态的页面，点击内容 Widget 触发重新加载数据。
+
 
 
 ## Widgets ##
@@ -489,11 +487,11 @@ updaetView 中，调用 children 的 updateView 或 setState 或 update 方法
 
 - [x] 优势
 - [x] 快速开始
-- [ ] 入门教程
+- [x] 入门教程
+- [ ] 进阶教程
 - [x] Widgets
 - [x] 异步线程策略
 - [x] 内部结构
-- [ ] 高级教程
 - [ ] 目录
 - [ ] 英文版
 - [x] To Do List

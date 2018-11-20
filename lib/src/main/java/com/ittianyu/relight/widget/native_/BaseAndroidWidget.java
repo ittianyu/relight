@@ -183,9 +183,19 @@ public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T>
         return this;
     }
 
-    public BaseAndroidWidget<T> setOnClickListener(View.OnClickListener onClickListener) {
+    public BaseAndroidWidget<T> onClickListener(View.OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
         view.setOnClickListener(onClickListener);
+        return this;
+    }
+
+    public BaseAndroidWidget<T> layoutGravity(int layoutGravity) {
+        this.layoutGravity = layoutGravity;
+        return this;
+    }
+
+    public BaseAndroidWidget<T> weight(int weight) {
+        this.weight = weight;
         return this;
     }
 
@@ -255,7 +265,7 @@ public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T>
         updateSize();
         updateMargin();
         updatePadding();
-        setOnClickListener(onClickListener);
+        onClickListener(onClickListener);
         updateVisible();
     }
 
