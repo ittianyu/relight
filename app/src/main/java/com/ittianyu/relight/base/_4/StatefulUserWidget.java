@@ -3,6 +3,7 @@ package com.ittianyu.relight.base._4;
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.ittianyu.relight.common.bean.UserBean;
@@ -36,9 +37,17 @@ public class StatefulUserWidget extends LifecycleStatefulWidget<LinearLayout, Li
                 .orientation(LinearWidget.vertical)
                 .gravity(Gravity.CENTER)
                 .matchParent()
-                .onClickListener(v -> setState(() -> {
-                    user = UserDataSource.getInstance().getUser();
-                }));
+                .onClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setState(new Runnable() {
+                            @Override
+                            public void run() {
+                                user = UserDataSource.getInstance().getUser();
+                            }
+                        });
+                    }
+                });
 
         updateWidget(widget);
     }

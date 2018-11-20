@@ -3,6 +3,7 @@ package com.ittianyu.relight.base._5;
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.ittianyu.relight.common.bean.UserBean;
@@ -38,9 +39,17 @@ public class StatefulUserWidget extends LifecycleStatefulWidget<FrameLayout, Fra
 
         widget
                 .matchParent()
-                .onClickListener(v -> setState(() -> {
-                    user = UserDataSource.getInstance().getUser();
-                }));
+                .onClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setState(new Runnable() {
+                            @Override
+                            public void run() {
+                                user = UserDataSource.getInstance().getUser();
+                            }
+                        });
+                    }
+                });
 
         updateWidget(widget);
     }

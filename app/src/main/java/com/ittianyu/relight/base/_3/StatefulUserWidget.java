@@ -3,6 +3,7 @@ package com.ittianyu.relight.base._3;
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.TextView;
 
 import com.ittianyu.relight.common.bean.UserBean;
@@ -30,9 +31,17 @@ public class StatefulUserWidget extends LifecycleStatefulWidget<TextView, TextWi
                 .text(user.getName())
                 .gravity(Gravity.CENTER)
                 .matchParent()
-                .onClickListener(v -> setState(() -> {
-                    user = UserDataSource.getInstance().getUser();
-                }));
+                .onClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setState(new Runnable() {
+                            @Override
+                            public void run() {
+                                user = UserDataSource.getInstance().getUser();
+                            }
+                        });
+                    }
+                });
     }
 
     @Override

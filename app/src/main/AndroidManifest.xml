@@ -29,7 +29,6 @@
         <activity android:name=".base._5.WidgetActivity" />
         <activity android:name=".base._6.WidgetActivity" />
         <activity android:name=".base._7.WidgetActivity" />
-
         <activity android:name=".lcee.GirlListActivity" />
     </application>
 

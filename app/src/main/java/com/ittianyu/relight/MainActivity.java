@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.MediumTutorial:
 
                 break;
-            case R.id._3_LceeWidget:
+            case R.id.LceeWidget:
                 start(GirlListActivity.class);
                 break;
         }

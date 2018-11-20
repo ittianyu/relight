@@ -3,6 +3,7 @@ package com.ittianyu.relight.base._6;
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.graphics.Color;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.ittianyu.relight.R;
@@ -51,9 +52,17 @@ public class StatefulUserWidget extends LifecycleStatefulWidget<RelativeLayout, 
     public void initWidget(RelativeWidget widget) {
         widget
                 .matchParent()
-                .onClickListener(v -> setState(() -> {
-                    user = UserDataSource.getInstance().getUser();
-                }));
+                .onClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setState(new Runnable() {
+                            @Override
+                            public void run() {
+                                user = UserDataSource.getInstance().getUser();
+                            }
+                        });
+                    }
+                });
 
         updateWidget(widget);
     }
