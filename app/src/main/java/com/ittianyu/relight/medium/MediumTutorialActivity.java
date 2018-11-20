@@ -1,4 +1,4 @@
-package com.ittianyu.relight;
+package com.ittianyu.relight.medium;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,25 +6,22 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.ittianyu.relight.base.BaseTutorialActivity;
-import com.ittianyu.relight.medium.MediumTutorialActivity;
+import com.ittianyu.relight.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MediumTutorialActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_medium_tutorial);
     }
 
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.BaseTutorial:
-                start(BaseTutorialActivity.class);
+            case R.id._1_LceeWidget:
+                start(com.ittianyu.relight.medium._1.WidgetActivity.class);
                 break;
-            case R.id.MediumTutorial:
-                start(MediumTutorialActivity.class);
-                break;
+
         }
     }
 

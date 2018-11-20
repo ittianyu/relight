@@ -41,6 +41,11 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
     }
 
     @Override
+    public void initWidget(FrameWidget widget) {
+        widget.matchParent();
+    }
+
+    @Override
     public void updateWidget(FrameWidget widget) {
         updateWidget();
     }
@@ -52,7 +57,7 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
     }
 
     private void updateWidget() {
-        FrameWidget frameWidget = (FrameWidget) this.widget;
+        FrameWidget frameWidget = this.widget;
         frameWidget.removeAllChildren();
         switch (status) {
             case Loading: {

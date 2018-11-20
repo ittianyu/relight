@@ -2,6 +2,8 @@ package com.ittianyu.relight.common.datasource;
 
 import com.ittianyu.relight.common.bean.UserBean;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class UserDataSource {
@@ -34,6 +36,27 @@ public class UserDataSource {
         int id = randomId();
         String name = randomName();
         return new UserBean(id, name);
+    }
+
+    public List<UserBean> getUsersFromRemote() {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        int count = randomCount();
+        List<UserBean> list = new ArrayList<>(count);
+        for (int i = 0; i < count; i++) {
+            int id = randomId();
+            String name = randomName();
+            UserBean bean = new UserBean(id, name);
+            list.add(bean);
+        }
+        return list;
+    }
+
+    private int randomCount() {
+        return random.nextInt(30) + 5;
     }
 
     private int randomId() {
