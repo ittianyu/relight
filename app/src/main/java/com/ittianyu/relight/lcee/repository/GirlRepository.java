@@ -18,15 +18,11 @@ import java.util.UUID;
 import okhttp3.ResponseBody;
 
 /**
- * 数据源
+ * 数据仓库
  */
 public class GirlRepository {
     private static final String TAG = "relight";
-    private static final String URL = "https://image.baidu.com/search/acjson?tn=resultjson_com&ipn=rj&ct=201326592&" +
-            "is=&fp=result&queryWord=%E5%8F%A4%E8%A3%85%E7%BE%8E%E5%A5%B3&cl=2&lm=-1&ie=utf-8&" +
-            "oe=utf-8&adpicid=&st=-1&z=&ic=0&word=%E5%8F%A4%E8%A3%85%E7%BE%8E%E5%A5%B3&s=&se=&" +
-            "tab=&width=&height=&face=0&istype=2&qc=&nc=1&fr=&expermode=&cg=girl&pn=30&rn=30&" +
-            "gsm=1e&1542348345179=";
+    private static final String URL = "https://gank.io/api/data/%E7%A6%8F%E5%88%A9/{pageSize}/{pageIndex}";
     private static final GirlRepository INSTANCE = new GirlRepository();
     private UUID uuid;
 
@@ -34,9 +30,14 @@ public class GirlRepository {
         return INSTANCE;
     }
 
+    private String wrapUrl(int pageIndex) {
+        return URL.replace("{pageSize}", "10")
+                .replace("{pageIndex}", String.valueOf(pageIndex));
+    }
+
     @WorkerThread
     @Nullable
-    public GirlResponseBean fetchData() {
+    public GirlResponseBean fetchData(int pageIndex) {
         if (uuid != null) {
             Log.w(TAG, "cancel request " + uuid);
             OkGo.getInstance().cancelTag(uuid);
@@ -44,7 +45,7 @@ public class GirlRepository {
         uuid = UUID.randomUUID();
         try {
             Log.w(TAG, "start request " + uuid);
-            okhttp3.Response response = OkGo.<String>get(URL).tag(uuid).execute();
+            okhttp3.Response response = OkGo.<String>get(wrapUrl(pageIndex)).tag(uuid).execute();
             if (response.isSuccessful()) {
                 ResponseBody body = response.body();
                 if (body == null) {
@@ -65,13 +66,13 @@ public class GirlRepository {
     }
 
     @MainThread
-    public void fetchData(final Callback callback) {
+    public void fetchData(int pageIndex,final Callback callback) {
         if (uuid != null) {
             Log.w(TAG, "cancel request " + uuid);
             OkGo.getInstance().cancelTag(uuid);
         }
         uuid = UUID.randomUUID();
-        OkGo.<String>get(URL).tag(uuid).execute(new StringCallback() {
+        OkGo.<String>get(wrapUrl(pageIndex)).tag(uuid).execute(new StringCallback() {
             @Override
             public void onStart(Request<String, ? extends Request> request) {
                 Log.w(TAG, "start request " + uuid);

@@ -45,21 +45,21 @@ public class GirlListLceeWidget extends LceeWidget {
 
     @Override
     protected Status onLoadData() {
-        GirlResponseBean bean = GirlRepository.getInstance().fetchData();
+        GirlResponseBean bean = GirlRepository.getInstance().fetchData(pageIndex);
         if (bean == null) {
             return Status.Error;
         }
-        data = bean.getData();
+        data = bean.getResults();
         return Status.Content;
     }
 
     @Override
     public void initWidget(FrameWidget widget) {
         widget.matchParent();
-//        GirlRepository.getInstance().fetchData(new GirlRepository.Callback() {
+//        GirlRepository.getInstance().fetchData(pageIndex, new GirlRepository.Callback() {
 //            @Override
 //            public void onSuccess(final GirlResponseBean responseBean) {
-//                data = responseBean.getData();
+//                data = responseBean.getResults();
 //                showContent();
 //            }
 //

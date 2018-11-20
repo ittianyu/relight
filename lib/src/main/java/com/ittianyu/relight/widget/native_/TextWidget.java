@@ -19,6 +19,10 @@ public class TextWidget extends BaseAndroidWidget<TextView> {
         super(context, lifecycle);
     }
 
+    public TextWidget(Context context, Lifecycle lifecycle, String text) {
+        super(context, lifecycle);
+        text(text);
+    }
 
     @Override
     public TextView createView(Context context) {

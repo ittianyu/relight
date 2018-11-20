@@ -26,6 +26,17 @@ public class UserDataSource {
         return new UserBean(id, name);
     }
 
+    public UserBean getUserFromRemote() {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        int id = randomId();
+        String name = randomName();
+        return new UserBean(id, name);
+    }
+
     private int randomId() {
         return random.nextInt(1000000);
     }

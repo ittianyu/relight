@@ -8,23 +8,23 @@ import java.util.List;
  * Created by liyujiang on 2018/11/15 18:11
  */
 public class GirlResponseBean extends JavaBean {
-    private int displayNum;
-    private List<GirlItemBean> data;
+    private boolean error;
+    private List<GirlItemBean> results;
 
-    public int getDisplayNum() {
-        return displayNum;
+    public boolean isError() {
+        return error;
     }
 
-    public void setDisplayNum(int displayNum) {
-        this.displayNum = displayNum;
+    public void setError(boolean error) {
+        this.error = error;
     }
 
-    public List<GirlItemBean> getData() {
-        return data;
+    public List<GirlItemBean> getResults() {
+        return results;
     }
 
-    public void setData(List<GirlItemBean> data) {
-        this.data = data;
+    public void setResults(List<GirlItemBean> results) {
+        this.results = results;
     }
 
 }

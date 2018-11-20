@@ -21,8 +21,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="._1.WidgetActivity" />
-        <activity android:name="._2.WidgetActivity" />
+        <activity android:name=".base.BaseTutorialActivity" />
+        <activity android:name=".base._1.WidgetActivity" />
+        <activity android:name=".base._2.WidgetActivity" />
+        <activity android:name=".base._3.WidgetActivity" />
+        <activity android:name=".base._4.WidgetActivity" />
+        <activity android:name=".base._5.WidgetActivity" />
+        <activity android:name=".base._6.WidgetActivity" />
+        <activity android:name=".base._7.WidgetActivity" />
         <activity android:name=".lcee.GirlListActivity" />
     </application>
 
