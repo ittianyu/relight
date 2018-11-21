@@ -1,4 +1,4 @@
-package com.ittianyu.relight.lcee.adapter;
+package com.ittianyu.relight.learn.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -16,7 +16,7 @@ import com.bumptech.glide.request.target.Target;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ittianyu.relight.R;
-import com.ittianyu.relight.lcee.bean.GirlItemBean;
+import com.ittianyu.relight.learn.bean.GirlItemBean;
 
 import java.util.ArrayList;
 

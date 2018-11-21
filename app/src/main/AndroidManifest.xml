@@ -31,7 +31,7 @@
         <activity android:name=".base._7.WidgetActivity" />
         <activity android:name=".medium.MediumTutorialActivity" />
         <activity android:name=".medium._1.WidgetActivity" />
-        <activity android:name=".lcee.GirlListActivity" />
+        <activity android:name=".learn.GirlListActivity" />
 
     </application>
 

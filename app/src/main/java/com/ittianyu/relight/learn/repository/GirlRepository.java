@@ -1,4 +1,4 @@
-package com.ittianyu.relight.lcee.repository;
+package com.ittianyu.relight.learn.repository;
 
 import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
@@ -6,7 +6,7 @@ import android.support.annotation.WorkerThread;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
-import com.ittianyu.relight.lcee.bean.GirlResponseBean;
+import com.ittianyu.relight.learn.bean.GirlResponseBean;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -38,6 +38,8 @@ public class GirlRepository {
     @WorkerThread
     @Nullable
     public GirlResponseBean fetchData(int pageIndex) {
+        GirlResponseBean responseBean = new GirlResponseBean();
+        responseBean.setError(true);
         if (uuid != null) {
             Log.w(TAG, "cancel request " + uuid);
             OkGo.getInstance().cancelTag(uuid);
@@ -45,28 +47,34 @@ public class GirlRepository {
         uuid = UUID.randomUUID();
         try {
             Log.w(TAG, "start request " + uuid);
+            Thread.sleep(1000);
             okhttp3.Response response = OkGo.<String>get(wrapUrl(pageIndex)).tag(uuid).execute();
+            uuid = null;
             if (response.isSuccessful()) {
                 ResponseBody body = response.body();
                 if (body == null) {
                     Log.w(TAG, "request failure: " + uuid);
-                    uuid = null;
-                    return null;
+                    responseBean.setErrorReason("body is empty");
+                    return responseBean;
                 }
                 String json = body.string();
                 Log.w(TAG, "request success: " + json);
+                responseBean.setError(false);
                 return JSON.parseObject(json, GirlResponseBean.class);
             }
-        } catch (IOException e) {
+            responseBean.setErrorReason("response code is " + response.code());
+            return responseBean;
+        } catch (Throwable e) {
             e.printStackTrace();
+            Log.w(TAG, "request failure: " + uuid);
+            responseBean.setErrorReason(e.getMessage());
+            uuid = null;
+            return responseBean;
         }
-        Log.w(TAG, "request failure: " + uuid);
-        uuid = null;
-        return null;
     }
 
     @MainThread
-    public void fetchData(int pageIndex,final Callback callback) {
+    public void fetchData(int pageIndex, final Callback callback) {
         if (uuid != null) {
             Log.w(TAG, "cancel request " + uuid);
             OkGo.getInstance().cancelTag(uuid);

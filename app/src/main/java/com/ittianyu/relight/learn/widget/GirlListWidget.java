@@ -1,4 +1,4 @@
-package com.ittianyu.relight.lcee.widget;
+package com.ittianyu.relight.learn.widget;
 
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
@@ -10,14 +10,14 @@ import android.widget.Toast;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ittianyu.relight.MainApplication;
 import com.ittianyu.relight.R;
-import com.ittianyu.relight.lcee.adapter.GirlListAdapter;
+import com.ittianyu.relight.learn.adapter.GirlListAdapter;
 import com.ittianyu.relight.widget.native_.AndroidWidget;
 
 public class GirlListWidget extends AndroidWidget<View> implements BaseQuickAdapter.OnItemClickListener {
+    private GirlLceeWidget lceeWidget;
     private GirlListAdapter adapter = new GirlListAdapter();
-    private GirlListLceeWidget lceeWidget;
 
-    public GirlListWidget(Context context, Lifecycle lifecycle, GirlListLceeWidget lceeWidget) {
+    public GirlListWidget(Context context, Lifecycle lifecycle, GirlLceeWidget lceeWidget) {
         super(context, lifecycle);
         this.lceeWidget = lceeWidget;
     }
