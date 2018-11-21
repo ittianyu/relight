@@ -2,7 +2,13 @@ package com.ittianyu.relight.widget.native_;
 
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -18,6 +24,7 @@ public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T>
     public static final int wrapContent = ViewGroup.LayoutParams.WRAP_CONTENT;
 
     public int id;
+    public Drawable background;
     public int marginStart;
     public int marginEnd;
     public int marginTop;
@@ -45,6 +52,25 @@ public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T>
         this.id = id;
         render().setId(id);
         return this;
+    }
+
+    public BaseAndroidWidget<T> background(Drawable drawable) {
+        background = drawable;
+        if (background != null)
+            view.setBackground(background);
+        return this;
+    }
+
+    public BaseAndroidWidget<T> background(Bitmap bitmap) {
+        return background(new BitmapDrawable(context.getResources(), bitmap));
+    }
+
+    public BaseAndroidWidget<T> backgroundResource(@DrawableRes int res) {
+        return background(drawable(res));
+    }
+
+    public BaseAndroidWidget<T> backgroundColor(@ColorInt int color) {
+        return background(new ColorDrawable(color));
     }
 
     public BaseAndroidWidget<T> margin(int px) {
@@ -237,8 +263,20 @@ public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T>
         return dp((float) dp);
     }
 
+    protected int sp(int sp) {
+        return sp(sp);
+    }
+
+    protected int sp(double sp) {
+        return sp((float) sp);
+    }
+
+    protected int sp(float sp) {
+        return DensityUtils.sp2px(context, sp);
+    }
+
     protected int color(int resId) {
-        return context.getResources().getColor(resId);
+        return ContextCompat.getColor(context, resId);
     }
 
     protected String string(int resId) {
@@ -246,7 +284,7 @@ public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T>
     }
 
     protected Drawable drawable(int resId) {
-        return context.getResources().getDrawable(resId);
+        return ContextCompat.getDrawable(context, resId);
     }
 
     @Override

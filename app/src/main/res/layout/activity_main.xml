@@ -22,11 +22,11 @@
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/LceeWidget"
+        android:id="@+id/LearnRelight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onClick"
-        android:text="LceeWidget"
+        android:text="LearnRelight"
         android:textAllCaps="false" />
 
 </LinearLayout>

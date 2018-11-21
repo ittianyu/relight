@@ -7,7 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.ittianyu.relight.base.BaseTutorialActivity;
-import com.ittianyu.relight.lcee.GirlListActivity;
+import com.ittianyu.relight.medium.MediumTutorialActivity;
+import com.ittianyu.relight.learn.GirlListActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,9 +24,9 @@ public class MainActivity extends AppCompatActivity {
                 start(BaseTutorialActivity.class);
                 break;
             case R.id.MediumTutorial:
-
+                start(MediumTutorialActivity.class);
                 break;
-            case R.id.LceeWidget:
+            case R.id.LearnRelight:
                 start(GirlListActivity.class);
                 break;
         }

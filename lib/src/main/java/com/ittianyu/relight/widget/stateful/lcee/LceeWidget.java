@@ -2,7 +2,6 @@ package com.ittianyu.relight.widget.stateful.lcee;
 
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
-import android.support.annotation.WorkerThread;
 import android.widget.FrameLayout;
 
 import com.ittianyu.relight.utils.StateUtils;
@@ -22,18 +21,14 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
         super(context, lifecycle);
     }
 
-    protected abstract Widget renderLoading();
-
-    protected abstract Widget renderContent();
-
-    protected abstract Widget renderEmpty();
-
-    protected abstract Widget renderError();
+    abstract protected Widget renderLoading();
+    abstract protected Widget renderContent();
+    abstract protected Widget renderEmpty();
+    abstract protected Widget renderError();
 
     /**
      * default cache the l c e e widget.
      * If false, will create a new widget when status changed
-     *
      * @return
      */
     protected boolean cache() {
@@ -46,44 +41,51 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
     }
 
     @Override
+    public void initWidget(FrameWidget widget) {
+        widget.matchParent();
+    }
+
+    @Override
     public void updateWidget(FrameWidget widget) {
         updateWidget();
     }
 
     @Override
     public void onStart() {
+        super.onStart();
         updateWidget();
     }
 
     private void updateWidget() {
-        widget.removeAllChildren();
+        FrameWidget frameWidget = this.widget;
+        frameWidget.removeAllChildren();
         switch (status) {
             case Loading: {
                 // 如果不缓存 或者 loading == null 时，都直接调用 render 去创建一个新的
                 if (!cache() || loading == null)
                     loading = renderLoading();
-                widget.addChild(loading);
+                frameWidget.addChild(loading);
                 break;
             }
             case Content: {
                 // 如果不缓存 或者 content == null 时，都直接调用 render 去创建一个新的
                 if (!cache() || content == null)
                     content = renderContent();
-                widget.addChild(content);
+                frameWidget.addChild(content);
                 break;
             }
             case Empty: {
                 // 如果不缓存 或者 empty == null 时，都直接调用 render 去创建一个新的
                 if (!cache() || empty == null)
                     empty = renderEmpty();
-                widget.addChild(empty);
+                frameWidget.addChild(empty);
                 break;
             }
             case Error: {
                 // 如果不缓存 或者 error == null 时，都直接调用 render 去创建一个新的
                 if (!cache() || error == null)
                     error = renderError();
-                widget.addChild(error);
+                frameWidget.addChild(error);
                 break;
             }
         }
@@ -138,10 +140,8 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
     /**
      * Running in non-main thread.
      * If some showError happen, it will auto set showError status
-     *
      * @return return the next status after data load complete
      */
-    @WorkerThread
-    protected abstract Status onLoadData() throws Exception;
+    abstract protected Status onLoadData() throws Exception;
 
 }

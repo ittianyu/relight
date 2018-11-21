@@ -3,6 +3,7 @@ package com.ittianyu.relight.utils;
 import android.content.Context;
 
 public class DensityUtils {
+
     /**
      * 将dp转换成px
      *
@@ -26,4 +27,15 @@ public class DensityUtils {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
     }
+
+    public static float px2sp(Context context, float pxValue) {
+        final float scale = context.getResources().getDisplayMetrics().scaledDensity;
+        return pxValue / scale + 0.5f;
+    }
+
+    public static int sp2px(Context context, float pxValue) {
+        final float scale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (pxValue * scale + 0.5f);
+    }
+
 }

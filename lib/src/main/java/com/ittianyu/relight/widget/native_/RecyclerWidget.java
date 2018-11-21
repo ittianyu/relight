@@ -4,9 +4,9 @@ import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
-public class RecyclerWidget extends BaseAndroidWidget<RecyclerView> {
+public class RecyclerWidget<T extends RecyclerView.Adapter> extends BaseAndroidWidget<RecyclerView> {
     public RecyclerView.LayoutManager layoutManager;
-    public RecyclerView.Adapter adapter;
+    public T adapter;
 
     public RecyclerWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
@@ -18,7 +18,7 @@ public class RecyclerWidget extends BaseAndroidWidget<RecyclerView> {
         return this;
     }
 
-    public RecyclerWidget adapter(RecyclerView.Adapter adapter) {
+    public RecyclerWidget adapter(T adapter) {
         this.adapter = adapter;
         view.setAdapter(adapter);
         return this;

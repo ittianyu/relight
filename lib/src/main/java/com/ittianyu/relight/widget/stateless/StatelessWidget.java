@@ -49,6 +49,10 @@ public abstract class StatelessWidget<V extends View, T extends Widget<V>>
     }
 
     @Override
+    public void initWidget(T widget) {
+    }
+
+    @Override
     public V render() {
         if (null == widget) {
             widget = build(context);

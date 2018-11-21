@@ -1,31 +1,38 @@
-package com.ittianyu.relight.lcee.widget;
+package com.ittianyu.relight.learn.widget;
 
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
+import android.view.View;
 
-import com.ittianyu.relight.lcee.bean.GirlItemBean;
-import com.ittianyu.relight.lcee.bean.GirlResponseBean;
-import com.ittianyu.relight.lcee.repository.GirlRepository;
+import com.ittianyu.relight.learn.bean.GirlItemBean;
+import com.ittianyu.relight.learn.bean.GirlResponseBean;
+import com.ittianyu.relight.learn.repository.GirlRepository;
 import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.FrameWidget;
-import com.ittianyu.relight.widget.stateful.lcee.CommonEmptyWidget;
-import com.ittianyu.relight.widget.stateful.lcee.CommonLoadingWidget;
 import com.ittianyu.relight.widget.stateful.lcee.LceeWidget;
 import com.ittianyu.relight.widget.stateful.lcee.Status;
 
 import java.util.List;
 
-public class GirlListLceeWidget extends LceeWidget {
+public class GirlLceeWidget extends LceeWidget {
     private List<GirlItemBean> data;
     private int pageIndex = 1;
+    private View.OnClickListener reloadListener;
+    private String errorReason;
 
-    public GirlListLceeWidget(Context context, Lifecycle lifecycle) {
+    public GirlLceeWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
+        reloadListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reload();
+            }
+        };
     }
 
     @Override
     protected Widget renderLoading() {
-        return new CommonLoadingWidget(context, lifecycle);
+        return new GirlLoadingWidget(context, lifecycle, "加载中");
     }
 
     @Override
@@ -35,21 +42,29 @@ public class GirlListLceeWidget extends LceeWidget {
 
     @Override
     protected Widget renderEmpty() {
-        return new CommonEmptyWidget(context, lifecycle, "暂无数据");
+        return new GirlEmptyWidget(context, lifecycle, "暂无数据", reloadListener);
     }
 
     @Override
     protected Widget renderError() {
-        return new CommonEmptyWidget(context, lifecycle, "出错了");
+        return new GirlErrorWidget(context, lifecycle, "出错了: " + errorReason, reloadListener);
     }
 
     @Override
     protected Status onLoadData() {
         GirlResponseBean bean = GirlRepository.getInstance().fetchData(pageIndex);
         if (bean == null) {
+            errorReason = "response bean is null";
+            return Status.Error;
+        }
+        if (bean.isError()) {
+            errorReason = bean.getErrorReason();
             return Status.Error;
         }
         data = bean.getResults();
+        if (data == null || data.size() == 0) {
+            return Status.Empty;
+        }
         return Status.Content;
     }
 

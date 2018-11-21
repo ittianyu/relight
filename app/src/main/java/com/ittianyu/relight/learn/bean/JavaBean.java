@@ -1,4 +1,4 @@
-package com.ittianyu.relight.lcee.bean;
+package com.ittianyu.relight.learn.bean;
 
 import android.support.annotation.NonNull;
 

@@ -1,7 +1,7 @@
-package com.ittianyu.relight.lcee.bean;
+package com.ittianyu.relight.learn.bean;
 
 /**
- * 网络数据实体
+ * 数据实体
  * <p>
  * Created by liyujiang on 2018/11/16 15:31
  */
