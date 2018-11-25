@@ -77,12 +77,10 @@ public abstract class AsyncState<T extends Widget> implements State<T> {
                 return;
             }
         } else if (updateStateStrategy == UpdateStateStrategy.Single) {
-            if (!updateStateMap.isEmpty()) {
-                for (Future future : updateStateMap.values()) {
-                    if (future.isDone())
-                        continue;
-                    return;// if exist one task is running, don't allow new task
-                }
+            for (Future future : updateStateMap.values()) {
+                if (future.isDone())
+                    continue;
+                return;// if exist one task is running, don't allow new task
             }
         }
 

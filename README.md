@@ -356,6 +356,10 @@ public class UserActivity extends AppCompatActivity {
 
 目的：学习 LceeWidget 的使用。
 
+#### [2. UpdateStrategy](./docs/medium/2.UpdateStrategy.md) ####
+
+目的：学习 AsyncState 的更新策略。
+
 ## Widgets ##
 
 本框架将 Widget 大致分为 3 大类。
