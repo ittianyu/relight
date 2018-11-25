@@ -21,6 +21,9 @@ public class MediumTutorialActivity extends AppCompatActivity {
             case R.id._1_LceeWidget:
                 start(com.ittianyu.relight.medium._1.WidgetActivity.class);
                 break;
+            case R.id._2_UpdateStrategy:
+                start(com.ittianyu.relight.medium._2.WidgetActivity.class);
+                break;
 
         }
     }
