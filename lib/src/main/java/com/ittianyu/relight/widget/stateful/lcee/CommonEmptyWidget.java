@@ -15,7 +15,7 @@ public class CommonEmptyWidget extends StatelessWidget<FrameLayout, FrameWidget>
     protected Lifecycle lifecycle;
     protected String text;
     protected View.OnClickListener onClickListener;
-    private TextWidget textWidget;
+    protected TextWidget textWidget;
 
     public CommonEmptyWidget(Context context, Lifecycle lifecycle) {
         this(context, lifecycle, null);
@@ -34,33 +34,29 @@ public class CommonEmptyWidget extends StatelessWidget<FrameLayout, FrameWidget>
 
     @Override
     protected FrameWidget build(Context context) {
-        textWidget = new TextWidget(context, lifecycle) {
-            @Override
-            protected void initProps() {
-                super.initProps();
-                text = CommonEmptyWidget.this.text;
-                textSize = dp(14);
-                textColor = Color.BLACK;
-                layoutGravity = Gravity.CENTER;
-            }
-        };
+        textWidget = new TextWidget(context, lifecycle);
         return new FrameWidget(context, lifecycle, textWidget);
     }
 
     @Override
     public void initWidget(FrameWidget widget) {
+        textWidget.text(text)
+                .textSize(16.0f)
+                .textColor(Color.BLACK)
+                .layoutGravity(Gravity.CENTER);
+        textWidget.onClickListener(onClickListener);
         widget.matchParent().onClickListener(onClickListener);
     }
 
-    public CommonEmptyWidget setText(String text) {
+    public CommonEmptyWidget text(String text) {
         this.text = text;
         textWidget.text(text);
         return this;
     }
 
-    public CommonEmptyWidget setOnClickListener(View.OnClickListener onClickListener) {
+    public CommonEmptyWidget onClickListener(View.OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
-        ((FrameWidget) widget).onClickListener(onClickListener);
+        widget.onClickListener(onClickListener);
         return this;
     }
 }

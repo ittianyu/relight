@@ -1,5 +1,6 @@
 package com.ittianyu.relight.medium._1;
 
+import android.accounts.NetworkErrorException;
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
@@ -60,7 +61,7 @@ public class UserLceeWidget extends LceeWidget {
     }
 
     @Override
-    protected Status onLoadData() {
+    protected Status onLoadData() throws NetworkErrorException {
         data = UserDataSource.getInstance().getUsersFromRemote();
         if (data.isEmpty())
             return Status.Empty;

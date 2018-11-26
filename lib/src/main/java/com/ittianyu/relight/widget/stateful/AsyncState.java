@@ -6,8 +6,9 @@ import android.os.Looper;
 import com.ittianyu.relight.thread.ThreadPool;
 import com.ittianyu.relight.widget.Widget;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.Future;
 
 /**
@@ -21,22 +22,45 @@ import java.util.concurrent.Future;
  * You can call dispose to stop the state operations and release resources.
  */
 public abstract class AsyncState<T extends Widget> extends State<T> {
+    public static final AsyncState.UpdateStateStrategy DEFAULT_UPDATE_STATE_STRATEGY = AsyncState.UpdateStateStrategy.Limited;
+
     private Handler handler = new Handler(Looper.getMainLooper());
-    private List<Future> results = new LinkedList<>();
     private OnUpdateListener onUpdateListener;
+    private UpdateStateStrategy updateStateStrategy;
+    private UpdateTask updateTask = new UpdateTask(this);
+    private Map<Runnable, Future> updateStateMap = new HashMap<>();
+
+    public AsyncState() {
+        this(DEFAULT_UPDATE_STATE_STRATEGY);
+    }
+
+    public AsyncState(UpdateStateStrategy updateStateStrategy) {
+        this.updateStateStrategy = updateStateStrategy;
+    }
 
     public void setOnUpdateListener(OnUpdateListener onUpdateListener) {
         this.onUpdateListener = onUpdateListener;
     }
 
     @Override
+    public void update() {
+        if (onUpdateListener != null)
+            onUpdateListener.update();
+    }
+
+    @Override
+    public void didUpdate() {
+        clearFinishedTask();
+    }
+
+    @Override
     public void dispose() {
-        for (Future future : results) {
+        for (Future future : updateStateMap.values()) {
             if (future.isDone())
                 continue;
             future.cancel(true);
         }
-        results.clear();
+        updateStateMap = null;
         handler = null;
     }
 
@@ -46,20 +70,37 @@ public abstract class AsyncState<T extends Widget> extends State<T> {
      * @param func
      */
     public void setStateAsync(Runnable func) {
+        // don't update if the func is ignored
+        if (updateStateStrategy == UpdateStateStrategy.Limited) {
+            Future future = updateStateMap.get(func);
+            if (future != null && !future.isDone()) {// the same task is Running, ignore new task
+                return;
+            }
+        } else if (updateStateStrategy == UpdateStateStrategy.Single) {
+            for (Future future : updateStateMap.values()) {
+                if (future.isDone())
+                    continue;
+                return;// if exist one task is running, don't allow new task
+            }
+        }
+
         willUpdate();
         // run func in thread pool and update in main thread
         if (null == func) {
+            updateTask.run();
             return;
         }
-        AsyncTask task = new AsyncTask(handler, func, new UpdateTask(this));
+        AsyncTask task = new AsyncTask(handler, func, updateTask);
         Future<?> result = ThreadPool.get().submit(task);
-        results.add(result);
+        updateStateMap.put(func, result);
     }
 
-    @Override
-    public void update() {
-        if (onUpdateListener != null) {
-            onUpdateListener.update();
+    private void clearFinishedTask() {
+        Iterator<Map.Entry<Runnable, Future>> it = updateStateMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Runnable, Future> entry = it.next();
+            if (entry.getValue().isDone())
+                it.remove();
         }
     }
 
@@ -78,6 +119,7 @@ public abstract class AsyncState<T extends Widget> extends State<T> {
         public void run() {
             asyncTask.run();
             handler.post(mainThreadTask);
+            mainThreadTask = null;
             handler = null;
         }
     }
@@ -93,11 +135,21 @@ public abstract class AsyncState<T extends Widget> extends State<T> {
         public void run() {
             state.update();
             state.didUpdate();
-            state = null;
         }
     }
 
     interface OnUpdateListener {
         void update();
+    }
+
+    /**
+     * None: allow call setStateAsync limitless
+     * Limited: the same task only can be executed once at the same time
+     * Single: if one update task is running, others will be ignore
+     */
+    public enum UpdateStateStrategy {
+        None,
+        Limited,
+        Single
     }
 }

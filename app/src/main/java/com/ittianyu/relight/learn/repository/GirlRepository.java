@@ -12,7 +12,6 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 
-import java.io.IOException;
 import java.util.UUID;
 
 import okhttp3.ResponseBody;
@@ -49,19 +48,21 @@ public class GirlRepository {
             Log.w(TAG, "start request " + uuid);
             Thread.sleep(1000);
             okhttp3.Response response = OkGo.<String>get(wrapUrl(pageIndex)).tag(uuid).execute();
-            uuid = null;
             if (response.isSuccessful()) {
                 ResponseBody body = response.body();
                 if (body == null) {
                     Log.w(TAG, "request failure: " + uuid);
+                    uuid = null;
                     responseBean.setErrorReason("body is empty");
                     return responseBean;
                 }
+                uuid = null;
                 String json = body.string();
                 Log.w(TAG, "request success: " + json);
                 responseBean.setError(false);
                 return JSON.parseObject(json, GirlResponseBean.class);
             }
+            uuid = null;
             responseBean.setErrorReason("response code is " + response.code());
             return responseBean;
         } catch (Throwable e) {

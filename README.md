@@ -308,42 +308,43 @@ public class UserActivity extends AppCompatActivity {
 
 ## 入门教程 ##
 
-#### [1. AndroidWidget](./docs/1.AndroidWidget.md) ####
+#### [1. AndroidWidget](./docs/base/1.AndroidWidget.md) ####
 
 目的：学习 AndroidWidget 的简单用法。
 
-#### [2. LifecycleStatefulWidget](./docs/2.LifecycleStatefulWidget.md) ####
+#### [2. LifecycleStatefulWidget](./docs/base/2.LifecycleStatefulWidget.md) ####
 
 目的：学习 LifecycleStatefulWidget 的简单用法。
 
-#### [3. TextWidget](./docs/3.TextWidget.md) ####
+#### [3. TextWidget](./docs/base/3.TextWidget.md) ####
 
 目的：学习 TextWidget 的简单用法，熟悉非 xml 的方式写界面。
 
-#### [4. LinearWidget](./docs/4.LinearWidget.md) ####
+#### [4. LinearWidget](./docs/base/4.LinearWidget.md) ####
 
 目的：学习 LinearWidget 的简单用法。
 
-#### [5. FrameWidget](./docs/5.FrameWidget.md) ####
+#### [5. FrameWidget](./docs/base/5.FrameWidget.md) ####
 
 目的：学习 FrameWidget 的简单用法
 
-#### [6. RelativeWidget](./docs/6.RelativeWidget.md) ####
+#### [6. RelativeWidget](./docs/base/6.RelativeWidget.md) ####
 
 目的：学习 RelativeWidget 的简单用法
 
-#### [7. setStateAsync](./docs/7.setStateAsync.md) ####
+#### [7. setStateAsync](./docs/base/7.setStateAsync.md) ####
 
 目的：学习 setStateAsync 的使用。
 
 ## 进阶教程 ##
 
-#### 1. LceeWidget ####
+#### [1. LceeWidget](./docs/medium/1.LceeWidget.md) ####
 
 目的：学习 LceeWidget 的使用。
-计划：创建一个 widget 继承 LceeWidget，分别渲染 4中状态的页面，点击内容 Widget 触发重新加载数据。
 
+#### [2. UpdateStrategy](./docs/medium/2.UpdateStrategy.md) ####
 
+目的：学习 AsyncState 的更新策略。
 
 ## Widgets ##
 

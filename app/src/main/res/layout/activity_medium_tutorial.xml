@@ -17,6 +17,13 @@
             android:textAllCaps="false"
             android:text="1. LceeWidget" />
 
+        <Button
+            android:id="@+id/_2_UpdateStrategy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:textAllCaps="false"
+            android:text="2. UpdateStrategy" />
 
     </LinearLayout>
 
