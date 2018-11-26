@@ -374,6 +374,7 @@ public class UserActivity extends AppCompatActivity {
 * LinearWidget：封装 LinearLayout
 * RelativeWidget：封装 RelativeLayout
 * TextWidget：封装 TextView
+* ImageWidget：封装 ImageView
 * RecyclerWidget：封装 RecyclerView
 
 #### stateful ####
@@ -486,7 +487,7 @@ updaetView 中，调用 children 的 updateView 或 setState 或 update 方法
 - [x] TextWidget
 - [ ] ButtonWidget
 - [ ] ToolBarWidget
-- [ ] ImageWidget
+- [x] ImageWidget
 - [ ] EditWidget
 - [ ] FloatingActionButtonWidget
 - [ ] DrawerWidget
