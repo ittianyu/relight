@@ -33,11 +33,9 @@ public class UserLceermWidget extends LceermWidget {
     private boolean noMoreData;
     private View.OnClickListener reload = v -> reload();
     private SwipeRefreshLayout.OnRefreshListener refresh = () -> {
-        if (status == Status.Loading) {
+        if (!refresh()) {
             srw.refreshing(false);
-            return;
         }
-        refresh();
     };
 
     public UserLceermWidget(Context context, Lifecycle lifecycle) {
@@ -87,7 +85,6 @@ public class UserLceermWidget extends LceermWidget {
 
     @Override
     protected void onLoadMoreEmpty() {
-        noMoreData = true;
         Toast.makeText(context, "No more data !", Toast.LENGTH_SHORT).show();
     }
 
@@ -108,8 +105,10 @@ public class UserLceermWidget extends LceermWidget {
     @Override
     protected Status onLoadMore() throws NetworkErrorException {
         data = UserDataSource.getInstance().getUsersFromRemote();
-        if (data.isEmpty())
+        if (data.isEmpty()) {
+            noMoreData = true;
             return Status.Empty;
+        }
         return Status.Content;
     }
 
@@ -143,6 +142,9 @@ public class UserLceermWidget extends LceermWidget {
 
             @Override
             public void updateView(RecyclerView view) {
+                // attention: must check status before update view data
+                if (status != Status.Content)
+                    return;
                 switch (loadType) {
                     case FirstLoad:
                     case Refresh:

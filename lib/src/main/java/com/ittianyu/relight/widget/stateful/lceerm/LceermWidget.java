@@ -116,7 +116,6 @@ public abstract class LceermWidget extends LifecycleStatefulWidget<FrameLayout, 
                 onLoadMoreComplete();
                 break;
             case Content:
-                widget.updateView(widget.render());
                 onLoadMoreComplete();
                 break;
         }
@@ -137,7 +136,6 @@ public abstract class LceermWidget extends LifecycleStatefulWidget<FrameLayout, 
                 onRefreshComplete();
                 break;
             case Content:
-                widget.updateView(widget.render());
                 onRefreshComplete();
                 break;
         }
@@ -180,47 +178,47 @@ public abstract class LceermWidget extends LifecycleStatefulWidget<FrameLayout, 
         onStatusChanged(status, loadType);
     }
 
-    public void reload() {
-        showLoading(LoadType.FirstLoad);
+    public boolean reload() {
+        return showLoading(LoadType.FirstLoad);
     }
 
-    public void refresh() {
-        showLoading(LoadType.Refresh);
+    public boolean refresh() {
+        return showLoading(LoadType.Refresh);
     }
 
-    public void loadMore() {
-        showLoading(LoadType.LoadMore);
+    public boolean loadMore() {
+        return showLoading(LoadType.LoadMore);
     }
 
-    public void showLoading(LoadType loadType) {
-        updateStatus(Status.Loading, loadType);
+    public boolean showLoading(LoadType loadType) {
+        return updateStatus(Status.Loading, loadType);
     }
 
-    public void showContent(LoadType loadType) {
-        updateStatus(Status.Content, loadType);
+    public boolean showContent(LoadType loadType) {
+        return updateStatus(Status.Content, loadType);
     }
 
-    public void showEmpty(LoadType loadType) {
-        updateStatus(Status.Empty, loadType);
+    public boolean showEmpty(LoadType loadType) {
+        return updateStatus(Status.Empty, loadType);
     }
 
-    public void showError(LoadType loadType) {
-        updateStatus(Status.Error, loadType);
+    public boolean showError(LoadType loadType) {
+        return updateStatus(Status.Error, loadType);
     }
 
-    public void updateStatus(Status status, LoadType loadType) {
+    public boolean updateStatus(Status status, LoadType loadType) {
         // don't allow update with same status.
         // For example, we don't allow loadMore when refreshing
         if (status == this.status)
-            return;
+            return false;
         setState(() -> {
             this.status = status;
             this.loadType = loadType;
         });
+        return true;
     }
 
     protected void onStatusChanged(Status status, LoadType loadType) {
-        System.out.println("status:" + status + ", loadType:" + loadType);
         if (status == Status.Loading) {
             setStateAsync(loadingTask);
         }

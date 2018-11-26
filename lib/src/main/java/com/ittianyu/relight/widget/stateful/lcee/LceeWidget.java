@@ -101,30 +101,33 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
         onStatusChanged(status);
     }
 
-    public void reload() {
-        showLoading();
+    public boolean reload() {
+        return showLoading();
     }
 
-    public void showLoading() {
-        updateStatus(Status.Loading);
+    public boolean showLoading() {
+        return updateStatus(Status.Loading);
     }
 
-    public void showContent() {
-        updateStatus(Status.Content);
+    public boolean showContent() {
+        return updateStatus(Status.Content);
     }
 
-    public void showEmpty() {
-        updateStatus(Status.Empty);
+    public boolean showEmpty() {
+        return updateStatus(Status.Empty);
     }
 
-    public void showError() {
-        updateStatus(Status.Error);
+    public boolean showError() {
+        return updateStatus(Status.Error);
     }
 
-    public void updateStatus(Status status) {
+    public boolean updateStatus(Status status) {
+        if (status == this.status)
+            return false;
         setState(() -> {
             this.status = status;
         });
+        return true;
     }
 
     protected void onStatusChanged(Status status) {
