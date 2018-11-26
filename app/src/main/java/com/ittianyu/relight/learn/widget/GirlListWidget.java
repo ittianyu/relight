@@ -24,7 +24,7 @@ public class GirlListWidget extends AndroidWidget<View> implements BaseQuickAdap
 
     @Override
     public View createView(Context context) {
-        return View.inflate(context, R.layout.widget_girl_list, null);
+        return View.inflate(context, R.layout.activity_girl_list, null);
     }
 
     @Override

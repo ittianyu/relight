@@ -41,8 +41,9 @@ public class ImageWidget extends BaseAndroidWidget<ImageView> {
 
     public ImageWidget scaleType(ImageView.ScaleType scaleType) {
         this.scaleType = scaleType;
-        if (this.scaleType != null)
+        if (this.scaleType != null) {
             view.setScaleType(this.scaleType);
+        }
         return this;
     }
 

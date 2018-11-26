@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import android.arch.lifecycle.Lifecycle;
 
+import com.ittianyu.relight.utils.DensityUtils;
+
 public class TextWidget extends BaseAndroidWidget<TextView> {
     protected int gravity = -1;
     protected CharSequence text;
@@ -81,6 +83,10 @@ public class TextWidget extends BaseAndroidWidget<TextView> {
         if (textSize != -1)
             view.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         return this;
+    }
+
+    public TextWidget textSize(float sp) {
+        return textSize(DensityUtils.sp2px(context, sp));
     }
 
     public TextWidget lines(int lines) {

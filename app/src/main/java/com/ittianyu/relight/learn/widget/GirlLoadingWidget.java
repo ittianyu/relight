@@ -3,20 +3,18 @@ package com.ittianyu.relight.learn.widget;
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.ittianyu.relight.R;
 import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.BaseAndroidWidget;
-import com.ittianyu.relight.widget.native_.ImageWidget;
 import com.ittianyu.relight.widget.native_.LinearWidget;
 import com.ittianyu.relight.widget.native_.TextWidget;
 import com.ittianyu.relight.widget.stateless.StatelessWidget;
 
 /**
- * 出错页面
+ * 加载等待页面
  * <p>
  * Created by liyujiang on 2018/11/21 17:25
  */

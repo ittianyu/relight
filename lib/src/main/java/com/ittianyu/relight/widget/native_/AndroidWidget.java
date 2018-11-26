@@ -20,19 +20,21 @@ public abstract class AndroidWidget<T extends View> implements AndroidRender<T>,
         if (view == null)
             throw new IllegalStateException("can't render view");
     }
+
+    public final T obtainView() {
+        return view;
+    }
+
     @Override
     public void onResume() {
-
     }
 
     @Override
     public void onPause() {
-
     }
 
     @Override
     public void onStop() {
-
     }
 
     @Override
@@ -54,7 +56,6 @@ public abstract class AndroidWidget<T extends View> implements AndroidRender<T>,
 
     @Override
     public void onDestroy() {
-
     }
 
     public T render() {

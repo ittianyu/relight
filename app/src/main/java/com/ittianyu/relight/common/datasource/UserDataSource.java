@@ -1,8 +1,11 @@
 package com.ittianyu.relight.common.datasource;
 
+import android.accounts.NetworkErrorException;
+
 import com.ittianyu.relight.common.bean.UserBean;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -39,12 +42,24 @@ public class UserDataSource {
         return new UserBean(id, name);
     }
 
-    public List<UserBean> getUsersFromRemote() {
+    public List<UserBean> getUsersFromRemote() throws NetworkErrorException{
         try {
-            Thread.sleep(3000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        // mock empty and error
+        switch (random.nextInt(3)) {
+            case 0: {// empty
+                return Collections.emptyList();
+            }
+            case 1: {// error
+                throw new NetworkErrorException("network error");
+            }
+            // other: content
+        }
+
         int count = randomCount();
         List<UserBean> list = new ArrayList<>(count);
         for (int i = 0; i < count; i++) {
