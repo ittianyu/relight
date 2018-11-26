@@ -52,6 +52,8 @@ public class UserLceeWidget extends LceeWidget {
 
     @Override
     protected Widget renderError() {
+        if (lastError != null)
+            lastError.printStackTrace();
         return new CommonEmptyWidget(context, lifecycle, "Network error. Click to reload", reload);
     }
 

@@ -1,4 +1,4 @@
-package com.ittianyu.relight.widget.stateful.lcee;
+package com.ittianyu.relight.widget.stateful.lceerm;
 
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
@@ -9,9 +9,11 @@ import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.FrameWidget;
 import com.ittianyu.relight.widget.stateful.AsyncState;
 import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
+import com.ittianyu.relight.widget.stateful.lcee.Status;
 
-public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, FrameWidget> {
+public abstract class LceermWidget extends LifecycleStatefulWidget<FrameLayout, FrameWidget> {
     protected Status status = Status.Loading;
+    protected LoadType loadType = LoadType.FirstLoad;
     private Widget loading;
     private Widget content;
     private Widget empty;
@@ -21,23 +23,45 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
         try {
             this.status = onLoadData();
         } catch (Exception e) {
-            this.lastError = e;
+            lastError = e;
+            this.status = Status.Error;
+        }
+    };
+    private Runnable loadingMoreTask = () -> {
+        try {
+            this.status = onLoadMore();
+        } catch (Exception e) {
+            lastError = e;
             this.status = Status.Error;
         }
     };
 
-    public LceeWidget(Context context, Lifecycle lifecycle) {
+    public LceermWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
     }
 
     abstract protected Widget renderLoading();
+
     abstract protected Widget renderContent();
+
     abstract protected Widget renderEmpty();
+
     abstract protected Widget renderError();
+
+    abstract protected void onRefreshError(Throwable throwable);
+
+    abstract protected void onRefreshComplete();
+
+    abstract protected void onLoadMoreError(Throwable throwable);
+
+    abstract protected void onLoadMoreEmpty();
+
+    abstract protected void onLoadMoreComplete();
 
     /**
      * default cache the l c e e widget.
      * If false, will create a new widget when status changed
+     *
      * @return
      */
     protected boolean cache() {
@@ -66,6 +90,45 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
     }
 
     private void updateWidget() {
+        if (loadType == LoadType.Refresh && status != Status.Empty) {
+            switch (status) {
+                case Error:
+                    onRefreshError(lastError);
+                    onRefreshComplete();
+                    break;
+                case Content:
+                    widget.updateView(widget.render());
+                    onRefreshComplete();
+                    break;
+            }
+            onStatusChanged(status, loadType);
+            return;
+        }
+        // call complete when refresh empty
+        if (loadType == LoadType.Refresh) {
+            onRefreshComplete();
+        }
+
+        if (loadType == LoadType.LoadMore) {
+            switch (status) {
+                case Empty:
+                    onLoadMoreEmpty();
+                    onLoadMoreComplete();
+                    break;
+                case Error:
+                    onLoadMoreError(lastError);
+                    onLoadMoreComplete();
+                    break;
+                case Content:
+                    widget.updateView(widget.render());
+                    onLoadMoreComplete();
+                    break;
+            }
+            onStatusChanged(status, loadType);
+            return;
+        }
+
+
         FrameWidget frameWidget = this.widget;
         frameWidget.removeAllChildren();
         switch (status) {
@@ -98,46 +161,73 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
                 break;
             }
         }
-        onStatusChanged(status);
+        onStatusChanged(status, loadType);
     }
 
     public void reload() {
-        showLoading();
+        showLoading(LoadType.FirstLoad);
     }
 
-    public void showLoading() {
-        updateStatus(Status.Loading);
+    public void refresh() {
+        showLoading(LoadType.Refresh);
     }
 
-    public void showContent() {
-        updateStatus(Status.Content);
+    public void loadMore() {
+        showLoading(LoadType.LoadMore);
     }
 
-    public void showEmpty() {
-        updateStatus(Status.Empty);
+    public void showLoading(LoadType loadType) {
+        updateStatus(Status.Loading, loadType);
     }
 
-    public void showError() {
-        updateStatus(Status.Error);
+    public void showContent(LoadType loadType) {
+        updateStatus(Status.Content, loadType);
     }
 
-    public void updateStatus(Status status) {
+    public void showEmpty(LoadType loadType) {
+        updateStatus(Status.Empty, loadType);
+    }
+
+    public void showError(LoadType loadType) {
+        updateStatus(Status.Error, loadType);
+    }
+
+    public void updateStatus(Status status, LoadType loadType) {
         setState(() -> {
             this.status = status;
+            this.loadType = loadType;
         });
     }
 
-    protected void onStatusChanged(Status status) {
+    protected void onStatusChanged(Status status, LoadType loadType) {
         if (status == Status.Loading) {
-            setStateAsync(loadingTask);
+            switch (loadType) {
+                case FirstLoad:
+                case Refresh:
+                    setStateAsync(loadingTask);
+                    break;
+                case LoadMore:
+                    setStateAsync(loadingMoreTask);
+                    break;
+            }
         }
     }
 
     /**
      * Running in non-main thread.
      * If some showError happen, it will auto set showError status
+     *
      * @return return the next status after data load complete
      */
     abstract protected Status onLoadData() throws Exception;
+
+    /**
+     * Running in non-main thread.
+     * If some showError happen, it will auto set showError status
+     *
+     * @return return the next status after data load complete
+     */
+    abstract protected Status onLoadMore() throws Exception;
+
 
 }

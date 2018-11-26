@@ -16,6 +16,10 @@ public class ImageWidget extends BaseAndroidWidget<ImageView> {
         super(context, lifecycle);
     }
 
+    @Override
+    protected void initProps() {
+    }
+
     public ImageView createView(Context context) {
         return new ImageView(context);
     }
@@ -35,10 +39,6 @@ public class ImageWidget extends BaseAndroidWidget<ImageView> {
         return imageDrawable(drawable(res));
     }
 
-    protected void initProps() {
-        view.setImageResource(android.R.drawable.ic_menu_report_image);
-    }
-
     public ImageWidget scaleType(ImageView.ScaleType scaleType) {
         this.scaleType = scaleType;
         if (this.scaleType != null) {
@@ -47,6 +47,7 @@ public class ImageWidget extends BaseAndroidWidget<ImageView> {
         return this;
     }
 
+    @Override
     public void updateProps(ImageView view) {
         super.updateProps(view);
         scaleType(scaleType);

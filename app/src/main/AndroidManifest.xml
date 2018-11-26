@@ -30,6 +30,7 @@
         <activity android:name=".medium.MediumTutorialActivity" />
         <activity android:name=".medium._1.WidgetActivity" />
         <activity android:name=".medium._2.WidgetActivity" />
+        <activity android:name=".medium._3.WidgetActivity" />
 
     </application>
 
