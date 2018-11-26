@@ -50,6 +50,10 @@ public abstract class LceermWidget extends LifecycleStatefulWidget<FrameLayout, 
 
     abstract protected void onRefreshError(Throwable throwable);
 
+    protected void onRefreshEmpty() {
+        updateWidgetFirstLoad();
+    }
+
     abstract protected void onRefreshComplete();
 
     abstract protected void onLoadMoreError(Throwable throwable);
@@ -90,45 +94,57 @@ public abstract class LceermWidget extends LifecycleStatefulWidget<FrameLayout, 
     }
 
     private void updateWidget() {
-        if (loadType == LoadType.Refresh && status != Status.Empty) {
-            switch (status) {
-                case Error:
-                    onRefreshError(lastError);
-                    onRefreshComplete();
-                    break;
-                case Content:
-                    widget.updateView(widget.render());
-                    onRefreshComplete();
-                    break;
-            }
-            onStatusChanged(status, loadType);
-            return;
-        }
-        // call complete when refresh empty
         if (loadType == LoadType.Refresh) {
-            onRefreshComplete();
+            updateWidgetRefresh();
+            return;
         }
-
         if (loadType == LoadType.LoadMore) {
-            switch (status) {
-                case Empty:
-                    onLoadMoreEmpty();
-                    onLoadMoreComplete();
-                    break;
-                case Error:
-                    onLoadMoreError(lastError);
-                    onLoadMoreComplete();
-                    break;
-                case Content:
-                    widget.updateView(widget.render());
-                    onLoadMoreComplete();
-                    break;
-            }
-            onStatusChanged(status, loadType);
+            updateWidgetLoadMore();
+            return;
+        }
+        updateWidgetFirstLoad();
+    }
+
+    private void updateWidgetLoadMore() {
+        switch (status) {
+            case Empty:
+                onLoadMoreEmpty();
+                onLoadMoreComplete();
+                break;
+            case Error:
+                onLoadMoreError(lastError);
+                onLoadMoreComplete();
+                break;
+            case Content:
+                widget.updateView(widget.render());
+                onLoadMoreComplete();
+                break;
+        }
+        onStatusChanged(status, loadType);
+    }
+
+    private void updateWidgetRefresh() {
+        // call complete when refresh empty
+        if (status == Status.Empty) {
+            onRefreshEmpty();
+            onRefreshComplete();
             return;
         }
 
+        switch (status) {
+            case Error:
+                onRefreshError(lastError);
+                onRefreshComplete();
+                break;
+            case Content:
+                widget.updateView(widget.render());
+                onRefreshComplete();
+                break;
+        }
+        onStatusChanged(status, loadType);
+    }
 
+    private void updateWidgetFirstLoad() {
         FrameWidget frameWidget = this.widget;
         frameWidget.removeAllChildren();
         switch (status) {
