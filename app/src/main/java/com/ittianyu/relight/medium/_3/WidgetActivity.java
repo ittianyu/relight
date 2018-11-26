@@ -10,7 +10,7 @@ public class WidgetActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View root = WidgetUtils.render(this, UserLceeWidget.class);
+        View root = WidgetUtils.render(this, UserLceermWidget.class);
         setContentView(root);
     }
 }

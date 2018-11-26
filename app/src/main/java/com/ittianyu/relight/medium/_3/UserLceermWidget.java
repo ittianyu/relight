@@ -4,6 +4,7 @@ import android.accounts.NetworkErrorException;
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -26,13 +27,20 @@ import com.ittianyu.relight.widget.stateful.lceerm.LceermWidget;
 import java.util.Collections;
 import java.util.List;
 
-public class UserLceeWidget extends LceermWidget {
+public class UserLceermWidget extends LceermWidget {
     private List<UserBean> data = Collections.emptyList();
-    private View.OnClickListener reload = v -> reload();
     private SwipeRefreshWidget srw;
     private boolean noMoreData;
+    private View.OnClickListener reload = v -> reload();
+    private SwipeRefreshLayout.OnRefreshListener refresh = () -> {
+        if (status == Status.Loading) {
+            srw.refreshing(false);
+            return;
+        }
+        refresh();
+    };
 
-    public UserLceeWidget(Context context, Lifecycle lifecycle) {
+    public UserLceermWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
     }
 
@@ -49,7 +57,7 @@ public class UserLceeWidget extends LceermWidget {
                         renderFab()
                 )
         );
-        return srw.onRefreshListener(this::refresh).matchParent();
+        return srw.onRefreshListener(refresh).matchParent();
     }
 
     @Override
@@ -119,7 +127,7 @@ public class UserLceeWidget extends LceermWidget {
                     private int mLastVisibleItemPosition;
                     @Override
                     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                        if (adapter == null || noMoreData)
+                        if (adapter == null || noMoreData || status == Status.Loading)
                             return;
                         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
                         if (layoutManager instanceof LinearLayoutManager) {
@@ -127,8 +135,6 @@ public class UserLceeWidget extends LceermWidget {
                         }
                         if (newState == RecyclerView.SCROLL_STATE_IDLE
                                 && mLastVisibleItemPosition + 1 == adapter.getItemCount()) {
-                            if (status == Status.Loading)
-                                return;
                             loadMore();
                         }
                     }

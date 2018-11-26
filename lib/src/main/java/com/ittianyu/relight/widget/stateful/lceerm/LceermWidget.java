@@ -21,15 +21,15 @@ public abstract class LceermWidget extends LifecycleStatefulWidget<FrameLayout, 
     protected Throwable lastError;
     private Runnable loadingTask = () -> {
         try {
-            this.status = onLoadData();
-        } catch (Exception e) {
-            lastError = e;
-            this.status = Status.Error;
-        }
-    };
-    private Runnable loadingMoreTask = () -> {
-        try {
-            this.status = onLoadMore();
+            switch (loadType) {
+                case Refresh:
+                case FirstLoad:
+                    this.status = onLoadData();
+                    break;
+                case LoadMore:
+                    this.status = onLoadMore();
+                    break;
+            }
         } catch (Exception e) {
             lastError = e;
             this.status = Status.Error;
@@ -209,6 +209,10 @@ public abstract class LceermWidget extends LifecycleStatefulWidget<FrameLayout, 
     }
 
     public void updateStatus(Status status, LoadType loadType) {
+        // don't allow update with same status.
+        // For example, we don't allow loadMore when refreshing
+        if (status == this.status)
+            return;
         setState(() -> {
             this.status = status;
             this.loadType = loadType;
@@ -216,16 +220,9 @@ public abstract class LceermWidget extends LifecycleStatefulWidget<FrameLayout, 
     }
 
     protected void onStatusChanged(Status status, LoadType loadType) {
+        System.out.println("status:" + status + ", loadType:" + loadType);
         if (status == Status.Loading) {
-            switch (loadType) {
-                case FirstLoad:
-                case Refresh:
-                    setStateAsync(loadingTask);
-                    break;
-                case LoadMore:
-                    setStateAsync(loadingMoreTask);
-                    break;
-            }
+            setStateAsync(loadingTask);
         }
     }
 
