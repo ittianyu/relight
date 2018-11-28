@@ -81,7 +81,8 @@ public class MainApplication extends Application {
             public RefreshHeader createRefreshHeader(@NonNull Context context, @NonNull RefreshLayout layout) {
                 ClassicsHeader header = new ClassicsHeader(context);
                 header.setTextSizeTitle(12);
-                header.setDrawableSize(20);
+                header.setDrawableSize(13);
+                header.setProgressResource(R.mipmap.ic_lcee_loading);
                 return header;
             }
         });
@@ -92,7 +93,8 @@ public class MainApplication extends Application {
             public RefreshFooter createRefreshFooter(@NonNull Context context, @NonNull RefreshLayout layout) {
                 ClassicsFooter footer = new ClassicsFooter(context);
                 footer.setTextSizeTitle(12);
-                footer.setDrawableSize(20);
+                footer.setDrawableSize(13);
+                footer.setProgressResource(R.mipmap.ic_lcee_loading);
                 return footer;
             }
         });
