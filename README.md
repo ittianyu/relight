@@ -450,7 +450,7 @@ initView -> initProps -> updateProps
 
 构造方法 -> addChildren -> updateChildrenProps -> updateProps 
 
-updaetView 中，调用 children 的 updateView 或 setState 或 update 方法
+updateView 中，调用 children 的 updateView 或 setState 或 update 方法
 
 ## To Do List ##
 
@@ -470,9 +470,10 @@ updaetView 中，调用 children 的 updateView 或 setState 或 update 方法
 - [x] RelativeWidget
 - [x] RecyclerWidget
 - [x] TextWidget
+- [x] ImageWidget
+- [x] SwipeRefreshWidget
 - [ ] ButtonWidget
 - [ ] ToolBarWidget
-- [ ] ImageWidget
 - [ ] EditWidget
 - [ ] FloatingActionButtonWidget
 - [ ] DrawerWidget

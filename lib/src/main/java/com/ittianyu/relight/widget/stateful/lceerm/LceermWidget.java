@@ -1,4 +1,4 @@
-package com.ittianyu.relight.widget.stateful.lcee;
+package com.ittianyu.relight.widget.stateful.lceerm;
 
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
@@ -10,9 +10,11 @@ import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.FrameWidget;
 import com.ittianyu.relight.widget.stateful.AsyncState;
 import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
+import com.ittianyu.relight.widget.stateful.lcee.Status;
 
-public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, FrameWidget> {
+public abstract class LceermWidget extends LifecycleStatefulWidget<FrameLayout, FrameWidget> {
     protected Status status = Status.Loading;
+    protected LoadType loadType = LoadType.FirstLoad;
     private Widget loading;
     private Widget content;
     private Widget empty;
@@ -22,7 +24,15 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
         @Override
         public void run() {
             try {
-                status = onLoadData();
+                switch (loadType) {
+                    case Refresh:
+                    case FirstLoad:
+                        status = onLoadData();
+                        break;
+                    case LoadMore:
+                        status = onLoadMore();
+                        break;
+                }
             } catch (Exception e) {
                 lastError = e;
                 status = Status.Error;
@@ -30,7 +40,7 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
         }
     };
 
-    public LceeWidget(Context context, Lifecycle lifecycle) {
+    public LceermWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
     }
 
@@ -41,6 +51,20 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
     abstract protected Widget renderEmpty();
 
     abstract protected Widget renderError();
+
+    abstract protected void onRefreshError(Throwable throwable);
+
+    protected void onRefreshEmpty() {
+        updateWidgetFirstLoad();
+    }
+
+    abstract protected void onRefreshComplete();
+
+    abstract protected void onLoadMoreError(Throwable throwable);
+
+    abstract protected void onLoadMoreEmpty();
+
+    abstract protected void onLoadMoreComplete();
 
     /**
      * default cache the l c e e widget.
@@ -74,6 +98,55 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
     }
 
     private void updateWidget() {
+        if (loadType == LoadType.Refresh) {
+            updateWidgetRefresh();
+            return;
+        }
+        if (loadType == LoadType.LoadMore) {
+            updateWidgetLoadMore();
+            return;
+        }
+        updateWidgetFirstLoad();
+    }
+
+    private void updateWidgetLoadMore() {
+        switch (status) {
+            case Empty:
+                onLoadMoreEmpty();
+                onLoadMoreComplete();
+                break;
+            case Error:
+                onLoadMoreError(lastError);
+                onLoadMoreComplete();
+                break;
+            case Content:
+                onLoadMoreComplete();
+                break;
+        }
+        onStatusChanged(status, loadType);
+    }
+
+    private void updateWidgetRefresh() {
+        // call complete when refresh empty
+        if (status == Status.Empty) {
+            onRefreshEmpty();
+            onRefreshComplete();
+            return;
+        }
+
+        switch (status) {
+            case Error:
+                onRefreshError(lastError);
+                onRefreshComplete();
+                break;
+            case Content:
+                onRefreshComplete();
+                break;
+        }
+        onStatusChanged(status, loadType);
+    }
+
+    private void updateWidgetFirstLoad() {
         FrameWidget frameWidget = this.widget;
         frameWidget.removeAllChildren();
         switch (status) {
@@ -106,42 +179,53 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
                 break;
             }
         }
-        onStatusChanged(status);
+        onStatusChanged(status, loadType);
     }
 
     public boolean reload() {
-        return showLoading();
+        return showLoading(LoadType.FirstLoad);
     }
 
-    public boolean showLoading() {
-        return updateStatus(Status.Loading);
+    public boolean refresh() {
+        return showLoading(LoadType.Refresh);
     }
 
-    public boolean showContent() {
-        return updateStatus(Status.Content);
+    public boolean loadMore() {
+        return showLoading(LoadType.LoadMore);
     }
 
-    public boolean showEmpty() {
-        return updateStatus(Status.Empty);
+    public boolean showLoading(LoadType loadType) {
+        return updateStatus(Status.Loading, loadType);
     }
 
-    public boolean showError() {
-        return updateStatus(Status.Error);
+    public boolean showContent(LoadType loadType) {
+        return updateStatus(Status.Content, loadType);
     }
 
-    public boolean updateStatus(final Status status) {
+    public boolean showEmpty(LoadType loadType) {
+        return updateStatus(Status.Empty, loadType);
+    }
+
+    public boolean showError(LoadType loadType) {
+        return updateStatus(Status.Error, loadType);
+    }
+
+    public boolean updateStatus(final Status status, final LoadType loadType) {
+        // don't allow update with same status.
+        // For example, we don't allow loadMore when refreshing
         if (status == this.status)
             return false;
         setState(new Runnable() {
             @Override
             public void run() {
-                LceeWidget.this.status = status;
+                LceermWidget.this.status = status;
+                LceermWidget.this.loadType = loadType;
             }
         });
         return true;
     }
 
-    protected void onStatusChanged(Status status) {
+    protected void onStatusChanged(Status status, LoadType loadType) {
         if (status == Status.Loading) {
             setStateAsync(loadingTask);
         }
@@ -155,5 +239,15 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
      */
     @WorkerThread
     abstract protected Status onLoadData() throws Exception;
+
+    /**
+     * Running in non-main thread.
+     * If some showError happen, it will auto set showError status
+     *
+     * @return return the next status after data load complete
+     */
+    @WorkerThread
+    abstract protected Status onLoadMore() throws Exception;
+
 
 }
