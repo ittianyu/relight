@@ -30,7 +30,7 @@ public class GirlRepository {
     }
 
     private String wrapUrl(int pageIndex) {
-        return URL.replace("{pageSize}", "10")
+        return URL.replace("{pageSize}", "30")
                 .replace("{pageIndex}", String.valueOf(pageIndex));
     }
 
@@ -46,7 +46,7 @@ public class GirlRepository {
         uuid = UUID.randomUUID();
         try {
             Log.w(TAG, "start request " + uuid);
-            Thread.sleep(1000);
+            Thread.sleep(500);
             okhttp3.Response response = OkGo.<String>get(wrapUrl(pageIndex)).tag(uuid).execute();
             if (response.isSuccessful()) {
                 ResponseBody body = response.body();

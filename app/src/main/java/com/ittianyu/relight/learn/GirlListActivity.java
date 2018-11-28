@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.ittianyu.relight.learn.widget.GirlLceeWidget;
+import com.ittianyu.relight.learn.widget.GirlLceermWidget;
 import com.ittianyu.relight.utils.WidgetUtils;
 
 public class GirlListActivity extends AppCompatActivity {
@@ -12,7 +12,7 @@ public class GirlListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View root = WidgetUtils.render(this, GirlLceeWidget.class);
+        View root = WidgetUtils.render(this, GirlLceermWidget.class);
         setContentView(root);
     }
 
