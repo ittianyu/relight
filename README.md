@@ -360,6 +360,11 @@ public class UserActivity extends AppCompatActivity {
 
 目的：学习 AsyncState 的更新策略。
 
+#### [3. LceermWidget](./docs/medium/3.LceermWidget.md) ####
+
+目的：学习 LceermWidget 的使用。
+
+
 ## Widgets ##
 
 本框架将 Widget 大致分为 3 大类。

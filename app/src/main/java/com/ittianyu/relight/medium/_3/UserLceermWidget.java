@@ -21,7 +21,7 @@ import com.ittianyu.relight.widget.native_.RecyclerWidget;
 import com.ittianyu.relight.widget.native_.SwipeRefreshWidget;
 import com.ittianyu.relight.widget.stateful.lcee.CommonEmptyWidget;
 import com.ittianyu.relight.widget.stateful.lcee.CommonLoadingWidget;
-import com.ittianyu.relight.widget.stateful.lcee.Status;
+import com.ittianyu.relight.widget.stateful.lcee.LceeStatus;
 import com.ittianyu.relight.widget.stateful.lceerm.LceermWidget;
 
 import java.util.Collections;
@@ -65,12 +65,14 @@ public class UserLceermWidget extends LceermWidget {
 
     @Override
     protected Widget renderError() {
+        lastError.printStackTrace();
         return new CommonEmptyWidget(context, lifecycle, "Network error. Click to reload", reload);
     }
 
     @Override
     protected void onRefreshError(Throwable throwable) {
         Toast.makeText(context, "Refresh failed !", Toast.LENGTH_SHORT).show();
+        lastError.printStackTrace();
     }
 
     @Override
@@ -81,6 +83,7 @@ public class UserLceermWidget extends LceermWidget {
     @Override
     protected void onLoadMoreError(Throwable throwable) {
         Toast.makeText(context, "Load more data failed !", Toast.LENGTH_SHORT).show();
+        lastError.printStackTrace();
     }
 
     @Override
@@ -94,22 +97,22 @@ public class UserLceermWidget extends LceermWidget {
     }
 
     @Override
-    protected Status onLoadData() throws NetworkErrorException {
+    protected LceeStatus onLoadData() throws NetworkErrorException {
         noMoreData = false;
         data = UserDataSource.getInstance().getUsersFromRemote();
         if (data.isEmpty())
-            return Status.Empty;
-        return Status.Content;
+            return LceeStatus.Empty;
+        return LceeStatus.Content;
     }
 
     @Override
-    protected Status onLoadMore() throws NetworkErrorException {
+    protected LceeStatus onLoadMore() throws NetworkErrorException {
         data = UserDataSource.getInstance().getUsersFromRemote();
         if (data.isEmpty()) {
             noMoreData = true;
-            return Status.Empty;
+            return LceeStatus.Empty;
         }
-        return Status.Content;
+        return LceeStatus.Content;
     }
 
     private RecyclerWidget renderRecycler() {
@@ -126,7 +129,7 @@ public class UserLceermWidget extends LceermWidget {
                     private int mLastVisibleItemPosition;
                     @Override
                     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                        if (adapter == null || noMoreData || status == Status.Loading)
+                        if (adapter == null || noMoreData || status == LceeStatus.Loading)
                             return;
                         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
                         if (layoutManager instanceof LinearLayoutManager) {
@@ -143,7 +146,7 @@ public class UserLceermWidget extends LceermWidget {
             @Override
             public void updateView(RecyclerView view) {
                 // attention: must check status before update view data
-                if (status != Status.Content)
+                if (status != LceeStatus.Content)
                     return;
                 switch (loadType) {
                     case FirstLoad:

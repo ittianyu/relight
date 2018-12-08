@@ -11,7 +11,7 @@ import com.ittianyu.relight.widget.stateful.AsyncState;
 import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
 
 public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, FrameWidget> {
-    protected Status status = Status.Loading;
+    protected LceeStatus status = LceeStatus.Loading;
     private Widget loading;
     private Widget content;
     private Widget empty;
@@ -22,7 +22,7 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
             this.status = onLoadData();
         } catch (Exception e) {
             this.lastError = e;
-            this.status = Status.Error;
+            this.status = LceeStatus.Error;
         }
     };
 
@@ -106,22 +106,22 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
     }
 
     public boolean showLoading() {
-        return updateStatus(Status.Loading);
+        return updateStatus(LceeStatus.Loading);
     }
 
     public boolean showContent() {
-        return updateStatus(Status.Content);
+        return updateStatus(LceeStatus.Content);
     }
 
     public boolean showEmpty() {
-        return updateStatus(Status.Empty);
+        return updateStatus(LceeStatus.Empty);
     }
 
     public boolean showError() {
-        return updateStatus(Status.Error);
+        return updateStatus(LceeStatus.Error);
     }
 
-    public boolean updateStatus(Status status) {
+    public boolean updateStatus(LceeStatus status) {
         if (status == this.status)
             return false;
         setState(() -> {
@@ -130,8 +130,8 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
         return true;
     }
 
-    protected void onStatusChanged(Status status) {
-        if (status == Status.Loading) {
+    protected void onStatusChanged(LceeStatus status) {
+        if (status == LceeStatus.Loading) {
             setStateAsync(loadingTask);
         }
     }
@@ -141,6 +141,6 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
      * If some showError happen, it will auto set showError status
      * @return return the next status after data load complete
      */
-    abstract protected Status onLoadData() throws Exception;
+    abstract protected LceeStatus onLoadData() throws Exception;
 
 }

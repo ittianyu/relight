@@ -20,7 +20,7 @@ import com.ittianyu.relight.widget.native_.RecyclerWidget;
 import com.ittianyu.relight.widget.stateful.lcee.CommonEmptyWidget;
 import com.ittianyu.relight.widget.stateful.lcee.CommonLoadingWidget;
 import com.ittianyu.relight.widget.stateful.lcee.LceeWidget;
-import com.ittianyu.relight.widget.stateful.lcee.Status;
+import com.ittianyu.relight.widget.stateful.lcee.LceeStatus;
 
 import java.util.*;
 
@@ -58,11 +58,11 @@ public class UserLceeWidget extends LceeWidget {
     }
 
     @Override
-    protected Status onLoadData() throws NetworkErrorException {
+    protected LceeStatus onLoadData() throws NetworkErrorException {
         data = UserDataSource.getInstance().getUsersFromRemote();
         if (data.isEmpty())
-            return Status.Empty;
-        return Status.Content;
+            return LceeStatus.Empty;
+        return LceeStatus.Content;
     }
 
     private RecyclerWidget renderRecycler() {
