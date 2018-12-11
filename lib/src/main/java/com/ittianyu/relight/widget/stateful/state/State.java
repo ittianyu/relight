@@ -1,8 +1,9 @@
-package com.ittianyu.relight.widget.stateful;
+package com.ittianyu.relight.widget.stateful.state;
 
 import android.content.Context;
 
 import com.ittianyu.relight.widget.Widget;
+import java.util.concurrent.Callable;
 
 /**
  * call in order:
@@ -35,6 +36,28 @@ public interface State<T extends Widget> {
         willUpdate();
         if (null != func)
             func.run();
+        update();
+        didUpdate();
+    }
+
+    /**
+     * run func in main thread.
+     * @param func
+     * @param retryCount if > 0, it will retry when func return false
+     */
+    default void setState(Callable<Boolean> func, int retryCount) {
+        willUpdate();
+        if (null != func) {
+            try {
+                boolean result;
+                do {
+                    result = func.call();
+                    retryCount--;
+                } while (!result && retryCount >= 0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         update();
         didUpdate();
     }

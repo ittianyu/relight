@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.ittianyu.relight.utils.StateUtils;
 import com.ittianyu.relight.widget.Widget;
-import com.ittianyu.relight.widget.stateful.AsyncState;
+import com.ittianyu.relight.widget.stateful.state.AsyncState;
 import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
 
 public abstract class RmWidget<V extends View, T extends Widget<V>> extends LifecycleStatefulWidget<V, T> {

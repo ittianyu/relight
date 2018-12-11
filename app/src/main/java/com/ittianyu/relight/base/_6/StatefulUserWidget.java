@@ -13,7 +13,7 @@ import com.ittianyu.relight.widget.native_.RelativeWidget;
 import com.ittianyu.relight.widget.native_.RelativeWidget.Prop;
 import com.ittianyu.relight.widget.native_.RelativeWidget.WidgetAndProps;
 import com.ittianyu.relight.widget.native_.TextWidget;
-import com.ittianyu.relight.widget.stateful.AsyncState;
+import com.ittianyu.relight.widget.stateful.state.AsyncState;
 import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
 
 

@@ -1,4 +1,4 @@
-package com.ittianyu.relight.widget.stateful;
+package com.ittianyu.relight.widget.stateful.state;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -6,9 +6,14 @@ import android.os.Looper;
 import com.ittianyu.relight.thread.ThreadPool;
 import com.ittianyu.relight.widget.Widget;
 
+import com.ittianyu.relight.widget.stateful.state.listener.OnUpdateListener;
+import com.ittianyu.relight.widget.stateful.state.task.AsyncTask;
+import com.ittianyu.relight.widget.stateful.state.task.RetryableAsyncTask;
+import com.ittianyu.relight.widget.stateful.state.task.UpdateTask;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
 /**
@@ -28,7 +33,7 @@ public abstract class AsyncState<T extends Widget> implements State<T> {
     private OnUpdateListener onUpdateListener;
     private UpdateStateStrategy updateStateStrategy;
     private UpdateTask updateTask = new UpdateTask(this);
-    private Map<Runnable, Future> updateStateMap = new HashMap<>();
+    private Map<Object, Future> updateStateMap = new HashMap<>();
 
     public AsyncState() {
         this(DEFAULT_UPDATE_STATE_STRATEGY);
@@ -71,17 +76,8 @@ public abstract class AsyncState<T extends Widget> implements State<T> {
      */
     public void setStateAsync(Runnable func) {
         // don't update if the func is ignored
-        if (updateStateStrategy == UpdateStateStrategy.Limited) {
-            Future future = updateStateMap.get(func);
-            if (future != null && !future.isDone()) {// the same task is Running, ignore new task
-                return;
-            }
-        } else if (updateStateStrategy == UpdateStateStrategy.Single) {
-            for (Future future : updateStateMap.values()) {
-                if (future.isDone())
-                    continue;
-                return;// if exist one task is running, don't allow new task
-            }
+        if (filterTaskByStrategy(func)) {
+            return;
         }
 
         willUpdate();
@@ -95,51 +91,69 @@ public abstract class AsyncState<T extends Widget> implements State<T> {
         updateStateMap.put(func, result);
     }
 
+    /**
+     * run func in other thread. And update in main thread.
+     *
+     * @param func
+     * @param retryCount if > 0, it will retry when func return false
+     */
+    public void setStateAsync(Callable<Boolean> func, int retryCount) {
+        // don't update if the func is ignored
+        if (filterTaskByStrategy(func)) {
+            return;
+        }
+
+        willUpdate();
+        // run func in thread pool and update in main thread
+        if (null == func) {
+            updateTask.run();
+            return;
+        }
+        RetryableAsyncTask task = new RetryableAsyncTask(handler, func, updateTask, retryCount);
+        Future<?> result = ThreadPool.get().submit(task);
+        updateStateMap.put(func, result);
+    }
+
+    private boolean filterTaskByStrategy(Object func) {
+        if (updateStateStrategy == UpdateStateStrategy.Limited) {
+            // if the same task is running, return
+            if (isTaskRunning(func)) {
+                return true;
+            }
+        } else if (updateStateStrategy == UpdateStateStrategy.Single) {
+            // if exist one task is running, don't allow new task
+            if (hasTaskRunning()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean hasTaskRunning() {
+        for (Future future : updateStateMap.values()) {
+            if (future.isDone())
+                continue;
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isTaskRunning(Object func) {
+        Future future = updateStateMap.get(func);
+        // the same task is Running, ignore new task
+        if (future != null && !future.isDone()) {
+            return true;
+        }
+        return false;
+    }
+
     private void clearFinishedTask() {
-        Iterator<Map.Entry<Runnable, Future>> it = updateStateMap.entrySet().iterator();
+        Iterator<Map.Entry<Object, Future>> it = updateStateMap.entrySet().iterator();
         while(it.hasNext()){
-            Map.Entry<Runnable, Future> entry = it.next();
+            Map.Entry<Object, Future> entry = it.next();
             if(entry.getValue().isDone())
                 it.remove();
         }
-    }
-
-    private static class AsyncTask implements Runnable {
-        private Handler handler;
-        private Runnable asyncTask;
-        private Runnable mainThreadTask;
-
-        public AsyncTask(Handler handler, Runnable asyncTask, Runnable mainThreadTask) {
-            this.handler = handler;
-            this.asyncTask = asyncTask;
-            this.mainThreadTask = mainThreadTask;
-        }
-
-        @Override
-        public void run() {
-            asyncTask.run();
-            handler.post(mainThreadTask);
-            mainThreadTask = null;
-            handler = null;
-        }
-    }
-
-    private static class UpdateTask implements Runnable {
-        private AsyncState state;
-
-        public UpdateTask(AsyncState state) {
-            this.state = state;
-        }
-
-        @Override
-        public void run() {
-            state.update();
-            state.didUpdate();
-        }
-    }
-
-    interface OnUpdateListener {
-        void update();
     }
 
     /**
