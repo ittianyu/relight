@@ -2,6 +2,7 @@ package com.ittianyu.relight.widget.stateful.rm;
 
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
+import android.support.annotation.WorkerThread;
 import android.view.View;
 
 import com.ittianyu.relight.utils.StateUtils;
@@ -12,19 +13,22 @@ import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
 public abstract class RmWidget<V extends View, T extends Widget<V>> extends LifecycleStatefulWidget<V, T> {
     protected RmStatus status = RmStatus.RefreshContent;
     protected Throwable lastError;
-    private Runnable loadingTask = () -> {
-        try {
-            if (status == RmStatus.Refreshing) {
-                this.status = onLoadData();
-            } else {
-                this.status = onLoadMore();
-            }
-        } catch (Exception e) {
-            this.lastError = e;
-            if (status == RmStatus.Refreshing) {
-                this.status = RmStatus.RefreshError;
-            } else {
-                this.status = RmStatus.LoadMoreError;
+    private Runnable loadingTask = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                if (status == RmStatus.Refreshing) {
+                    status = onLoadData();
+                } else {
+                    status = onLoadMore();
+                }
+            } catch (Exception e) {
+                lastError = e;
+                if (status == RmStatus.Refreshing) {
+                    status = RmStatus.RefreshError;
+                } else {
+                    status = RmStatus.LoadMoreError;
+                }
             }
         }
     };
@@ -133,11 +137,14 @@ public abstract class RmWidget<V extends View, T extends Widget<V>> extends Life
         return updateStatus(RmStatus.LoadMoreError);
     }
 
-    public boolean updateStatus(RmStatus status) {
+    public boolean updateStatus(final RmStatus status) {
         if (status == this.status)
             return false;
-        setState(() -> {
-            this.status = status;
+        setState(new Runnable() {
+            @Override
+            public void run() {
+                RmWidget.this.status = status;
+            }
         });
         return true;
     }
@@ -180,6 +187,7 @@ public abstract class RmWidget<V extends View, T extends Widget<V>> extends Life
      * If some error happen, it will auto set RefreshError status
      * @return return the next status after data load complete
      */
+    @WorkerThread
     abstract protected RmStatus onLoadData() throws Exception;
 
     /**
@@ -187,6 +195,7 @@ public abstract class RmWidget<V extends View, T extends Widget<V>> extends Life
      * If some error happen, it will auto set LoadMoreError status
      * @return return the next status after data load complete
      */
+    @WorkerThread
     abstract protected RmStatus onLoadMore() throws Exception;
 
 }

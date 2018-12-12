@@ -12,7 +12,7 @@ import com.ittianyu.relight.learn.bean.GirlResponseBean;
 import com.ittianyu.relight.learn.repository.GirlRepository;
 import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.FrameWidget;
-import com.ittianyu.relight.widget.stateful.lcee.Status;
+import com.ittianyu.relight.widget.stateful.lcee.LceeStatus;
 import com.ittianyu.relight.widget.stateful.lceerm.LceermWidget;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -85,31 +85,31 @@ public class GirlLceermWidget extends LceermWidget implements OnRefreshListener,
     }
 
     @NonNull
-    private Status fetchData() {
+    private LceeStatus fetchData() {
         GirlResponseBean bean = GirlRepository.getInstance().fetchData(pageIndex);
         if (bean == null) {
             errorReason = "response bean is null";
-            return Status.Error;
+            return LceeStatus.Error;
         }
         if (bean.isError()) {
             errorReason = bean.getErrorReason();
-            return Status.Error;
+            return LceeStatus.Error;
         }
         data = bean.getResults();
         if (data == null || data.size() == 0) {
-            return Status.Empty;
+            return LceeStatus.Empty;
         }
-        return Status.Content;
+        return LceeStatus.Content;
     }
 
     @Override
-    protected Status onLoadData() {
+    protected LceeStatus onLoadData() {
         pageIndex = 1;
         return fetchData();
     }
 
     @Override
-    public Status onLoadMore() {
+    public LceeStatus onLoadMore() {
         pageIndex++;
         return fetchData();
     }

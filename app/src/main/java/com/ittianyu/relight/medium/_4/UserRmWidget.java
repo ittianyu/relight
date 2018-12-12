@@ -30,9 +30,12 @@ public class UserRmWidget extends RmWidget<SwipeRefreshLayout, SwipeRefreshWidge
     private List<UserBean> data = Collections.emptyList();
     private boolean noMoreData;
 
-    private SwipeRefreshLayout.OnRefreshListener refresh = () -> {
-        if (!refresh()) {
-            srw.refreshing(false);
+    private SwipeRefreshLayout.OnRefreshListener refresh = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            if (!refresh()) {
+                srw.refreshing(false);
+            }
         }
     };
     private View.OnClickListener reloadListener;

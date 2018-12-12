@@ -21,17 +21,25 @@ public class StatefulUserWidget extends LifecycleStatefulWidget<LinearLayout, Li
     private UserBean user;
     private TextWidget twId;
     private TextWidget twName;
-    private Callable<Boolean> updateTask = () -> {
-        System.out.println("Time:" + new Date() + ", get data...");
-        try {
-            user = UserDataSource.getInstance().getUserFromRemoteWithRandomError();
-            return true;
-        } catch (Exception e) {
-            user = null;
-            return false;
+    private Callable<Boolean> updateTask = new Callable<Boolean>() {
+        @Override
+        public Boolean call() throws Exception {
+            System.out.println("Time:" + new Date() + ", get data...");
+            try {
+                user = UserDataSource.getInstance().getUserFromRemoteWithRandomError();
+                return true;
+            } catch (Exception e) {
+                user = null;
+                return false;
+            }
         }
     };
-    View.OnClickListener loadData = v -> setStateAsync(updateTask, RETRY_COUNT);
+    View.OnClickListener loadData = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            setStateAsync(updateTask, RETRY_COUNT);
+        }
+    };
 
     public StatefulUserWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);

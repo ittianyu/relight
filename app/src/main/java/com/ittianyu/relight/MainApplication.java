@@ -2,10 +2,8 @@ package com.ittianyu.relight;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDex;
-import android.text.TextUtils;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
@@ -81,7 +79,7 @@ public class MainApplication extends Application {
             public RefreshHeader createRefreshHeader(@NonNull Context context, @NonNull RefreshLayout layout) {
                 ClassicsHeader header = new ClassicsHeader(context);
                 header.setTextSizeTitle(12);
-                header.setDrawableSize(13);
+                header.setDrawableSize(15);
                 header.setProgressResource(R.mipmap.ic_lcee_loading);
                 return header;
             }
@@ -93,7 +91,7 @@ public class MainApplication extends Application {
             public RefreshFooter createRefreshFooter(@NonNull Context context, @NonNull RefreshLayout layout) {
                 ClassicsFooter footer = new ClassicsFooter(context);
                 footer.setTextSizeTitle(12);
-                footer.setDrawableSize(13);
+                footer.setDrawableSize(15);
                 footer.setProgressResource(R.mipmap.ic_lcee_loading);
                 return footer;
             }

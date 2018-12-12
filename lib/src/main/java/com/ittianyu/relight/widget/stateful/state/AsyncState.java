@@ -1,5 +1,6 @@
 package com.ittianyu.relight.widget.stateful.state;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -48,9 +49,11 @@ public abstract class AsyncState<T extends Widget> implements State<T> {
     }
 
     @Override
-    public void update() {
-        if (onUpdateListener != null)
-            onUpdateListener.update();
+    public void init() {
+    }
+
+    @Override
+    public void willUpdate() {
     }
 
     @Override
@@ -67,6 +70,51 @@ public abstract class AsyncState<T extends Widget> implements State<T> {
         }
         updateStateMap = null;
         handler = null;
+    }
+
+    @Override
+    public T build(Context context) {
+        return null;
+    }
+
+    @Override
+    public void update() {
+        if (onUpdateListener != null)
+            onUpdateListener.update();
+    }
+
+    /**
+     * run func in main thread.
+     * @param func
+     */
+    public void setState(Runnable func) {
+        willUpdate();
+        if (null != func)
+            func.run();
+        update();
+        didUpdate();
+    }
+
+    /**
+     * run func in main thread.
+     * @param func
+     * @param retryCount if > 0, it will retry when func return false
+     */
+    public void setState(Callable<Boolean> func, int retryCount) {
+        willUpdate();
+        if (null != func) {
+            try {
+                boolean result;
+                do {
+                    result = func.call();
+                    retryCount--;
+                } while (!result && retryCount >= 0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        update();
+        didUpdate();
     }
 
     /**

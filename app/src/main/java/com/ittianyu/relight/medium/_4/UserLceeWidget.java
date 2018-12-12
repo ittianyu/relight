@@ -12,7 +12,12 @@ import com.ittianyu.relight.widget.stateful.lcee.LceeStatus;
 import com.ittianyu.relight.widget.stateful.rm.RmStatus;
 
 public class UserLceeWidget extends LceeWidget {
-    private View.OnClickListener reload = v -> reload();
+    private View.OnClickListener reload = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            reload();
+        }
+    };
     private UserRmWidget contentWidget;
 
     public UserLceeWidget(Context context, Lifecycle lifecycle) {
@@ -21,7 +26,12 @@ public class UserLceeWidget extends LceeWidget {
         // 否则只有当加载完数据之后才会 调用 renderContent 进行初始化
         contentWidget = new UserRmWidget(context, lifecycle)
                 .onReloadListener(reload)
-                .showEmpty(this::showEmpty);
+                .showEmpty(new Runnable() {
+                    @Override
+                    public void run() {
+                        showEmpty();
+                    }
+                });
     }
 
     @Override
