@@ -11,7 +11,7 @@ import com.ittianyu.relight.utils.StateUtils;
 import com.ittianyu.relight.widget.native_.LinearWidget;
 import com.ittianyu.relight.widget.native_.TextWidget;
 import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
-import com.ittianyu.relight.widget.stateful.state.AsyncState;
+import com.ittianyu.relight.widget.stateful.state.State;
 import java.util.Date;
 import java.util.concurrent.Callable;
 
@@ -31,14 +31,14 @@ public class StatefulUserWidget extends LifecycleStatefulWidget<LinearLayout, Li
             return false;
         }
     };
-    View.OnClickListener loadData = v -> setStateAsync(updateTask, RETRY_COUNT);
+    View.OnClickListener loadData = v -> setStateAsync(RETRY_COUNT, updateTask);
 
     public StatefulUserWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
     }
 
     @Override
-    protected AsyncState<LinearWidget> createState(Context context) {
+    protected State<LinearWidget> createState(Context context) {
         twId = new TextWidget(context, lifecycle);
         twName = new TextWidget(context, lifecycle);
         LinearWidget root = new LinearWidget(context, lifecycle, twId, twName);
