@@ -41,7 +41,7 @@ public class GirlListAdapter extends BaseQuickAdapter<GirlItemBean, BaseViewHold
         Glide.with(context).applyDefaultRequestOptions(RequestOptions
                 .placeholderOf(android.R.drawable.ic_menu_report_image)
                 .error(android.R.drawable.ic_menu_report_image)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)).load(item.getUrl()).listener(new RequestListener<Drawable>() {
+                .diskCacheStrategy(DiskCacheStrategy.ALL)).load(item.getUrl()).listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 params.height = params.width * 3 / 2;

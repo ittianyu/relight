@@ -8,12 +8,12 @@ import android.widget.FrameLayout;
 import com.ittianyu.relight.utils.StateUtils;
 import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.FrameWidget;
-import com.ittianyu.relight.widget.stateful.AsyncState;
+import com.ittianyu.relight.widget.stateful.state.AsyncState;
 import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
-import com.ittianyu.relight.widget.stateful.lcee.Status;
+import com.ittianyu.relight.widget.stateful.lcee.LceeStatus;
 
 public abstract class LceermWidget extends LifecycleStatefulWidget<FrameLayout, FrameWidget> {
-    protected Status status = Status.Loading;
+    protected LceeStatus status = LceeStatus.Loading;
     protected LoadType loadType = LoadType.FirstLoad;
     private Widget loading;
     private Widget content;
@@ -35,7 +35,7 @@ public abstract class LceermWidget extends LifecycleStatefulWidget<FrameLayout, 
                 }
             } catch (Exception e) {
                 lastError = e;
-                status = Status.Error;
+                status = LceeStatus.Error;
             }
         }
     };
@@ -128,7 +128,7 @@ public abstract class LceermWidget extends LifecycleStatefulWidget<FrameLayout, 
 
     private void updateWidgetRefresh() {
         // call complete when refresh empty
-        if (status == Status.Empty) {
+        if (status == LceeStatus.Empty) {
             onRefreshEmpty();
             onRefreshComplete();
             return;
@@ -195,22 +195,22 @@ public abstract class LceermWidget extends LifecycleStatefulWidget<FrameLayout, 
     }
 
     public boolean showLoading(LoadType loadType) {
-        return updateStatus(Status.Loading, loadType);
+        return updateStatus(LceeStatus.Loading, loadType);
     }
 
     public boolean showContent(LoadType loadType) {
-        return updateStatus(Status.Content, loadType);
+        return updateStatus(LceeStatus.Content, loadType);
     }
 
     public boolean showEmpty(LoadType loadType) {
-        return updateStatus(Status.Empty, loadType);
+        return updateStatus(LceeStatus.Empty, loadType);
     }
 
     public boolean showError(LoadType loadType) {
-        return updateStatus(Status.Error, loadType);
+        return updateStatus(LceeStatus.Error, loadType);
     }
 
-    public boolean updateStatus(final Status status, final LoadType loadType) {
+    public boolean updateStatus(final LceeStatus status, final LoadType loadType) {
         // don't allow update with same status.
         // For example, we don't allow loadMore when refreshing
         if (status == this.status)
@@ -225,8 +225,8 @@ public abstract class LceermWidget extends LifecycleStatefulWidget<FrameLayout, 
         return true;
     }
 
-    protected void onStatusChanged(Status status, LoadType loadType) {
-        if (status == Status.Loading) {
+    protected void onStatusChanged(LceeStatus status, LoadType loadType) {
+        if (status == LceeStatus.Loading) {
             setStateAsync(loadingTask);
         }
     }
@@ -238,7 +238,7 @@ public abstract class LceermWidget extends LifecycleStatefulWidget<FrameLayout, 
      * @return return the next status after data load complete
      */
     @WorkerThread
-    abstract protected Status onLoadData() throws Exception;
+    abstract protected LceeStatus onLoadData() throws Exception;
 
     /**
      * Running in non-main thread.
@@ -247,7 +247,7 @@ public abstract class LceermWidget extends LifecycleStatefulWidget<FrameLayout, 
      * @return return the next status after data load complete
      */
     @WorkerThread
-    abstract protected Status onLoadMore() throws Exception;
+    abstract protected LceeStatus onLoadMore() throws Exception;
 
 
 }
