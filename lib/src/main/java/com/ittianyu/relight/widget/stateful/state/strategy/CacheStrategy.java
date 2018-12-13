@@ -22,7 +22,6 @@ public abstract class CacheStrategy {
     }
 
     /**
-     *
      * @return true to run cache task
      */
     public abstract boolean shouldRunCacheTask();
@@ -41,7 +40,6 @@ public abstract class CacheStrategy {
     }
 
     /**
-     *
      * @return true to run task
      */
     public abstract boolean shouldRunTask();
@@ -65,7 +63,6 @@ public abstract class CacheStrategy {
     }
 
     /**
-     *
      * @return true to run cache task and then run task
      */
     public boolean runCacheFirst() {

@@ -3,7 +3,7 @@ package com.ittianyu.relight.widget.stateful.state.strategy;
 /**
  * run task first, if success, don't run cache anymore.
  * if task error, run cache.
- *
+ * <p>
  * Always update view when task and cache task finished.
  */
 public class CacheIfTaskErrorStrategy extends CacheStrategy {

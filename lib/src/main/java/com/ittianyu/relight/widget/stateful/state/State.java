@@ -6,7 +6,6 @@ import android.os.Looper;
 
 import com.ittianyu.relight.thread.ThreadPool;
 import com.ittianyu.relight.widget.Widget;
-
 import com.ittianyu.relight.widget.stateful.state.listener.OnUpdateListener;
 import com.ittianyu.relight.widget.stateful.state.strategy.CacheStrategy;
 import com.ittianyu.relight.widget.stateful.state.strategy.CacheThenTaskStrategy;
@@ -16,6 +15,7 @@ import com.ittianyu.relight.widget.stateful.state.task.AsyncTask;
 import com.ittianyu.relight.widget.stateful.state.task.CacheAsyncTask;
 import com.ittianyu.relight.widget.stateful.state.task.RetryableAsyncTask;
 import com.ittianyu.relight.widget.stateful.state.task.UpdateTask;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -46,7 +46,6 @@ public abstract class State<T extends Widget> implements SetState {
     }
 
     /**
-     *
      * @param filterStrategy if null, it don't filter any func
      */
     public State(FilterStrategy filterStrategy) {
@@ -57,11 +56,13 @@ public abstract class State<T extends Widget> implements SetState {
         this.onUpdateListener = onUpdateListener;
     }
 
-    public void init() {}
+    public void init() {
+    }
 
     public abstract T build(Context context);
 
-    public void willUpdate() {}
+    public void willUpdate() {
+    }
 
     public void update() {
         if (onUpdateListener != null)
@@ -84,6 +85,7 @@ public abstract class State<T extends Widget> implements SetState {
 
     /**
      * run func in main thread.
+     *
      * @param func
      */
     @Override
@@ -97,6 +99,7 @@ public abstract class State<T extends Widget> implements SetState {
 
     /**
      * run func in main thread.
+     *
      * @param retryCount if > 0, it will retry when func return false
      * @param func
      */
@@ -160,7 +163,7 @@ public abstract class State<T extends Widget> implements SetState {
 
     @Override
     public void setStateAsyncWithCache(CacheStrategy cacheStrategy, Runnable cacheFunc,
-        Runnable func) {
+                                       Runnable func) {
         // cacheFunc or func is running, ignore
         if (shouldIgnored(func)) {
             return;

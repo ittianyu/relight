@@ -1,6 +1,7 @@
 package com.ittianyu.relight.widget.stateful.state.task;
 
 import android.os.Handler;
+
 import com.ittianyu.relight.widget.stateful.state.strategy.CacheStrategy;
 
 public class CacheAsyncTask implements Runnable {

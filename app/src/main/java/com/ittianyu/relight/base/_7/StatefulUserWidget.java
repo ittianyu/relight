@@ -11,8 +11,8 @@ import com.ittianyu.relight.common.datasource.UserDataSource;
 import com.ittianyu.relight.utils.StateUtils;
 import com.ittianyu.relight.widget.native_.LinearWidget;
 import com.ittianyu.relight.widget.native_.TextWidget;
-import com.ittianyu.relight.widget.stateful.state.State;
 import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
+import com.ittianyu.relight.widget.stateful.state.State;
 
 public class StatefulUserWidget extends LifecycleStatefulWidget<LinearLayout, LinearWidget> {
     private UserBean user = UserDataSource.getInstance().getUser();

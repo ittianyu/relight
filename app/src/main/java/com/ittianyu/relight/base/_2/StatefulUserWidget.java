@@ -7,8 +7,8 @@ import android.view.View;
 import com.ittianyu.relight.common.bean.UserBean;
 import com.ittianyu.relight.common.datasource.UserDataSource;
 import com.ittianyu.relight.utils.StateUtils;
-import com.ittianyu.relight.widget.stateful.state.State;
 import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
+import com.ittianyu.relight.widget.stateful.state.State;
 
 public class StatefulUserWidget extends LifecycleStatefulWidget<View, UserWidget> {
     private UserBean user = UserDataSource.getInstance().getUser();

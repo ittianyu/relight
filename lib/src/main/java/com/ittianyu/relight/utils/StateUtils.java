@@ -7,8 +7,8 @@ import android.view.View;
 import com.ittianyu.relight.view.AndroidRender;
 import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.AndroidWidget;
-import com.ittianyu.relight.widget.stateful.state.State;
 import com.ittianyu.relight.widget.stateful.StatefulWidget;
+import com.ittianyu.relight.widget.stateful.state.State;
 import com.ittianyu.relight.widget.stateful.state.strategy.FilterStrategy;
 import com.ittianyu.relight.widget.stateless.StatelessWidget;
 
@@ -18,8 +18,8 @@ public class StateUtils {
         return create(androidRender, lifecycle, State.DEFAULT_UPDATE_STATE_STRATEGY);
     }
 
-    public static <V extends View> State<AndroidWidget<V>> create(AndroidRender<V> androidRender,
-                                                                       Lifecycle lifecycle, FilterStrategy updateStateStrategy) {
+    public static <V extends View> State<AndroidWidget<V>> create(final AndroidRender<V> androidRender,
+                                                                  final Lifecycle lifecycle, FilterStrategy updateStateStrategy) {
         return new State<AndroidWidget<V>>(updateStateStrategy) {
             private AndroidWidget<V> widget;
 
@@ -41,7 +41,7 @@ public class StateUtils {
         return create(widget, State.DEFAULT_UPDATE_STATE_STRATEGY);
     }
 
-    public static <V extends View, T extends Widget<V>> State<T> create(T widget, FilterStrategy updateStateStrategy) {
+    public static <V extends View, T extends Widget<V>> State<T> create(final T widget, FilterStrategy updateStateStrategy) {
         return new State<T>(updateStateStrategy) {
             @Override
             public T build(Context context) {
@@ -52,6 +52,7 @@ public class StateUtils {
             public void update() {
                 super.update();
                 if (widget instanceof AndroidWidget) {
+                    //noinspection unchecked
                     ((AndroidWidget) widget).updateView(widget.render());
                 } else if (widget instanceof StatelessWidget) {
                     ((StatelessWidget) widget).update(widget);

@@ -8,8 +8,8 @@ import android.widget.FrameLayout;
 import com.ittianyu.relight.utils.StateUtils;
 import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.FrameWidget;
-import com.ittianyu.relight.widget.stateful.state.State;
 import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
+import com.ittianyu.relight.widget.stateful.state.State;
 
 public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, FrameWidget> {
     protected LceeStatus status = LceeStatus.Loading;

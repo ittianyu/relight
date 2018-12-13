@@ -3,7 +3,7 @@ package com.ittianyu.relight.widget.stateful.state.strategy;
 /**
  * run cache task and update view
  * then run task and update view
- *
+ * <p>
  * if cache task error, don't update view
  * always update when task finish
  */
