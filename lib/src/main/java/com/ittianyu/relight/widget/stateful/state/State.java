@@ -184,6 +184,10 @@ public abstract class State<T extends Widget> implements SetState {
     }
 
     private void cleanFinishedTask() {
+        //NPE: Attempt to invoke interface method '...entrySet()' on a null object reference
+        if (updateStateMap == null) {
+            return;
+        }
         Iterator<Map.Entry<Object, Future>> it = updateStateMap.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<Object, Future> entry = it.next();
