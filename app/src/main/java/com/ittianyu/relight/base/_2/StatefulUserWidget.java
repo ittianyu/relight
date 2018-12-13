@@ -7,7 +7,7 @@ import android.view.View;
 import com.ittianyu.relight.common.bean.UserBean;
 import com.ittianyu.relight.common.datasource.UserDataSource;
 import com.ittianyu.relight.utils.StateUtils;
-import com.ittianyu.relight.widget.stateful.state.AsyncState;
+import com.ittianyu.relight.widget.stateful.state.State;
 import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
 
 public class StatefulUserWidget extends LifecycleStatefulWidget<View, UserWidget> {
@@ -18,7 +18,7 @@ public class StatefulUserWidget extends LifecycleStatefulWidget<View, UserWidget
     }
 
     @Override
-    protected AsyncState<UserWidget> createState(Context context) {
+    protected State<UserWidget> createState(Context context) {
         return StateUtils.create(new UserWidget(context, lifecycle, user));
     }
 

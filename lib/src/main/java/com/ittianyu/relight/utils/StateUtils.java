@@ -7,19 +7,20 @@ import android.view.View;
 import com.ittianyu.relight.view.AndroidRender;
 import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.AndroidWidget;
-import com.ittianyu.relight.widget.stateful.state.AsyncState;
+import com.ittianyu.relight.widget.stateful.state.State;
 import com.ittianyu.relight.widget.stateful.StatefulWidget;
+import com.ittianyu.relight.widget.stateful.state.strategy.FilterStrategy;
 import com.ittianyu.relight.widget.stateless.StatelessWidget;
 
 public class StateUtils {
 
-    public static <V extends View> AsyncState<AndroidWidget<V>> create(AndroidRender<V> androidRender, Lifecycle lifecycle) {
-        return create(androidRender, lifecycle, AsyncState.DEFAULT_UPDATE_STATE_STRATEGY);
+    public static <V extends View> State<AndroidWidget<V>> create(AndroidRender<V> androidRender, Lifecycle lifecycle) {
+        return create(androidRender, lifecycle, State.DEFAULT_UPDATE_STATE_STRATEGY);
     }
 
-    public static <V extends View> AsyncState<AndroidWidget<V>> create(final AndroidRender<V> androidRender,
-                                                                       final Lifecycle lifecycle, AsyncState.UpdateStateStrategy updateStateStrategy) {
-        return new AsyncState<AndroidWidget<V>>(updateStateStrategy) {
+    public static <V extends View> State<AndroidWidget<V>> create(AndroidRender<V> androidRender,
+                                                                       Lifecycle lifecycle, FilterStrategy updateStateStrategy) {
+        return new State<AndroidWidget<V>>(updateStateStrategy) {
             private AndroidWidget<V> widget;
 
             @Override
@@ -36,12 +37,12 @@ public class StateUtils {
         };
     }
 
-    public static <V extends View, T extends Widget<V>> AsyncState<T> create(final T widget) {
-        return create(widget, AsyncState.DEFAULT_UPDATE_STATE_STRATEGY);
+    public static <V extends View, T extends Widget<V>> State<T> create(T widget) {
+        return create(widget, State.DEFAULT_UPDATE_STATE_STRATEGY);
     }
 
-    public static <V extends View, T extends Widget<V>> AsyncState<T> create(final T widget, AsyncState.UpdateStateStrategy updateStateStrategy) {
-        return new AsyncState<T>(updateStateStrategy) {
+    public static <V extends View, T extends Widget<V>> State<T> create(T widget, FilterStrategy updateStateStrategy) {
+        return new State<T>(updateStateStrategy) {
             @Override
             public T build(Context context) {
                 return widget;
