@@ -7,8 +7,8 @@ import android.view.View;
 
 import com.ittianyu.relight.utils.StateUtils;
 import com.ittianyu.relight.widget.Widget;
-import com.ittianyu.relight.widget.stateful.state.AsyncState;
 import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
+import com.ittianyu.relight.widget.stateful.state.State;
 
 public abstract class RmWidget<V extends View, T extends Widget<V>> extends LifecycleStatefulWidget<V, T> {
     protected RmStatus status = RmStatus.RefreshContent;
@@ -38,7 +38,7 @@ public abstract class RmWidget<V extends View, T extends Widget<V>> extends Life
     }
 
     @Override
-    protected AsyncState<T> createState(Context context) {
+    protected State<T> createState(Context context) {
         return StateUtils.create(build(context));
     }
 

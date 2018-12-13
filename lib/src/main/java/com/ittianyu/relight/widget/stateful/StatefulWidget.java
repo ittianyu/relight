@@ -6,22 +6,25 @@ import android.view.View;
 import com.ittianyu.relight.widget.StatefulContainerWidget;
 import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.BaseAndroidWidget;
-import com.ittianyu.relight.widget.stateful.state.AsyncState;
+import com.ittianyu.relight.widget.stateful.state.SetState;
+import com.ittianyu.relight.widget.stateful.state.State;
 import com.ittianyu.relight.widget.stateful.state.listener.OnUpdateListener;
+import com.ittianyu.relight.widget.stateful.state.strategy.CacheStrategy;
 import com.ittianyu.relight.widget.stateless.StatelessWidget;
+
 import java.util.concurrent.Callable;
 
 public abstract class StatefulWidget<V extends View, T extends Widget<V>> implements Widget<V>,
-        StatefulContainerWidget<V, T>, OnUpdateListener {
+        StatefulContainerWidget<V, T>, OnUpdateListener, SetState {
     protected Context context;
-    protected AsyncState<T> state;
+    protected State<T> state;
     protected T widget;
 
     public StatefulWidget(Context context) {
         this.context = context;
     }
 
-    protected abstract AsyncState<T> createState(Context context);
+    abstract protected State<T> createState(Context context);
 
     @Override
     public V render() {
@@ -35,20 +38,35 @@ public abstract class StatefulWidget<V extends View, T extends Widget<V>> implem
         return widget.render();
     }
 
+    @Override
     public void setState(Runnable func) {
         state.setState(func);
     }
 
-    public void setState(Callable<Boolean> func, int retryCount) {
-        state.setState(func, retryCount);
+    @Override
+    public void setState(int retryCount, Callable<Boolean> func) {
+        state.setState(retryCount, func);
     }
 
+    @Override
     public void setStateAsync(Runnable func) {
         state.setStateAsync(func);
     }
 
-    public void setStateAsync(Callable<Boolean> func, int retryCount) {
-        state.setStateAsync(func, retryCount);
+    @Override
+    public void setStateAsync(int retryCount, Callable<Boolean> func) {
+        state.setStateAsync(retryCount, func);
+    }
+
+    @Override
+    public void setStateAsyncWithCache(Runnable cacheFunc, Runnable func) {
+        state.setStateAsyncWithCache(cacheFunc, func);
+    }
+
+    @Override
+    public void setStateAsyncWithCache(CacheStrategy cacheStrategy, Runnable cacheFunc,
+                                       Runnable func) {
+        state.setStateAsyncWithCache(cacheStrategy, cacheFunc, func);
     }
 
     @Override

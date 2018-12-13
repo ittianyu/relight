@@ -1,11 +1,11 @@
 package com.ittianyu.relight.widget.stateful.state.task;
 
-import com.ittianyu.relight.widget.stateful.state.AsyncState;
+import com.ittianyu.relight.widget.stateful.state.State;
 
 public class UpdateTask implements Runnable {
-    private AsyncState state;
+    private State state;
 
-    public UpdateTask(AsyncState state) {
+    public UpdateTask(State state) {
         this.state = state;
     }
 

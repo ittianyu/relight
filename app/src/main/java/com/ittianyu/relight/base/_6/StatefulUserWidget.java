@@ -14,8 +14,8 @@ import com.ittianyu.relight.widget.native_.RelativeWidget;
 import com.ittianyu.relight.widget.native_.RelativeWidget.Prop;
 import com.ittianyu.relight.widget.native_.RelativeWidget.WidgetAndProps;
 import com.ittianyu.relight.widget.native_.TextWidget;
-import com.ittianyu.relight.widget.stateful.state.AsyncState;
 import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
+import com.ittianyu.relight.widget.stateful.state.State;
 
 
 public class StatefulUserWidget extends LifecycleStatefulWidget<RelativeLayout, RelativeWidget> {
@@ -28,7 +28,7 @@ public class StatefulUserWidget extends LifecycleStatefulWidget<RelativeLayout, 
     }
 
     @Override
-    protected AsyncState<RelativeWidget> createState(Context context) {
+    protected State<RelativeWidget> createState(Context context) {
         twId = new TextWidget(context, lifecycle) {
             @Override
             protected void initProps() {

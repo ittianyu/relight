@@ -10,8 +10,8 @@ import com.ittianyu.relight.common.bean.UserBean;
 import com.ittianyu.relight.common.datasource.UserDataSource;
 import com.ittianyu.relight.utils.StateUtils;
 import com.ittianyu.relight.widget.native_.TextWidget;
-import com.ittianyu.relight.widget.stateful.state.AsyncState;
 import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
+import com.ittianyu.relight.widget.stateful.state.State;
 
 public class StatefulUserWidget extends LifecycleStatefulWidget<TextView, TextWidget> {
     private UserBean user = UserDataSource.getInstance().getUser();
@@ -21,7 +21,7 @@ public class StatefulUserWidget extends LifecycleStatefulWidget<TextView, TextWi
     }
 
     @Override
-    protected AsyncState<TextWidget> createState(Context context) {
+    protected State<TextWidget> createState(Context context) {
         return StateUtils.create(new TextWidget(context, lifecycle));
     }
 
