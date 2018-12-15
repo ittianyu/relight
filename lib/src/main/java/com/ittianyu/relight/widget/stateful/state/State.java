@@ -6,7 +6,6 @@ import android.os.Looper;
 
 import com.ittianyu.relight.thread.ThreadPool;
 import com.ittianyu.relight.widget.Widget;
-
 import com.ittianyu.relight.widget.stateful.state.listener.OnUpdateListener;
 import com.ittianyu.relight.widget.stateful.state.strategy.CacheStrategy;
 import com.ittianyu.relight.widget.stateful.state.strategy.CacheThenTaskStrategy;
@@ -14,12 +13,11 @@ import com.ittianyu.relight.widget.stateful.state.strategy.FilterStrategy;
 import com.ittianyu.relight.widget.stateful.state.strategy.NotRepeatFilterStrategy;
 import com.ittianyu.relight.widget.stateful.state.task.AsyncTask;
 import com.ittianyu.relight.widget.stateful.state.task.CacheAsyncTask;
-import com.ittianyu.relight.widget.stateful.state.task.RetryableAsyncTask;
 import com.ittianyu.relight.widget.stateful.state.task.UpdateTask;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
 /**
@@ -96,29 +94,6 @@ public abstract class State<T extends Widget> implements SetState {
     }
 
     /**
-     * run func in main thread.
-     * @param retryCount if > 0, it will retry when func return false
-     * @param func
-     */
-    @Override
-    public void setState(int retryCount, Callable<Boolean> func) {
-        willUpdate();
-        if (null != func) {
-            try {
-                boolean result;
-                do {
-                    result = func.call();
-                    retryCount--;
-                } while (!result && retryCount >= 0);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        update();
-        didUpdate();
-    }
-
-    /**
      * run func in other thread. And update in main thread.
      *
      * @param func
@@ -131,24 +106,6 @@ public abstract class State<T extends Widget> implements SetState {
 
         willUpdate();
         AsyncTask task = new AsyncTask(handler, func, updateTask);
-        Future<?> result = ThreadPool.get().submit(task);
-        updateStateMap.put(func, result);
-    }
-
-    /**
-     * run func in other thread. And update in main thread.
-     *
-     * @param func
-     * @param retryCount if > 0, it will retry when func return false
-     */
-    @Override
-    public void setStateAsync(int retryCount, Callable<Boolean> func) {
-        if (shouldIgnored(func)) {
-            return;
-        }
-
-        willUpdate();
-        RetryableAsyncTask task = new RetryableAsyncTask(handler, func, updateTask, retryCount);
         Future<?> result = ThreadPool.get().submit(task);
         updateStateMap.put(func, result);
     }

@@ -6,12 +6,11 @@ import android.view.View;
 import com.ittianyu.relight.widget.StatefulContainerWidget;
 import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.BaseAndroidWidget;
-import com.ittianyu.relight.widget.stateful.state.State;
 import com.ittianyu.relight.widget.stateful.state.SetState;
+import com.ittianyu.relight.widget.stateful.state.State;
 import com.ittianyu.relight.widget.stateful.state.listener.OnUpdateListener;
 import com.ittianyu.relight.widget.stateful.state.strategy.CacheStrategy;
 import com.ittianyu.relight.widget.stateless.StatelessWidget;
-import java.util.concurrent.Callable;
 
 public abstract class StatefulWidget<V extends View, T extends Widget<V>> implements Widget<V>,
         StatefulContainerWidget<V, T>, OnUpdateListener, SetState {
@@ -43,18 +42,8 @@ public abstract class StatefulWidget<V extends View, T extends Widget<V>> implem
     }
 
     @Override
-    public void setState(int retryCount, Callable<Boolean> func) {
-        state.setState(retryCount, func);
-    }
-
-    @Override
     public void setStateAsync(Runnable func) {
         state.setStateAsync(func);
-    }
-
-    @Override
-    public void setStateAsync(int retryCount, Callable<Boolean> func) {
-        state.setStateAsync(retryCount, func);
     }
 
     @Override

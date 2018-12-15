@@ -5,23 +5,25 @@ import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
+
 import com.ittianyu.relight.common.bean.UserBean;
 import com.ittianyu.relight.common.datasource.UserDataSource;
+import com.ittianyu.relight.utils.RetryUtils;
 import com.ittianyu.relight.utils.StateUtils;
 import com.ittianyu.relight.widget.native_.LinearWidget;
 import com.ittianyu.relight.widget.native_.TextWidget;
 import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
 import com.ittianyu.relight.widget.stateful.state.State;
+
 import java.util.Date;
-import java.util.concurrent.Callable;
 
 public class StatefulUserWidget extends LifecycleStatefulWidget<LinearLayout, LinearWidget> {
-    private static final int RETRY_COUNT = 2;
+    private static final int RETRY_COUNT = 2;// This task is executed up to 3 times at most
 
     private UserBean user;
     private TextWidget twId;
     private TextWidget twName;
-    private Callable<Boolean> updateTask = () -> {
+    private Runnable updateTask = RetryUtils.create(RETRY_COUNT, () -> {
         System.out.println("Time:" + new Date() + ", get data...");
         try {
             user = UserDataSource.getInstance().getUserFromRemoteWithRandomError();
@@ -30,8 +32,8 @@ public class StatefulUserWidget extends LifecycleStatefulWidget<LinearLayout, Li
             user = null;
             return false;
         }
-    };
-    View.OnClickListener loadData = v -> setStateAsync(RETRY_COUNT, updateTask);
+    });
+    View.OnClickListener loadData = v -> setStateAsync(updateTask);
 
     public StatefulUserWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
