@@ -30,10 +30,12 @@ public class MediumTutorialActivity extends AppCompatActivity {
             case R.id._4_LceeRmWidget:
                 start(com.ittianyu.relight.medium._4.WidgetActivity.class);
                 break;
-             case R.id._5_Retryable:
+            case R.id._5_Retryable:
                 start(com.ittianyu.relight.medium._5.WidgetActivity.class);
                 break;
-
+            case R.id._6_Cache:
+                start(com.ittianyu.relight.medium._6.WidgetActivity.class);
+                break;
         }
     }
 

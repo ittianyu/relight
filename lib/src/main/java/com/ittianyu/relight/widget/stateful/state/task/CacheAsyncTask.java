@@ -9,6 +9,13 @@ public class CacheAsyncTask implements Runnable {
     private Runnable asyncTask;
     private Runnable mainThreadTask;
     private CacheStrategy cacheStrategy;
+    private boolean readyForNextTask = true;
+    private Runnable notifyReadyForNextTask = () -> {
+        synchronized (this) {
+            readyForNextTask = true;
+            notify();
+        }
+    };
 
     public CacheAsyncTask(Handler handler, Runnable cacheTask, Runnable asyncTask, Runnable mainThreadTask, CacheStrategy cacheStrategy) {
         this.handler = handler;
@@ -33,6 +40,7 @@ public class CacheAsyncTask implements Runnable {
 
     private void runTask() {
         if (cacheStrategy.shouldRunTask()) {
+            waitForMainThreadTask();
             Throwable t = null;
             try {
                 asyncTask.run();
@@ -40,14 +48,17 @@ public class CacheAsyncTask implements Runnable {
                 t = throwable;
             }
             cacheStrategy.setTaskError(t);
-            if (cacheStrategy.shouldUpdateViewAfterCacheTask()) {
+            if (cacheStrategy.shouldUpdateViewAfterTask()) {
+                readyForNextTask = false;
                 handler.post(mainThreadTask);
+                handler.post(notifyReadyForNextTask);
             }
         }
     }
 
     private void runCache() {
         if (cacheStrategy.shouldRunCacheTask()) {
+            waitForMainThreadTask();
             Throwable t = null;
             try {
                 cacheTask.run();
@@ -55,8 +66,23 @@ public class CacheAsyncTask implements Runnable {
                 t = throwable;
             }
             cacheStrategy.setCacheTaskError(t);
-            if (cacheStrategy.shouldUpdateViewAfterTask()) {
+            if (cacheStrategy.shouldUpdateViewAfterCacheTask()) {
+                readyForNextTask = false;
                 handler.post(mainThreadTask);
+                handler.post(notifyReadyForNextTask);
+            }
+        }
+    }
+
+    private void waitForMainThreadTask() {
+        if (readyForNextTask) {
+            return;
+        }
+        synchronized (this) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }

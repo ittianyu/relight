@@ -11,7 +11,6 @@ import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import com.ittianyu.relight.utils.DensityUtils;
 import com.ittianyu.relight.utils.ViewUtils;
@@ -205,6 +204,13 @@ public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T>
     public BaseAndroidWidget<T> matchParent() {
         this.width = matchParent;
         this.height = matchParent;
+        updateSize();
+        return this;
+    }
+
+    public BaseAndroidWidget<T> widthMatchAndHeightWrap() {
+        this.width = matchParent;
+        this.height = wrapContent;
         updateSize();
         return this;
     }
