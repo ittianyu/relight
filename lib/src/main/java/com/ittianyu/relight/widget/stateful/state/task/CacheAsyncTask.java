@@ -9,7 +9,7 @@ public class CacheAsyncTask implements Runnable {
     private Runnable asyncTask;
     private Runnable mainThreadTask;
     private CacheStrategy cacheStrategy;
-    private boolean readyForNextTask = true;
+    volatile private boolean readyForNextTask = true;
     private Runnable notifyReadyForNextTask = () -> {
         synchronized (this) {
             readyForNextTask = true;
@@ -51,7 +51,6 @@ public class CacheAsyncTask implements Runnable {
             if (cacheStrategy.shouldUpdateViewAfterTask()) {
                 readyForNextTask = false;
                 handler.post(mainThreadTask);
-                handler.post(notifyReadyForNextTask);
             }
         }
     }
@@ -69,7 +68,6 @@ public class CacheAsyncTask implements Runnable {
             if (cacheStrategy.shouldUpdateViewAfterCacheTask()) {
                 readyForNextTask = false;
                 handler.post(mainThreadTask);
-                handler.post(notifyReadyForNextTask);
             }
         }
     }
@@ -78,7 +76,11 @@ public class CacheAsyncTask implements Runnable {
         if (readyForNextTask) {
             return;
         }
+        handler.post(notifyReadyForNextTask);
         synchronized (this) {
+            if (readyForNextTask) {
+                return;
+            }
             try {
                 wait();
             } catch (InterruptedException e) {
