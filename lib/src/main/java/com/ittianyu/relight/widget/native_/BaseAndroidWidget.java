@@ -174,6 +174,30 @@ public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T>
         return paddingBottom(dp(dp));
     }
 
+    public BaseAndroidWidget<T> paddingHorizontal(int px) {
+        this.paddingStart = px;
+        this.paddingEnd = px;
+        updatePadding();
+        return this;
+    }
+
+    public BaseAndroidWidget<T> paddingHorizontal(float dp) {
+        return paddingHorizontal(dp(dp));
+    }
+
+    public BaseAndroidWidget<T> paddingVertical(int px) {
+        this.paddingTop = px;
+        this.paddingBottom = px;
+        updatePadding();
+        return this;
+    }
+
+    public BaseAndroidWidget<T> paddingVertical(float dp) {
+        return paddingVertical(dp(dp));
+    }
+
+
+
     public BaseAndroidWidget<T> width(int px) {
         this.width = px;
         updateSize();

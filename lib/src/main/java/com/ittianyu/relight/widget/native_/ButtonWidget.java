@@ -21,6 +21,7 @@ public class ButtonWidget extends BaseAndroidWidget<Button> {
     protected Drawable drawableLeft = null;
     protected Drawable drawableRight = null;
     protected Drawable drawableTop = null;
+    private boolean allCaps = true;
 
     public ButtonWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
@@ -54,6 +55,7 @@ public class ButtonWidget extends BaseAndroidWidget<Button> {
         drawableTop(drawableTop);
         drawableRight(drawableRight);
         drawableBottom(drawableBottom);
+        allCaps(allCaps);
     }
 
     public ButtonWidget text(CharSequence text) {
@@ -166,6 +168,12 @@ public class ButtonWidget extends BaseAndroidWidget<Button> {
             Drawable[] drawables = view.getCompoundDrawables();
             view.setCompoundDrawables(drawables[0], drawables[1], drawables[2], drawableBottom);
         }
+        return this;
+    }
+
+    public ButtonWidget allCaps(boolean enable) {
+        this.allCaps = enable;
+        view.setAllCaps(allCaps);
         return this;
     }
 

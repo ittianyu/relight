@@ -138,6 +138,9 @@ public abstract class State<T extends Widget> implements SetState {
     }
 
     private void cleanFinishedTask() {
+        if (updateStateMap == null) {
+            return;
+        }
         Iterator<Map.Entry<Runnable, Future>> it = updateStateMap.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<Runnable, Future> entry = it.next();

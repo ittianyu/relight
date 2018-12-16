@@ -12,14 +12,13 @@ import com.ittianyu.relight.widget.stateful.state.listener.OnUpdateListener;
 import com.ittianyu.relight.widget.stateful.state.strategy.CacheStrategy;
 import com.ittianyu.relight.widget.stateless.StatelessWidget;
 
-public abstract class StatefulWidget<V extends View, T extends Widget<V>> implements Widget<V>,
-        StatefulContainerWidget<V, T>, OnUpdateListener, SetState {
-    protected Context context;
+public abstract class StatefulWidget<V extends View, T extends Widget<V>> extends Widget<V>
+    implements StatefulContainerWidget<V, T>, OnUpdateListener, SetState {
     protected State<T> state;
     protected T widget;
 
     public StatefulWidget(Context context) {
-        this.context = context;
+        super(context);
     }
 
     abstract protected State<T> createState(Context context);

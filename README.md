@@ -477,8 +477,11 @@ updateView 中，调用 children 的 updateView 或 setState 或 update 方法
 
 - [x] 基础框架
 - [x] 异步支持
+- [x] 重试支持
+- [x] 过滤支持
+- [x] 缓存支持
 - [ ] 完善 BaseAndroidWidget 基础属性 和 api
-- [ ] startActivity 支持
+- [x] startActivity 支持
 - [ ] anko 支持(开发时可视化支持)
 - [ ] Android Studio 模版
 
@@ -491,7 +494,7 @@ updateView 中，调用 children 的 updateView 或 setState 或 update 方法
 - [x] TextWidget
 - [x] ImageWidget
 - [x] SwipeRefreshWidget
-- [ ] ButtonWidget
+- [x] ButtonWidget
 - [ ] ToolBarWidget
 - [ ] EditWidget
 - [ ] FloatingActionButtonWidget
@@ -500,6 +503,8 @@ updateView 中，调用 children 的 updateView 或 setState 或 update 方法
 #### 高级控件 ####
 
 - [x] LceeWidget
+- [x] LceermWidget
+- [x] RmWidget
 - [ ] List
 - [ ] Route 和 Navigator
 

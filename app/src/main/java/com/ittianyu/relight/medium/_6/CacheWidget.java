@@ -64,16 +64,16 @@ public class CacheWidget extends LifecycleStatefulWidget<LinearLayout, LinearWid
         tvResult = new TextWidget(context, lifecycle);
         LinearWidget widget = new LinearWidget(context, lifecycle,
                 new TextWidget(context, lifecycle).text("CacheThenTaskStrategy").marginTop(16.0f),
-                new ButtonWidget(context, lifecycle).text("normal").id(btnNormal1).onClickListener(this).widthMatchAndHeightWrap(),
-                new ButtonWidget(context, lifecycle).text("cache error").id(btnCacheError1).onClickListener(this).widthMatchAndHeightWrap(),
-                new ButtonWidget(context, lifecycle).text("network error").id(btnNetworkError1).onClickListener(this).widthMatchAndHeightWrap(),
-                new ButtonWidget(context, lifecycle).text("both error").id(btnBothError1).onClickListener(this).widthMatchAndHeightWrap(),
+                new ButtonWidget(context, lifecycle).allCaps(false).text("normal").id(btnNormal1).onClickListener(this).widthMatchAndHeightWrap(),
+                new ButtonWidget(context, lifecycle).allCaps(false).text("cache error").id(btnCacheError1).onClickListener(this).widthMatchAndHeightWrap(),
+                new ButtonWidget(context, lifecycle).allCaps(false).text("network error").id(btnNetworkError1).onClickListener(this).widthMatchAndHeightWrap(),
+                new ButtonWidget(context, lifecycle).allCaps(false).text("both error").id(btnBothError1).onClickListener(this).widthMatchAndHeightWrap(),
 
                 new TextWidget(context, lifecycle).text("CacheIfTaskErrorStrategy").marginTop(16.0f),
-                new ButtonWidget(context, lifecycle).text("normal").id(btnNormal2).onClickListener(this).widthMatchAndHeightWrap(),
-                new ButtonWidget(context, lifecycle).text("cache error").id(btnCacheError2).onClickListener(this).widthMatchAndHeightWrap(),
-                new ButtonWidget(context, lifecycle).text("network error").id(btnNetworkError2).onClickListener(this).widthMatchAndHeightWrap(),
-                new ButtonWidget(context, lifecycle).text("both error").id(btnBothError2).onClickListener(this).widthMatchAndHeightWrap(),
+                new ButtonWidget(context, lifecycle).allCaps(false).text("normal").id(btnNormal2).onClickListener(this).widthMatchAndHeightWrap(),
+                new ButtonWidget(context, lifecycle).allCaps(false).text("cache error").id(btnCacheError2).onClickListener(this).widthMatchAndHeightWrap(),
+                new ButtonWidget(context, lifecycle).allCaps(false).text("network error").id(btnNetworkError2).onClickListener(this).widthMatchAndHeightWrap(),
+                new ButtonWidget(context, lifecycle).allCaps(false).text("both error").id(btnBothError2).onClickListener(this).widthMatchAndHeightWrap(),
 
                 tvResult.textColor(Color.BLACK).marginTop(16.0f)
         );

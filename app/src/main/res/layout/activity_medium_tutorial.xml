@@ -57,6 +57,14 @@
             android:textAllCaps="false"
             android:text="6. Cache" />
 
+        <Button
+            android:id="@+id/_7_StartActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:textAllCaps="false"
+            android:text="7. StartActivity" />
+
     </LinearLayout>
 
 </ScrollView>
