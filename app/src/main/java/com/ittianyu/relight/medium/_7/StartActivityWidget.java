@@ -49,9 +49,6 @@ public class StartActivityWidget extends LifecycleStatelessWidget<LinearLayout, 
             .gravity(Gravity.CENTER)
             .matchParent();
 
-        btnStartActivity.paddingHorizontal(16.0f);
-        btnStartActivityForResult.paddingHorizontal(16.0f);
-
         btnStartActivity.onClickListener(v -> {
             startActivity(new Intent(context, WidgetActivity.class));
         });

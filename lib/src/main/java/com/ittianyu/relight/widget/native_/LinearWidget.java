@@ -14,7 +14,7 @@ public class LinearWidget extends ViewGroupWidget<LinearLayout> {
     public static final int vertical = 1;
 
     protected int orientation = horizontal;
-    protected int gravity = -1;
+    protected Integer gravity;
 
     public LinearWidget(Context context, Lifecycle lifecycle, Widget... children) {
         super(context, lifecycle, children);
@@ -43,7 +43,8 @@ public class LinearWidget extends ViewGroupWidget<LinearLayout> {
         // set orientation
         orientation(orientation);
 
-        gravity(gravity);
+        if (gravity != null)
+            gravity(gravity);
 
         // update children layout params
         for (Widget widget : children) {
@@ -52,12 +53,15 @@ public class LinearWidget extends ViewGroupWidget<LinearLayout> {
                 ViewGroup.LayoutParams layoutParams = v.getLayoutParams();
                 if (layoutParams instanceof LinearLayout.LayoutParams) {
                     // layout_gravity
-                    int layoutGravity = ((BaseAndroidWidget) widget).layoutGravity;
-                    ViewUtils.setLayoutGravity((LinearLayout.LayoutParams) layoutParams, v, layoutGravity);
+                    Integer layoutGravity = ((BaseAndroidWidget) widget).layoutGravity;
+                    if (layoutGravity != null) {
+                        ViewUtils.setLayoutGravity((LinearLayout.LayoutParams) layoutParams, v, layoutGravity);
+                    }
+
                     // weight
-                    int weight = ((BaseAndroidWidget) widget).weight;
-                    if (weight != -1) {
-                        ViewUtils.setWeight((LinearLayout.LayoutParams) layoutParams, v, layoutGravity);
+                    Integer weight = ((BaseAndroidWidget) widget).weight;
+                    if (weight != null) {
+                        ViewUtils.setWeight((LinearLayout.LayoutParams) layoutParams, v, weight);
                     }
                 }
             }

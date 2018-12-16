@@ -11,25 +11,26 @@ import android.arch.lifecycle.Lifecycle;
 import com.ittianyu.relight.utils.DensityUtils;
 
 public class TextWidget extends BaseAndroidWidget<TextView> {
-    protected int gravity = -1;
+
+    protected Integer gravity;
     protected CharSequence text;
-    protected int textColor = -1;
-    protected int textSize = -1;
-    protected int lines = -1;
-    protected int maxLines = -1;
-    protected int drawablePadding = -1;
-    protected Drawable drawableBottom = null;
-    protected Drawable drawableLeft = null;
-    protected Drawable drawableRight = null;
-    protected Drawable drawableTop = null;
+    protected Integer textColor;
+    protected Integer textSize;
+    protected Integer lines;
+    protected Integer maxLines;
+    protected Integer drawablePadding;
+    protected Drawable drawableBottom;
+    protected Drawable drawableLeft;
+    protected Drawable drawableRight;
+    protected Drawable drawableTop;
 
     public TextWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
     }
 
-    public TextWidget(Context context, Lifecycle lifecycle, String text) {
+    public TextWidget(Context context, Lifecycle lifecycle, CharSequence text) {
         super(context, lifecycle);
-        text(text);
+        this.text = text;
     }
 
     @Override
@@ -44,44 +45,64 @@ public class TextWidget extends BaseAndroidWidget<TextView> {
     @Override
     public void updateProps(TextView view) {
         super.updateProps(view);
-        gravity(gravity);
-        text(text);
-        textColor(textColor);
-        textSize(textSize);
-        lines(lines);
-        maxLines(maxLines);
-        drawablePadding(drawablePadding);
-        drawableLeft(drawableLeft);
-        drawableTop(drawableTop);
-        drawableRight(drawableRight);
-        drawableBottom(drawableBottom);
+        if (gravity != null) {
+            gravity(gravity);
+        }
+        if (text != null) {
+            text(text);
+        }
+        if (textColor != null) {
+            textColor(textColor);
+        }
+        if (textSize != null) {
+            textSize(textSize);
+        }
+        if (lines != null) {
+            lines(lines);
+        }
+        if (maxLines != null) {
+            maxLines(maxLines);
+        }
+        if (drawablePadding != null) {
+            drawablePadding(drawablePadding);
+        }
+        if (drawableLeft != null) {
+            drawableLeft(drawableLeft);
+        }
+        if (drawableTop != null) {
+            drawableTop(drawableTop);
+        }
+        if (drawableRight != null) {
+            drawableRight(drawableRight);
+        }
+        if (drawableBottom != null) {
+            drawableBottom(drawableBottom);
+        }
     }
 
     public TextWidget text(CharSequence text) {
         this.text = text;
-        if (null != text)
+        if (null != text) {
             view.setText(text);
+        }
         return this;
     }
 
     public TextWidget gravity(int gravity) {
         this.gravity = gravity;
-        if (gravity != -1)
-            view.setGravity(gravity);
+        view.setGravity(gravity);
         return this;
     }
 
     public TextWidget textColor(int textColor) {
         this.textColor = textColor;
-        if (textColor != -1)
-            view.setTextColor(textColor);
+        view.setTextColor(textColor);
         return this;
     }
 
     public TextWidget textSize(int px) {
         this.textSize = px;
-        if (textSize != -1)
-            view.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+        view.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         return this;
     }
 
@@ -91,22 +112,19 @@ public class TextWidget extends BaseAndroidWidget<TextView> {
 
     public TextWidget lines(int lines) {
         this.lines = lines;
-        if (lines != -1)
-            view.setLines(lines);
+        view.setLines(lines);
         return this;
     }
 
     public TextWidget maxLines(int maxLines) {
         this.maxLines = maxLines;
-        if (maxLines != -1)
-            view.setMaxLines(maxLines);
+        view.setMaxLines(maxLines);
         return this;
     }
 
     public TextWidget drawablePadding(int res) {
         drawablePadding = res;
-        if (drawablePadding != -1)
-            view.setCompoundDrawablePadding(drawablePadding);
+        view.setCompoundDrawablePadding(drawablePadding);
         return this;
     }
 
@@ -116,12 +134,10 @@ public class TextWidget extends BaseAndroidWidget<TextView> {
 
     public TextWidget drawableLeft(Drawable drawable) {
         drawableLeft = drawable;
-        if (drawableLeft != null) {
-            drawableLeft.setBounds(0, 0, drawableLeft.getMinimumWidth(),
-                    drawableLeft.getMinimumHeight());
-            Drawable[] drawables = view.getCompoundDrawables();
-            view.setCompoundDrawables(drawableLeft, drawables[1], drawables[2], drawables[3]);
-        }
+        drawableLeft.setBounds(0, 0, drawableLeft.getMinimumWidth(),
+            drawableLeft.getMinimumHeight());
+        Drawable[] drawables = view.getCompoundDrawables();
+        view.setCompoundDrawables(drawableLeft, drawables[1], drawables[2], drawables[3]);
         return this;
     }
 
@@ -131,12 +147,10 @@ public class TextWidget extends BaseAndroidWidget<TextView> {
 
     public TextWidget drawableTop(Drawable drawable) {
         drawableTop = drawable;
-        if (drawableTop != null) {
-            drawableTop.setBounds(0, 0, drawableTop.getMinimumWidth(),
-                    drawableTop.getMinimumHeight());
-            Drawable[] drawables = view.getCompoundDrawables();
-            view.setCompoundDrawables(drawables[0], drawableTop, drawables[2], drawables[3]);
-        }
+        drawableTop.setBounds(0, 0, drawableTop.getMinimumWidth(),
+            drawableTop.getMinimumHeight());
+        Drawable[] drawables = view.getCompoundDrawables();
+        view.setCompoundDrawables(drawables[0], drawableTop, drawables[2], drawables[3]);
         return this;
     }
 
@@ -146,12 +160,10 @@ public class TextWidget extends BaseAndroidWidget<TextView> {
 
     public TextWidget drawableRight(Drawable drawable) {
         drawableRight = drawable;
-        if (drawableRight != null) {
-            drawableRight.setBounds(0, 0, drawableRight.getMinimumWidth(),
-                    drawableRight.getMinimumHeight());
-            Drawable[] drawables = view.getCompoundDrawables();
-            view.setCompoundDrawables(drawables[0], drawables[1], drawableRight, drawables[3]);
-        }
+        drawableRight.setBounds(0, 0, drawableRight.getMinimumWidth(),
+            drawableRight.getMinimumHeight());
+        Drawable[] drawables = view.getCompoundDrawables();
+        view.setCompoundDrawables(drawables[0], drawables[1], drawableRight, drawables[3]);
         return this;
     }
 
@@ -161,12 +173,10 @@ public class TextWidget extends BaseAndroidWidget<TextView> {
 
     public TextWidget drawableBottom(Drawable drawable) {
         drawableBottom = drawable;
-        if (drawableBottom != null) {
-            drawableBottom.setBounds(0, 0, drawableBottom.getMinimumWidth(),
-                    drawableBottom.getMinimumHeight());
-            Drawable[] drawables = view.getCompoundDrawables();
-            view.setCompoundDrawables(drawables[0], drawables[1], drawables[2], drawableBottom);
-        }
+        drawableBottom.setBounds(0, 0, drawableBottom.getMinimumWidth(),
+            drawableBottom.getMinimumHeight());
+        Drawable[] drawables = view.getCompoundDrawables();
+        view.setCompoundDrawables(drawables[0], drawables[1], drawables[2], drawableBottom);
         return this;
     }
 
