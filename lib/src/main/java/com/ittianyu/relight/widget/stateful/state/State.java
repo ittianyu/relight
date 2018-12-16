@@ -37,7 +37,7 @@ public abstract class State<T extends Widget> implements SetState {
     private OnUpdateListener onUpdateListener;
     private FilterStrategy filterStrategy;
     private UpdateTask updateTask = new UpdateTask(this);
-    private Map<Object, Future> updateStateMap = new HashMap<>();
+    private Map<Runnable, Future> updateStateMap = new HashMap<>();
 
     public State() {
         this(DEFAULT_UPDATE_STATE_STRATEGY);
@@ -138,9 +138,9 @@ public abstract class State<T extends Widget> implements SetState {
     }
 
     private void cleanFinishedTask() {
-        Iterator<Map.Entry<Object, Future>> it = updateStateMap.entrySet().iterator();
+        Iterator<Map.Entry<Runnable, Future>> it = updateStateMap.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry<Object, Future> entry = it.next();
+            Map.Entry<Runnable, Future> entry = it.next();
             if (entry.getValue().isDone()) {
                 it.remove();
             }
