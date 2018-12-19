@@ -8,21 +8,17 @@ import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.widget.LinearLayout;
-import com.ittianyu.relight.common.bean.UserBean;
-import com.ittianyu.relight.common.datasource.UserDataSource;
-import com.ittianyu.relight.utils.StateUtils;
+
 import com.ittianyu.relight.widget.native_.ButtonWidget;
+import com.ittianyu.relight.widget.native_.EditWidget;
 import com.ittianyu.relight.widget.native_.LinearWidget;
-import com.ittianyu.relight.widget.native_.TextWidget;
-import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
-import com.ittianyu.relight.widget.stateful.state.State;
 import com.ittianyu.relight.widget.stateless.LifecycleStatelessWidget;
 
 public class StartActivityWidget extends LifecycleStatelessWidget<LinearLayout, LinearWidget> {
     private static final int REQ = 1;
     public static final String RESULT_MSG = "msg";
 
-    private TextWidget twNote;
+    private EditWidget edtNote;
     private ButtonWidget btnStartActivity;
     private ButtonWidget btnStartActivityForResult;
 
@@ -34,11 +30,16 @@ public class StartActivityWidget extends LifecycleStatelessWidget<LinearLayout, 
     protected LinearWidget build(Context context) {
         btnStartActivity = new ButtonWidget(context, lifecycle, "startActivity").allCaps(false);
         btnStartActivityForResult = new ButtonWidget(context, lifecycle, "startActivityForResult").allCaps(false);
-        twNote = new TextWidget(context, lifecycle).textColor(Color.BLACK);
+        edtNote = new EditWidget(context, lifecycle)
+                .textColor(Color.BLACK)
+                .gravity(Gravity.CENTER)
+                .enabled(false)
+                .hintText("result here")
+                .hintTextColor(0xFFCCCCCC);
         return new LinearWidget(context, lifecycle,
             btnStartActivity,
             btnStartActivityForResult,
-            twNote.marginTop(16.0f)
+                edtNote.marginTop(16.0f)
         );
     }
 
@@ -64,7 +65,7 @@ public class StartActivityWidget extends LifecycleStatelessWidget<LinearLayout, 
         super.onActivityResult(requestCode, resultCode, data);
         System.out.println("onActivityResult, requestCode:" + requestCode + ", resultCode:" + resultCode + ", data:" + data);
         if (requestCode == REQ && resultCode == Activity.RESULT_OK && data != null) {
-            twNote.text("onActivityResult:" + data.getStringExtra(RESULT_MSG));
+            edtNote.text("onActivityResult:" + data.getStringExtra(RESULT_MSG));
         }
     }
 
