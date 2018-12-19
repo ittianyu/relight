@@ -10,12 +10,13 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import com.ittianyu.relight.widget.Widget;
 
 public class SwipeRefreshWidget extends ViewGroupWidget<SwipeRefreshLayout> {
-    private boolean enabled = true;
-    private int size = SwipeRefreshLayout.DEFAULT;
-    private boolean refreshing;
+
+    private Boolean enabled;
+    private Integer size;
+    private Boolean refreshing;
     private int[] colorResIds;
     private int[] colors;
-    private int distance;
+    private Integer distance;
     private SwipeRefreshLayout.OnRefreshListener listener;
 
     public SwipeRefreshWidget(Context context, Lifecycle lifecycle, Widget... children) {
@@ -30,12 +31,24 @@ public class SwipeRefreshWidget extends ViewGroupWidget<SwipeRefreshLayout> {
     @Override
     public void updateProps(SwipeRefreshLayout view) {
         super.updateProps(view);
-        enabled(enabled);
-        size(size);
-        refreshing(refreshing);
-        colorSchemeResources(colorResIds);
-        colorSchemeColors(colors);
-        distanceToTriggerSync(distance);
+        if (enabled != null) {
+            enabled(enabled);
+        }
+        if (size != null) {
+            size(size);
+        }
+        if (refreshing != null) {
+            refreshing(refreshing);
+        }
+        if (colorResIds != null) {
+            colorSchemeResources(colorResIds);
+        }
+        if (colors != null) {
+            colorSchemeColors(colors);
+        }
+        if (distance != null) {
+            distanceToTriggerSync(distance);
+        }
     }
 
     public SwipeRefreshWidget enabled(boolean enabled) {
@@ -57,26 +70,20 @@ public class SwipeRefreshWidget extends ViewGroupWidget<SwipeRefreshLayout> {
     }
 
     public SwipeRefreshWidget colorSchemeResources(@ColorRes int... colorResIds) {
-        if (null != colorResIds) {
-            this.colorResIds = colorResIds;
-            view.setColorSchemeResources(colorResIds);
-        }
+        this.colorResIds = colorResIds;
+        view.setColorSchemeResources(colorResIds);
         return this;
     }
 
     public SwipeRefreshWidget colorSchemeColors(@ColorInt int... colors) {
-        if (null != colors) {
-            this.colors = colors;
-            view.setColorSchemeColors(colors);
-        }
+        this.colors = colors;
+        view.setColorSchemeColors(colors);
         return this;
     }
 
     public SwipeRefreshWidget distanceToTriggerSync(int distance) {
-        if (distance != 0) {
-            this.distance = distance;
-            view.setDistanceToTriggerSync(distance);
-        }
+        this.distance = distance;
+        view.setDistanceToTriggerSync(distance);
         return this;
     }
 

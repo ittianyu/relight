@@ -10,5 +10,5 @@ public interface FilterStrategy {
      * @param func           the task which need to filter
      * @return true to keep the func, false to ignore the func
      */
-    boolean filter(Map<Object, Future> updateStateMap, Object func);
+    boolean filter(Map<Runnable, Future> updateStateMap, Object func);
 }

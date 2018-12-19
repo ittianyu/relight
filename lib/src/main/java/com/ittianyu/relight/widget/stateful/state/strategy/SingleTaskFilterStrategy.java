@@ -9,14 +9,14 @@ import java.util.concurrent.Future;
 public class SingleTaskFilterStrategy implements FilterStrategy {
 
     @Override
-    public boolean filter(Map<Object, Future> updateStateMap, Object func) {
+    public boolean filter(Map<Runnable, Future> updateStateMap, Object func) {
         if (null == func) {
             throw new IllegalArgumentException("func can't be null, please call setState(null) if you want to update without task running !");
         }
         return !hasTaskRunning(updateStateMap);
     }
 
-    private boolean hasTaskRunning(Map<Object, Future> updateStateMap) {
+    private boolean hasTaskRunning(Map<Runnable, Future> updateStateMap) {
         for (Future future : updateStateMap.values()) {
             if (future.isDone())
                 continue;

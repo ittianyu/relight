@@ -12,16 +12,13 @@ import com.ittianyu.relight.widget.stateful.state.listener.OnUpdateListener;
 import com.ittianyu.relight.widget.stateful.state.strategy.CacheStrategy;
 import com.ittianyu.relight.widget.stateless.StatelessWidget;
 
-import java.util.concurrent.Callable;
-
-public abstract class StatefulWidget<V extends View, T extends Widget<V>> implements Widget<V>,
-        StatefulContainerWidget<V, T>, OnUpdateListener, SetState {
-    protected Context context;
+public abstract class StatefulWidget<V extends View, T extends Widget<V>> extends Widget<V>
+        implements StatefulContainerWidget<V, T>, OnUpdateListener, SetState {
     protected State<T> state;
     protected T widget;
 
     public StatefulWidget(Context context) {
-        this.context = context;
+        super(context);
     }
 
     abstract protected State<T> createState(Context context);
@@ -39,23 +36,17 @@ public abstract class StatefulWidget<V extends View, T extends Widget<V>> implem
     }
 
     @Override
+    public void initWidget(T widget) {
+    }
+
+    @Override
     public void setState(Runnable func) {
         state.setState(func);
     }
 
     @Override
-    public void setState(int retryCount, Callable<Boolean> func) {
-        state.setState(retryCount, func);
-    }
-
-    @Override
     public void setStateAsync(Runnable func) {
         state.setStateAsync(func);
-    }
-
-    @Override
-    public void setStateAsync(int retryCount, Callable<Boolean> func) {
-        state.setStateAsync(retryCount, func);
     }
 
     @Override
