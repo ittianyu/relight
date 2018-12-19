@@ -10,7 +10,7 @@ import com.ittianyu.relight.common.datasource.UserDataSource;
 import com.ittianyu.relight.utils.StateUtils;
 import com.ittianyu.relight.widget.native_.FrameWidget;
 import com.ittianyu.relight.widget.native_.TextWidget;
-import com.ittianyu.relight.widget.stateful.AsyncState;
+import com.ittianyu.relight.widget.stateful.state.State;
 import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
 
 public class StatefulUserWidget extends LifecycleStatefulWidget<FrameLayout, FrameWidget> {
@@ -23,7 +23,7 @@ public class StatefulUserWidget extends LifecycleStatefulWidget<FrameLayout, Fra
     }
 
     @Override
-    protected AsyncState<FrameWidget> createState(Context context) {
+    protected State<FrameWidget> createState(Context context) {
         twId = new TextWidget(context, lifecycle);
         twName = new TextWidget(context, lifecycle);
         FrameWidget root = new FrameWidget(context, lifecycle, twId, twName);

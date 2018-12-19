@@ -6,9 +6,17 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 public class ViewUtils {
-    public static void setMargin(View v, int l, int t, int r, int b) {
+    public static void setMargin(View v, Integer l, Integer t, Integer r, Integer b) {
         if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
             ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            if (l == null)
+                l = p.leftMargin;
+            if (t == null)
+                t = p.topMargin;
+            if (r == null)
+                r = p.rightMargin;
+            if (b == null)
+                b = p.bottomMargin;
             p.setMargins(l, t, r, b);
             v.requestLayout();
         }

@@ -28,8 +28,9 @@ public class FrameWidget extends ViewGroupWidget<FrameLayout> {
                 View v = widget.render();
                 ViewGroup.LayoutParams layoutParams = v.getLayoutParams();
                 if (layoutParams instanceof FrameLayout.LayoutParams) {
-                    int layoutGravity = ((BaseAndroidWidget) widget).layoutGravity;
-                    ViewUtils.setLayoutGravity((FrameLayout.LayoutParams) layoutParams, v, layoutGravity);
+                    Integer layoutGravity = ((BaseAndroidWidget) widget).layoutGravity;
+                    if (layoutGravity != null)
+                        ViewUtils.setLayoutGravity((FrameLayout.LayoutParams) layoutParams, v, layoutGravity);
                 }
             }
         }

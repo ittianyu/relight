@@ -25,6 +25,46 @@
             android:textAllCaps="false"
             android:text="2. UpdateStrategy" />
 
+        <Button
+            android:id="@+id/_3_LceermWidget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:textAllCaps="false"
+            android:text="3. LceermWidget" />
+
+        <Button
+            android:id="@+id/_4_LceeRmWidget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:textAllCaps="false"
+            android:text="4. LceeRmWidget" />
+
+        <Button
+            android:id="@+id/_5_Retryable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:textAllCaps="false"
+            android:text="5. Retryable" />
+
+        <Button
+            android:id="@+id/_6_Cache"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:textAllCaps="false"
+            android:text="6. Cache" />
+
+        <Button
+            android:id="@+id/_7_StartActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:textAllCaps="false"
+            android:text="7. StartActivity" />
+
     </LinearLayout>
 
 </ScrollView>

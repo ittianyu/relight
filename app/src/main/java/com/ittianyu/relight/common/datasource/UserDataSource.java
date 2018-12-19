@@ -41,7 +41,23 @@ public class UserDataSource {
         return new UserBean(id, name);
     }
 
-    public List<UserBean> getUsersFromRemote() throws NetworkErrorException{
+    public UserBean getUserFromRemoteWithRandomError() throws NetworkErrorException {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if (random.nextInt(3) != 1) {
+            throw new NetworkErrorException("network error");
+        }
+
+        int id = randomId();
+        String name = randomName();
+        return new UserBean(id, name);
+    }
+
+    public List<UserBean> getUsersFromRemote() throws NetworkErrorException {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

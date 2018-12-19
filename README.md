@@ -360,6 +360,11 @@ public class UserActivity extends AppCompatActivity {
 
 目的：学习 AsyncState 的更新策略。
 
+#### [3. LceermWidget](./docs/medium/3.LceermWidget.md) ####
+
+目的：学习 LceermWidget 的使用。
+
+
 ## Widgets ##
 
 本框架将 Widget 大致分为 3 大类。
@@ -374,7 +379,6 @@ public class UserActivity extends AppCompatActivity {
 * LinearWidget：封装 LinearLayout
 * RelativeWidget：封装 RelativeLayout
 * TextWidget：封装 TextView
-* ImageWidget：封装 ImageView
 * RecyclerWidget：封装 RecyclerView
 
 #### stateful ####
@@ -465,7 +469,7 @@ initView -> initProps -> updateProps
 
 构造方法 -> addChildren -> updateChildrenProps -> updateProps 
 
-updaetView 中，调用 children 的 updateView 或 setState 或 update 方法
+updateView 中，调用 children 的 updateView 或 setState 或 update 方法
 
 ## To Do List ##
 
@@ -473,8 +477,11 @@ updaetView 中，调用 children 的 updateView 或 setState 或 update 方法
 
 - [x] 基础框架
 - [x] 异步支持
+- [x] 重试支持
+- [x] 过滤支持
+- [x] 缓存支持
 - [ ] 完善 BaseAndroidWidget 基础属性 和 api
-- [ ] startActivity 支持
+- [x] startActivity 支持
 - [ ] anko 支持(开发时可视化支持)
 - [ ] Android Studio 模版
 
@@ -485,9 +492,10 @@ updaetView 中，调用 children 的 updateView 或 setState 或 update 方法
 - [x] RelativeWidget
 - [x] RecyclerWidget
 - [x] TextWidget
-- [ ] ButtonWidget
-- [ ] ToolBarWidget
 - [x] ImageWidget
+- [x] SwipeRefreshWidget
+- [x] ButtonWidget
+- [ ] ToolBarWidget
 - [ ] EditWidget
 - [ ] FloatingActionButtonWidget
 - [ ] DrawerWidget
@@ -495,6 +503,8 @@ updaetView 中，调用 children 的 updateView 或 setState 或 update 方法
 #### 高级控件 ####
 
 - [x] LceeWidget
+- [x] LceermWidget
+- [x] RmWidget
 - [ ] List
 - [ ] Route 和 Navigator
 

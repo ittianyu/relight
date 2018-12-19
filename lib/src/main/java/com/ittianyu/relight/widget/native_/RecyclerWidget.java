@@ -36,7 +36,9 @@ public class RecyclerWidget<T extends RecyclerView.Adapter> extends BaseAndroidW
     @Override
     public void updateProps(RecyclerView view) {
         super.updateProps(view);
-        view.setLayoutManager(layoutManager);
-        view.setAdapter(adapter);
+        if (null != layoutManager)
+            view.setLayoutManager(layoutManager);
+        if (null != adapter)
+            view.setAdapter(adapter);
     }
 }

@@ -7,15 +7,24 @@ import android.widget.FrameLayout;
 import com.ittianyu.relight.utils.StateUtils;
 import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.FrameWidget;
-import com.ittianyu.relight.widget.stateful.AsyncState;
+import com.ittianyu.relight.widget.stateful.state.State;
 import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
 
 public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, FrameWidget> {
-    protected Status status = Status.Loading;
+    protected LceeStatus status = LceeStatus.Loading;
     private Widget loading;
     private Widget content;
     private Widget empty;
     private Widget error;
+    protected Throwable lastError;
+    private Runnable loadingTask = () -> {
+        try {
+            this.status = onLoadData();
+        } catch (Exception e) {
+            this.lastError = e;
+            this.status = LceeStatus.Error;
+        }
+    };
 
     public LceeWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
@@ -36,7 +45,7 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
     }
 
     @Override
-    protected AsyncState<FrameWidget> createState(Context context) {
+    protected State<FrameWidget> createState(Context context) {
         return StateUtils.create(new FrameWidget(context, lifecycle));
     }
 
@@ -92,42 +101,38 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
         onStatusChanged(status);
     }
 
-    public void reload() {
-        showLoading();
+    public boolean reload() {
+        return showLoading();
     }
 
-    public void showLoading() {
-        updateStatus(Status.Loading);
+    public boolean showLoading() {
+        return updateStatus(LceeStatus.Loading);
     }
 
-    public void showContent() {
-        updateStatus(Status.Content);
+    public boolean showContent() {
+        return updateStatus(LceeStatus.Content);
     }
 
-    public void showEmpty() {
-        updateStatus(Status.Empty);
+    public boolean showEmpty() {
+        return updateStatus(LceeStatus.Empty);
     }
 
-    public void showError() {
-        updateStatus(Status.Error);
+    public boolean showError() {
+        return updateStatus(LceeStatus.Error);
     }
 
-    public void updateStatus(Status status) {
+    public boolean updateStatus(LceeStatus status) {
+        if (status == this.status)
+            return false;
         setState(() -> {
             this.status = status;
         });
+        return true;
     }
 
-    protected void onStatusChanged(Status status) {
-        if (status == Status.Loading) {
-            setStateAsync(() -> {
-                try {
-                    this.status = onLoadData();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    this.status = Status.Error;
-                }
-            });
+    protected void onStatusChanged(LceeStatus status) {
+        if (status == LceeStatus.Loading) {
+            setStateAsync(loadingTask);
         }
     }
 
@@ -136,6 +141,6 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
      * If some showError happen, it will auto set showError status
      * @return return the next status after data load complete
      */
-    abstract protected Status onLoadData() throws Exception;
+    abstract protected LceeStatus onLoadData() throws Exception;
 
 }
