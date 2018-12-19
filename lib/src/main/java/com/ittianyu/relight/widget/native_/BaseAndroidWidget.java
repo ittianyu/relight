@@ -11,7 +11,6 @@ import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import com.ittianyu.relight.utils.DensityUtils;
 import com.ittianyu.relight.utils.ViewUtils;
@@ -23,23 +22,23 @@ public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T>
     public static final int matchParent = ViewGroup.LayoutParams.MATCH_PARENT;
     public static final int wrapContent = ViewGroup.LayoutParams.WRAP_CONTENT;
 
-    public int id;
+    public Integer id;
     public Drawable background;
-    public int marginStart;
-    public int marginEnd;
-    public int marginTop;
-    public int marginBottom;
-    public int margin;
-    public int paddingStart;
-    public int paddingEnd;
-    public int paddingTop;
-    public int paddingBottom;
-    public int padding;
-    public int width = wrapContent;
-    public int height = wrapContent;
-    public int layoutGravity = -1;
-    public int weight = -1;
-    public int visibility = View.VISIBLE;
+    public Integer marginStart;
+    public Integer marginEnd;
+    public Integer marginTop;
+    public Integer marginBottom;
+    public Integer margin;
+    public Integer paddingStart;
+    public Integer paddingEnd;
+    public Integer paddingTop;
+    public Integer paddingBottom;
+    public Integer padding;
+    public Integer width = wrapContent;
+    public Integer height = wrapContent;
+    public Integer layoutGravity;
+    public Integer weight;
+    public Integer visibility;
     public View.OnClickListener onClickListener;
 
     public BaseAndroidWidget(Context context, Lifecycle lifecycle) {
@@ -50,14 +49,13 @@ public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T>
 
     public BaseAndroidWidget<T> id(int id) {
         this.id = id;
-        render().setId(id);
+        view.setId(id);
         return this;
     }
 
     public BaseAndroidWidget<T> background(Drawable drawable) {
         background = drawable;
-        if (background != null)
-            view.setBackground(background);
+        view.setBackground(background);
         return this;
     }
 
@@ -175,6 +173,30 @@ public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T>
         return paddingBottom(dp(dp));
     }
 
+    public BaseAndroidWidget<T> paddingHorizontal(int px) {
+        this.paddingStart = px;
+        this.paddingEnd = px;
+        updatePadding();
+        return this;
+    }
+
+    public BaseAndroidWidget<T> paddingHorizontal(float dp) {
+        return paddingHorizontal(dp(dp));
+    }
+
+    public BaseAndroidWidget<T> paddingVertical(int px) {
+        this.paddingTop = px;
+        this.paddingBottom = px;
+        updatePadding();
+        return this;
+    }
+
+    public BaseAndroidWidget<T> paddingVertical(float dp) {
+        return paddingVertical(dp(dp));
+    }
+
+
+
     public BaseAndroidWidget<T> width(int px) {
         this.width = px;
         updateSize();
@@ -209,6 +231,13 @@ public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T>
         return this;
     }
 
+    public BaseAndroidWidget<T> widthMatchAndHeightWrap() {
+        this.width = matchParent;
+        this.height = wrapContent;
+        updateSize();
+        return this;
+    }
+
     public BaseAndroidWidget<T> onClickListener(View.OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
         view.setOnClickListener(onClickListener);
@@ -234,6 +263,15 @@ public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T>
     }
 
     private void updatePadding() {
+        if (paddingStart == null)
+            paddingStart = view.getPaddingStart();
+        if (paddingTop == null)
+            paddingTop = view.getPaddingTop();
+        if (paddingEnd == null)
+            paddingEnd = view.getPaddingEnd();
+        if (paddingBottom == null)
+            paddingBottom = view.getPaddingBottom();
+
         view.setPadding(paddingStart, paddingTop, paddingEnd, paddingBottom);
     }
 
@@ -294,12 +332,14 @@ public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T>
     }
 
     public void updateProps(T view) {
-        if (id != 0)
-            view.setId(id);
-        if (margin != 0)
+        if (id != null)
+            id(id);
+        if (margin != null)
             setMargin(margin);
-        if (padding != 0)
+        if (padding != null)
             setPadding(padding);
+        if (background != null)
+            background(background);
         updateSize();
         updateMargin();
         updatePadding();
@@ -308,7 +348,9 @@ public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T>
     }
 
     private void updateVisible() {
-        view.setVisibility(visibility);
+        if (visibility != null) {
+            view.setVisibility(visibility);
+        }
     }
 
     @Override

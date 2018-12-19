@@ -9,12 +9,12 @@ import com.ittianyu.relight.widget.native_.AndroidWidget;
 import com.ittianyu.relight.widget.stateful.StatefulWidget;
 
 public abstract class StatelessWidget<V extends View, T extends Widget<V>>
-        implements Widget<V>, ContainerWidget<V, T> {
-    protected Context context;
+    extends Widget<V> implements ContainerWidget<V, T> {
+
     protected T widget;
 
     public StatelessWidget(Context context) {
-        this.context = context;
+        super(context);
     }
 
     protected abstract T build(Context context);
