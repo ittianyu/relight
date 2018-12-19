@@ -29,20 +29,18 @@ public class StartActivityWidget extends LifecycleStatelessWidget<LinearLayout, 
 
     @Override
     protected LinearWidget build(Context context) {
-        btnStartActivity = new ButtonWidget(context, lifecycle, "startActivity")
-                .allCaps(false);
-        btnStartActivityForResult = new ButtonWidget(context, lifecycle, "startActivityForResult")
-                .allCaps(false);
+        btnStartActivity = new ButtonWidget(context, lifecycle, "startActivity").allCaps(false);
+        btnStartActivityForResult = new ButtonWidget(context, lifecycle, "startActivityForResult").allCaps(false);
         edtNote = new EditWidget(context, lifecycle)
                 .textColor(Color.BLACK)
                 .gravity(Gravity.CENTER)
+                .enabled(false)
                 .hintText("result here")
-                .hintTextColor(0xFFCCCCCC)
-                .enabled(false);
+                .hintTextColor(0xFFCCCCCC);
         return new LinearWidget(context, lifecycle,
-                btnStartActivity,
-                btnStartActivityForResult,
-                edtNote.marginTop(16.0f)
+            btnStartActivity,
+            btnStartActivityForResult,
+            edtNote.marginTop(16.0f)
         );
     }
 

@@ -1,9 +1,8 @@
 package com.ittianyu.relight.widget.native_;
 
+import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.widget.TextView;
-
-import android.arch.lifecycle.Lifecycle;
 
 public class TextWidget extends BaseTextWidget<TextView, TextWidget> {
 
