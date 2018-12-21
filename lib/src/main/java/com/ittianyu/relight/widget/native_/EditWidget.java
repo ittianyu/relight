@@ -17,7 +17,7 @@ public class EditWidget extends BaseTextWidget<EditText, EditWidget> {
         super(context, lifecycle);
     }
 
-    public EditWidget(Context context, Lifecycle lifecycle, String text) {
+    public EditWidget(Context context, Lifecycle lifecycle, CharSequence text) {
         super(context, lifecycle, text);
     }
 

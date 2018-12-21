@@ -10,7 +10,7 @@ public class ButtonWidget extends BaseTextWidget<Button, ButtonWidget> {
         super(context, lifecycle);
     }
 
-    public ButtonWidget(Context context, Lifecycle lifecycle, String text) {
+    public ButtonWidget(Context context, Lifecycle lifecycle, CharSequence text) {
         super(context, lifecycle, text);
     }
 

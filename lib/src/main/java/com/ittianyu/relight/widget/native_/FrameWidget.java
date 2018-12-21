@@ -9,7 +9,7 @@ import android.widget.FrameLayout;
 import com.ittianyu.relight.utils.ViewUtils;
 import com.ittianyu.relight.widget.Widget;
 
-public class FrameWidget extends ViewGroupWidget<FrameLayout> {
+public class FrameWidget extends ViewGroupWidget<FrameLayout, FrameWidget> {
 
     public FrameWidget(Context context, Lifecycle lifecycle, Widget... children) {
         super(context, lifecycle, children);

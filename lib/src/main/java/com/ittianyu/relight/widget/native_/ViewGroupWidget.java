@@ -12,7 +12,7 @@ import com.ittianyu.relight.widget.stateless.StatelessWidget;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class ViewGroupWidget<T extends ViewGroup> extends BaseAndroidWidget<T> {
+public abstract class ViewGroupWidget<V extends ViewGroup, T extends ViewGroupWidget> extends BaseAndroidWidget<V, T> {
     protected List<Widget> children = new LinkedList<>();
 
     public ViewGroupWidget(Context context, Lifecycle lifecycle, Widget... children) {
@@ -30,7 +30,7 @@ public abstract class ViewGroupWidget<T extends ViewGroup> extends BaseAndroidWi
     }
 
     @Override
-    public void updateView(T view) {
+    public void updateView(V view) {
         super.updateView(view);
         for (Widget widget : children) {
             if (widget instanceof AndroidRender) {
@@ -58,29 +58,29 @@ public abstract class ViewGroupWidget<T extends ViewGroup> extends BaseAndroidWi
         }
     }
 
-    public ViewGroupWidget<T> addChild(Widget widget) {
+    public T addChild(Widget widget) {
         return addChild(widget, true);
     }
 
-    public ViewGroupWidget<T> addChild(Widget widget, boolean updateProps) {
+    public T addChild(Widget widget, boolean updateProps) {
         children.add(widget);
         view.addView(widget.render());
         if (updateProps) {
             updateChildrenProps();
             updateProps(view);
         }
-        return this;
+        return self();
     }
 
-    public ViewGroupWidget<T> addChildren(Widget... children) {
+    public T addChildren(Widget... children) {
         return addChildren(true, children);
     }
 
-    public ViewGroupWidget<T> addChildren(boolean updateProps, Widget... children) {
+    public T addChildren(boolean updateProps, Widget... children) {
         return addChildren(updateProps, updateProps, children);
     }
 
-    public ViewGroupWidget<T> addChildren(boolean updateProps, boolean updateChildrenProps, Widget... children) {
+    public T addChildren(boolean updateProps, boolean updateChildrenProps, Widget... children) {
         for (Widget widget : children) {
             addChild(widget, false);
         }
@@ -90,21 +90,21 @@ public abstract class ViewGroupWidget<T extends ViewGroup> extends BaseAndroidWi
         if (updateProps) {
             updateProps(view);
         }
-        return this;
+        return self();
     }
 
-    public ViewGroupWidget<T> removeChild(Widget widget) {
+    public T removeChild(Widget widget) {
         children.remove(weight);
         view.removeView(widget.render());
-        return this;
+        return self();
     }
 
-    public ViewGroupWidget<T> removeAllChildren() {
+    public T removeAllChildren() {
         for (Widget widget : children) {
             view.removeView(widget.render());
         }
         children.clear();
-        return this;
+        return self();
     }
 
 }

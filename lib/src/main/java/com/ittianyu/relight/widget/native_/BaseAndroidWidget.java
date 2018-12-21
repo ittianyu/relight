@@ -18,7 +18,7 @@ import com.ittianyu.relight.utils.ViewUtils;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.ParameterizedType;
 
-public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T> {
+public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWidget> extends AndroidWidget<V> {
     public static final int matchParent = ViewGroup.LayoutParams.MATCH_PARENT;
     public static final int wrapContent = ViewGroup.LayoutParams.WRAP_CONTENT;
 
@@ -47,211 +47,216 @@ public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T>
 
     protected abstract void initProps();
 
-    public BaseAndroidWidget<T> id(int id) {
+    protected final T self() {
+        //noinspection unchecked
+        return (T) this;
+    }
+
+    public T id(int id) {
         this.id = id;
         view.setId(id);
-        return this;
+        return self();
     }
 
-    public BaseAndroidWidget<T> background(Drawable drawable) {
+    public T background(Drawable drawable) {
         background = drawable;
         view.setBackground(background);
-        return this;
+        return self();
     }
 
-    public BaseAndroidWidget<T> background(Bitmap bitmap) {
+    public T background(Bitmap bitmap) {
         return background(new BitmapDrawable(context.getResources(), bitmap));
     }
 
-    public BaseAndroidWidget<T> backgroundResource(@DrawableRes int res) {
+    public T backgroundResource(@DrawableRes int res) {
         return background(drawable(res));
     }
 
-    public BaseAndroidWidget<T> backgroundColor(@ColorInt int color) {
+    public T backgroundColor(@ColorInt int color) {
         return background(new ColorDrawable(color));
     }
 
-    public BaseAndroidWidget<T> margin(int px) {
+    public T margin(int px) {
         this.margin = px;
         setMargin(px);
         updateMargin();
-        return this;
+        return self();
     }
 
-    public BaseAndroidWidget<T> margin(float dp) {
+    public T margin(float dp) {
         return margin(dp(dp));
     }
 
-    public BaseAndroidWidget<T> marginStart(int px) {
+    public T marginStart(int px) {
         this.marginStart = px;
         updateMargin();
-        return this;
+        return self();
     }
 
-    public BaseAndroidWidget<T> marginStart(float dp) {
+    public T marginStart(float dp) {
         return marginStart(dp(dp));
     }
 
-    public BaseAndroidWidget<T> marginEnd(int px) {
+    public T marginEnd(int px) {
         this.marginEnd = px;
         updateMargin();
-        return this;
+        return self();
     }
 
-    public BaseAndroidWidget<T> marginEnd(float dp) {
+    public T marginEnd(float dp) {
         return marginEnd(dp(dp));
     }
 
-    public BaseAndroidWidget<T> marginTop(int px) {
+    public T marginTop(int px) {
         this.marginTop = px;
         updateMargin();
-        return this;
+        return self();
     }
 
-    public BaseAndroidWidget<T> marginTop(float dp) {
+    public T marginTop(float dp) {
         return marginTop(dp(dp));
     }
 
-    public BaseAndroidWidget<T> marginBottom(int px) {
+    public T marginBottom(int px) {
         this.marginBottom = px;
         updateMargin();
-        return this;
+        return self();
     }
 
-    public BaseAndroidWidget<T> marginBottom(float dp) {
+    public T marginBottom(float dp) {
         return marginBottom(dp(dp));
     }
 
-    public BaseAndroidWidget<T> padding(int px) {
+    public T padding(int px) {
         this.padding = px;
         setPadding(px);
         updatePadding();
-        return this;
+        return self();
     }
 
-    public BaseAndroidWidget<T> padding(float dp) {
+    public T padding(float dp) {
         return padding(dp(dp));
     }
 
-    public BaseAndroidWidget<T> paddingStart(int px) {
+    public T paddingStart(int px) {
         this.paddingStart = px;
         updatePadding();
-        return this;
+        return self();
     }
 
-    public BaseAndroidWidget<T> paddingStart(float dp) {
+    public T paddingStart(float dp) {
         return paddingStart(dp(dp));
     }
 
-    public BaseAndroidWidget<T> paddingEnd(int px) {
+    public T paddingEnd(int px) {
         this.paddingEnd = px;
         updatePadding();
-        return this;
+        return self();
     }
 
-    public BaseAndroidWidget<T> paddingEnd(float dp) {
+    public T paddingEnd(float dp) {
         return paddingEnd(dp(dp));
     }
 
-    public BaseAndroidWidget<T> paddingTop(int px) {
+    public T paddingTop(int px) {
         this.paddingTop = px;
         updatePadding();
-        return this;
+        return self();
     }
 
-    public BaseAndroidWidget<T> paddingTop(float dp) {
+    public T paddingTop(float dp) {
         return paddingTop(dp(dp));
     }
 
-    public BaseAndroidWidget<T> paddingBottom(int px) {
+    public T paddingBottom(int px) {
         this.paddingBottom = px;
         updatePadding();
-        return this;
+        return self();
     }
 
-    public BaseAndroidWidget<T> paddingBottom(float dp) {
+    public T paddingBottom(float dp) {
         return paddingBottom(dp(dp));
     }
 
-    public BaseAndroidWidget<T> paddingHorizontal(int px) {
+    public T paddingHorizontal(int px) {
         this.paddingStart = px;
         this.paddingEnd = px;
         updatePadding();
-        return this;
+        return self();
     }
 
-    public BaseAndroidWidget<T> paddingHorizontal(float dp) {
+    public T paddingHorizontal(float dp) {
         return paddingHorizontal(dp(dp));
     }
 
-    public BaseAndroidWidget<T> paddingVertical(int px) {
+    public T paddingVertical(int px) {
         this.paddingTop = px;
         this.paddingBottom = px;
         updatePadding();
-        return this;
+        return self();
     }
 
-    public BaseAndroidWidget<T> paddingVertical(float dp) {
+    public T paddingVertical(float dp) {
         return paddingVertical(dp(dp));
     }
 
 
 
-    public BaseAndroidWidget<T> width(int px) {
+    public T width(int px) {
         this.width = px;
         updateSize();
-        return this;
+        return self();
     }
 
-    public BaseAndroidWidget<T> width(float dp) {
+    public T width(float dp) {
         return width(dp(dp));
     }
 
-    public BaseAndroidWidget<T> height(int px) {
+    public T height(int px) {
         this.height = px;
         updateSize();
-        return this;
+        return self();
     }
 
-    public BaseAndroidWidget<T> height(float dp) {
+    public T height(float dp) {
         return height(dp(dp));
     }
 
-    public BaseAndroidWidget<T> wrapContent() {
+    public T wrapContent() {
         this.width = wrapContent;
         this.height = wrapContent;
         updateSize();
-        return this;
+        return self();
     }
 
-    public BaseAndroidWidget<T> matchParent() {
+    public T matchParent() {
         this.width = matchParent;
         this.height = matchParent;
         updateSize();
-        return this;
+        return self();
     }
 
-    public BaseAndroidWidget<T> widthMatchAndHeightWrap() {
+    public T widthMatchAndHeightWrap() {
         this.width = matchParent;
         this.height = wrapContent;
         updateSize();
-        return this;
+        return self();
     }
 
-    public BaseAndroidWidget<T> onClickListener(View.OnClickListener onClickListener) {
+    public T onClickListener(View.OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
         view.setOnClickListener(onClickListener);
-        return this;
+        return self();
     }
 
-    public BaseAndroidWidget<T> layoutGravity(int layoutGravity) {
+    public T layoutGravity(int layoutGravity) {
         this.layoutGravity = layoutGravity;
-        return this;
+        return self();
     }
 
-    public BaseAndroidWidget<T> weight(int weight) {
+    public T weight(int weight) {
         this.weight = weight;
-        return this;
+        return self();
     }
 
     private void updateMargin() {
@@ -326,14 +331,14 @@ public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T>
     }
 
     @Override
-    public void initView(T view) {
+    public void initView(V view) {
         super.initView(view);
 
         initProps();
         updateProps(view);
     }
 
-    public void updateProps(T view) {
+    public void updateProps(V view) {
         if (id != null)
             id(id);
         if (margin != null)
@@ -356,11 +361,11 @@ public abstract class BaseAndroidWidget<T extends View> extends AndroidWidget<T>
     }
 
     @Override
-    public T createView(Context context) {
+    public V createView(Context context) {
         try {
             //noinspection unchecked
-            Class<T> clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-            Constructor<T> constructor = clazz.getConstructor(Context.class);
+            Class<V> clazz = (Class<V>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+            Constructor<V> constructor = clazz.getConstructor(Context.class);
             return constructor.newInstance(context);
         } catch (Exception e) {
             e.printStackTrace();

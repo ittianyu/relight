@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import com.ittianyu.relight.utils.ViewUtils;
 import com.ittianyu.relight.widget.Widget;
 
-public class LinearWidget extends ViewGroupWidget<LinearLayout> {
+public class LinearWidget extends ViewGroupWidget<LinearLayout, LinearWidget> {
     public static final int horizontal = 0;
     public static final int vertical = 1;
 
@@ -28,13 +28,13 @@ public class LinearWidget extends ViewGroupWidget<LinearLayout> {
     public LinearWidget orientation(int orientation) {
         this.orientation = orientation;
         view.setOrientation(orientation);
-        return this;
+        return self();
     }
 
     public LinearWidget gravity(int gravity) {
         this.gravity = gravity;
         view.setGravity(gravity);
-        return this;
+        return self();
     }
 
     @Override

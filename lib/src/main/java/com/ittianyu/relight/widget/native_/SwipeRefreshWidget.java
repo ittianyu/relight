@@ -9,7 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.ittianyu.relight.widget.Widget;
 
-public class SwipeRefreshWidget extends ViewGroupWidget<SwipeRefreshLayout> {
+public class SwipeRefreshWidget extends ViewGroupWidget<SwipeRefreshLayout, SwipeRefreshWidget> {
 
     private Boolean enabled;
     private Integer size;
@@ -54,43 +54,43 @@ public class SwipeRefreshWidget extends ViewGroupWidget<SwipeRefreshLayout> {
     public SwipeRefreshWidget enabled(boolean enabled) {
         this.enabled = enabled;
         view.setEnabled(enabled);
-        return this;
+        return self();
     }
 
     public SwipeRefreshWidget size(int size) {
         this.size = size;
         view.setSize(size);
-        return this;
+        return self();
     }
 
     public SwipeRefreshWidget refreshing(boolean refreshing) {
         this.refreshing = refreshing;
         view.setRefreshing(refreshing);
-        return this;
+        return self();
     }
 
     public SwipeRefreshWidget colorSchemeResources(@ColorRes int... colorResIds) {
         this.colorResIds = colorResIds;
         view.setColorSchemeResources(colorResIds);
-        return this;
+        return self();
     }
 
     public SwipeRefreshWidget colorSchemeColors(@ColorInt int... colors) {
         this.colors = colors;
         view.setColorSchemeColors(colors);
-        return this;
+        return self();
     }
 
     public SwipeRefreshWidget distanceToTriggerSync(int distance) {
         this.distance = distance;
         view.setDistanceToTriggerSync(distance);
-        return this;
+        return self();
     }
 
     public SwipeRefreshWidget onRefreshListener(SwipeRefreshLayout.OnRefreshListener listener) {
         this.listener = listener;
         view.setOnRefreshListener(listener);
-        return this;
+        return self();
     }
 
     public boolean isRefreshing() {

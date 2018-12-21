@@ -161,8 +161,8 @@ public class UserLceermWidget extends LceermWidget {
         };
     }
 
-    private BaseAndroidWidget<FloatingActionButton> renderFab() {
-        return new BaseAndroidWidget<FloatingActionButton>(context, lifecycle) {
+    private BaseAndroidWidget renderFab() {
+        return new BaseAndroidWidget<FloatingActionButton, BaseAndroidWidget>(context, lifecycle) {
             @Override
             protected void initProps() {
                 layoutGravity = Gravity.END | Gravity.BOTTOM;

@@ -25,7 +25,7 @@ import java.util.List;
 
 public class UserRmWidget extends RmWidget<SwipeRefreshLayout, SwipeRefreshWidget> {
     private SwipeRefreshWidget srw;
-    private BaseAndroidWidget<FloatingActionButton> fabWidget;
+    private BaseAndroidWidget<FloatingActionButton, BaseAndroidWidget> fabWidget;
 
     private List<UserBean> data = Collections.emptyList();
     private boolean noMoreData;
@@ -98,8 +98,8 @@ public class UserRmWidget extends RmWidget<SwipeRefreshLayout, SwipeRefreshWidge
         };
     }
 
-    private BaseAndroidWidget<FloatingActionButton> renderFab() {
-        fabWidget = new BaseAndroidWidget<FloatingActionButton>(context, lifecycle) {
+    private BaseAndroidWidget renderFab() {
+        fabWidget = new BaseAndroidWidget<FloatingActionButton, BaseAndroidWidget>(context, lifecycle) {
             @Override
             protected void initProps() {
                 layoutGravity = Gravity.END | Gravity.BOTTOM;

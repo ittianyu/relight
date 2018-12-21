@@ -30,8 +30,8 @@ public class CommonLoadingWidget extends StatelessWidget<FrameLayout, FrameWidge
         widget.matchParent();
     }
 
-    private BaseAndroidWidget<ProgressBar> buildLoadingWidget() {
-        return new BaseAndroidWidget<ProgressBar>(context, lifecycle) {
+    private BaseAndroidWidget<ProgressBar, BaseAndroidWidget> buildLoadingWidget() {
+        return new BaseAndroidWidget<ProgressBar, BaseAndroidWidget>(context, lifecycle) {
             @Override
             protected void initProps() {
                 layoutGravity = Gravity.CENTER;

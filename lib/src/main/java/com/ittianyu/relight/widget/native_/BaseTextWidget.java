@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.ittianyu.relight.utils.DensityUtils;
 
-public class BaseTextWidget<V extends TextView, T extends BaseTextWidget> extends BaseAndroidWidget<V> {
+public class BaseTextWidget<V extends TextView, T extends BaseTextWidget> extends BaseAndroidWidget<V, T> {
 
     protected Integer gravity;
     protected CharSequence text;
@@ -85,11 +85,6 @@ public class BaseTextWidget<V extends TextView, T extends BaseTextWidget> extend
         if (ellipsize != null) {
             ellipsize(ellipsize);
         }
-    }
-
-    protected final T self() {
-        //noinspection unchecked
-        return (T) this;
     }
 
     public T text(CharSequence text) {

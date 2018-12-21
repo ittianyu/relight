@@ -8,7 +8,7 @@ import android.widget.RelativeLayout;
 
 import com.ittianyu.relight.widget.Widget;
 
-public class RelativeWidget extends ViewGroupWidget<RelativeLayout> {
+public class RelativeWidget extends ViewGroupWidget<RelativeLayout, RelativeWidget> {
     protected WidgetAndProps[] childrenAndProps;
 
     public RelativeWidget(Context context, Lifecycle lifecycle, WidgetAndProps... childrenAndProps) {
