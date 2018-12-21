@@ -11,6 +11,9 @@ public class UpdateTask implements Runnable {
 
     @Override
     public void run() {
+        if (state.isDisposed()) {
+            return;
+        }
         state.update();
         state.didUpdate();
     }

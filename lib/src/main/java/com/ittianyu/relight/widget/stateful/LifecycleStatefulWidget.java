@@ -42,6 +42,8 @@ public abstract class LifecycleStatefulWidget<V extends View, T extends Widget<V
         if (hasRegisterActivityResultDelegation) {
             ActivityResultDelegationManager.unregister((Activity) context, this);
         }
-        state.dispose();
+        if (state != null) {
+            state.dispose();
+        }
     }
 }

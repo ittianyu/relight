@@ -38,6 +38,7 @@ public abstract class State<T extends Widget> implements SetState {
     private FilterStrategy filterStrategy;
     private UpdateTask updateTask = new UpdateTask(this);
     private Map<Runnable, Future> updateStateMap = new HashMap<>();
+    private boolean disposed;
 
     public State() {
         this(DEFAULT_UPDATE_STATE_STRATEGY);
@@ -71,6 +72,7 @@ public abstract class State<T extends Widget> implements SetState {
     }
 
     public void dispose() {
+        disposed = true;
         for (Future future : updateStateMap.values()) {
             if (future.isDone())
                 continue;
@@ -78,6 +80,10 @@ public abstract class State<T extends Widget> implements SetState {
         }
         updateStateMap = null;
         handler = null;
+    }
+
+    public boolean isDisposed() {
+        return disposed;
     }
 
     /**
