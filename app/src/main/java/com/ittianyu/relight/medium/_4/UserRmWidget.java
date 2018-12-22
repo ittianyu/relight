@@ -88,7 +88,8 @@ public class UserRmWidget extends RmWidget<SwipeRefreshLayout, SwipeRefreshWidge
             }
 
             @Override
-            public void updateView(RecyclerView view) {
+            public void update() {
+                super.update();
                 if (status == RmStatus.RefreshContent) {
                     adapter.setData(data);
                 } else if (status == RmStatus.LoadMoreContent) {

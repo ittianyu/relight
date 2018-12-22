@@ -40,11 +40,11 @@ public class StatefulUserWidget extends LifecycleStatefulWidget<LinearLayout, Li
                     user = UserDataSource.getInstance().getUserFromRemote();
                 }));
 
-        updateWidget(widget);
     }
 
     @Override
-    public void updateWidget(LinearWidget widget) {
+    public void update() {
+        super.update();
         twId.text(user.getId() + "");
         twName.text(user.getName());
     }

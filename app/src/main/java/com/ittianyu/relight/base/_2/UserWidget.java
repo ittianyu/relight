@@ -32,8 +32,8 @@ public class UserWidget extends LifecycleAndroidWidget<View> {
     }
 
     @Override
-    public void updateView(View view) {
-        super.updateView(view);
+    public void update() {
+        super.update();
         tvId.setText(user.getId() + "");
         tvName.setText(user.getName());
     }

@@ -41,7 +41,8 @@ public abstract class RmWidget<V extends View, T extends Widget<V>> extends Life
     protected abstract T build(Context context);
 
     @Override
-    public void updateWidget(T widget) {
+    public void update() {
+        super.update();
         updateWidget();
     }
 

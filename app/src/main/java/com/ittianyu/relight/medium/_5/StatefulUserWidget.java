@@ -55,13 +55,12 @@ public class StatefulUserWidget extends LifecycleStatefulWidget<LinearLayout, Li
                 .matchParent()
                 .onClickListener(loadData);
 
-        updateWidget(widget);
-
         loadData.onClick(null);
     }
 
     @Override
-    public void updateWidget(LinearWidget widget) {
+    public void update() {
+        super.update();
         String id;
         String name;
         if (user == null) {

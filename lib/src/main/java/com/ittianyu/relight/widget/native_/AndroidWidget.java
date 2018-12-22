@@ -6,7 +6,8 @@ import android.view.View;
 import com.ittianyu.relight.view.AndroidRender;
 import com.ittianyu.relight.widget.Widget;
 
-public abstract class AndroidWidget<V extends View> extends Widget<V> implements AndroidRender<V> {
+public abstract class AndroidWidget<V extends View> extends Widget<V>
+        implements AndroidRender<V> {
     protected V view;
     private boolean init;
 
@@ -28,8 +29,13 @@ public abstract class AndroidWidget<V extends View> extends Widget<V> implements
 
     private void init() {
         initView(view);
-        bindEvent(view);
+        initEvent(view);
         initData();
-        updateView(view);
+        update();
+    }
+
+    @Override
+    public void update() {
+
     }
 }

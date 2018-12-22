@@ -144,7 +144,8 @@ public class UserLceermWidget extends LceermWidget {
             }
 
             @Override
-            public void updateView(RecyclerView view) {
+            public void update() {
+                super.update();
                 // attention: must check status before update view data
                 if (status != LceeStatus.Content)
                     return;

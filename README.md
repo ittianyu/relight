@@ -72,7 +72,7 @@ MVVM的强大之处在于，你不需要关注数据“方向”，你只需要�
 class UserLayout extends AndroidWidget<View> {
 ...
         @Override
-        public void bindEvent(View view) {
+        public void initEvent(View view) {
             view.setOnClickListener(v -> setState(() -> {
                 user = UserModel.getInstance().getUser();
             }));
@@ -296,7 +296,7 @@ class UserLayout extends AndroidWidget<View> {
 然后添加一个点击事件，点击之后触发数据更新
 ```
     @Override
-    public void bindEvent(View view) {
+    public void initEvent(View view) {
         view.setOnClickListener(v -> setState(() -> {
             user = UserModel.getInstance().getUser();
         }));
@@ -417,7 +417,7 @@ ThreadPool.set(executorService);
 需要实现一个 Widget<T> build() 方法，来完成 Widget 的构建
 
 ```
-render(first call) -> build -> widget.render -> initWidget
+render(first call) -> build -> widget.render -> initWidget -> update
 ```
 
 #### state ####
@@ -432,9 +432,9 @@ onDestroy -> dispose
 需要实现一个 State<T> createState(Context context) 方法 来构建一个 State 对象
 
 ```
-render(first call) -> createState -> state.init -> state.build -> widget.render -> initWidget 
+render(first call) -> createState -> state.init -> state.build -> widget.render -> initWidget -> update
 
-state.setState -> state.update -> update -> updateWidget
+state.setState -> state.update -> widget.update
 ```
 
 #### AndroidWidget ####
@@ -444,7 +444,7 @@ state.setState -> state.update -> update -> updateWidget
 ```
 
 ```
-render(first call) -> initView -> bindEvent -> initData -> updateView
+render(first call) -> initView -> initEvent -> initData -> update
 ```
 
 #### LifecycleXxxWidget ####
@@ -477,7 +477,7 @@ initView -> initProps
 ```
 
 ```
-onStart -> updateProps
+onStart -> updateProps(when has LayoutParams)
 ```
 
 initView 是在 render 之后触发的
@@ -492,7 +492,6 @@ render(first call) -> children.render -> super.render(render self) -> add childr
 addChildren -> updateChildrenProps -> updateProps 
 ```
 
-updateView 中，调用 children 的 updateView 或 setState 或 update 方法
 
 ## To Do List ##
 
@@ -505,7 +504,7 @@ updateView 中，调用 children 的 updateView 或 setState 或 update 方法
 - [x] 缓存支持
 - [ ] 完善 BaseAndroidWidget 基础属性 和 api
 - [x] startActivity 支持
-- [ ] anko 支持(开发时可视化支持)
+- [ ] xml 支持
 - [ ] Android Studio 模版
 
 #### 基础控件 ####
@@ -544,3 +543,4 @@ updateView 中，调用 children 的 updateView 或 setState 或 update 方法
 - [ ] 目录
 - [ ] 英文版
 - [x] To Do List
+

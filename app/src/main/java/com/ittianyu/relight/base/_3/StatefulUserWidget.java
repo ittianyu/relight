@@ -36,7 +36,8 @@ public class StatefulUserWidget extends LifecycleStatefulWidget<TextView, TextWi
     }
 
     @Override
-    public void updateWidget(TextWidget widget) {
+    public void update() {
+        super.update();
         widget.text(user.getName());
     }
 }

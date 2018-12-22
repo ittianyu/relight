@@ -55,11 +55,11 @@ public class StatefulUserWidget extends LifecycleStatefulWidget<RelativeLayout, 
                     user = UserDataSource.getInstance().getUser();
                 }));
 
-        updateWidget(widget);
     }
 
     @Override
-    public void updateWidget(RelativeWidget widget) {
+    public void update() {
+        super.update();
         twId.text(user.getId() + "");
         twName.text(user.getName());
     }

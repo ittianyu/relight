@@ -12,6 +12,7 @@ import com.ittianyu.relight.widget.native_.TextWidget;
 import com.ittianyu.relight.widget.stateless.StatelessWidget;
 
 public class CommonEmptyWidget extends StatelessWidget<FrameLayout, FrameWidget> {
+    private final String TAG = getClass().getSimpleName();
     protected Lifecycle lifecycle;
     protected String text;
     protected View.OnClickListener onClickListener;

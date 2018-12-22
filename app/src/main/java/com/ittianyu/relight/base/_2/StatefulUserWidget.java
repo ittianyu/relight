@@ -32,7 +32,8 @@ public class StatefulUserWidget extends LifecycleStatefulWidget<View, UserWidget
     }
 
     @Override
-    public void updateWidget(UserWidget widget) {
+    public void update() {
+        super.update();
         widget.setUser(user);
     }
 }

@@ -49,7 +49,10 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
 
     @Override
     public void onStart() {
-        updateProps(view);
+        // no need to run updateProps if no LayoutParams(when it not attach to parent, it won't has it)
+        if (view.getLayoutParams() != null) {
+            updateProps(view);
+        }
     }
 
     protected final T self() {

@@ -42,11 +42,11 @@ public class StatefulUserWidget extends LifecycleStatefulWidget<FrameLayout, Fra
                     user = UserDataSource.getInstance().getUser();
                 }));
 
-        updateWidget(widget);
     }
 
     @Override
-    public void updateWidget(FrameWidget widget) {
+    public void update() {
+        super.update();
         twId.text(user.getId() + "");
         twName.text(user.getName());
     }

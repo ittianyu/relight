@@ -5,9 +5,6 @@ import android.view.View;
 
 import com.ittianyu.relight.widget.ContainerWidget;
 import com.ittianyu.relight.widget.Widget;
-import com.ittianyu.relight.widget.native_.LifecycleAndroidWidget;
-import com.ittianyu.relight.widget.native_.BaseAndroidWidget;
-import com.ittianyu.relight.widget.stateful.StatefulWidget;
 
 public abstract class StatelessWidget<V extends View, T extends Widget<V>>
         extends Widget<V> implements ContainerWidget<V, T> {
@@ -33,37 +30,17 @@ public abstract class StatelessWidget<V extends View, T extends Widget<V>>
         if (view == null)
             throw new IllegalStateException("can't render view");
         initWidget(widget);
+        update();
         return view;
     }
 
-    public void update(Widget widget) {
-        // stateless 的实例 widget 并不是直接渲染的 widget，所以这里对里面的实际 widget 进行获取
-        if (widget instanceof StatelessWidget) {
-            widget = ((StatelessWidget) widget).widget;
-        }
-
-        if (widget instanceof LifecycleAndroidWidget) {
-            ((LifecycleAndroidWidget) widget).updateView(widget.render());
-        } else if (widget instanceof StatefulWidget) {
-            ((StatefulWidget) widget).setState(null);
-        } else if (widget instanceof StatelessWidget) {
-            ((StatelessWidget) widget).update(widget);
-        }
+    @Override
+    public T getInnerWidget() {
+        return widget;
     }
 
-    public void updateProps(Widget widget) {
-        // stateless 的实例 widget 并不是直接渲染的 widget，所以这里对里面的实际 widget 进行获取
-        if (widget instanceof StatelessWidget) {
-            widget = ((StatelessWidget) widget).widget;
-        }
-
-        if (widget instanceof BaseAndroidWidget) {
-            ((BaseAndroidWidget) widget).updateProps(widget.render());
-        } else if (widget instanceof StatefulWidget) {
-            ((StatefulWidget) widget).updateProps(widget);
-        } else if (widget instanceof StatelessWidget) {
-            ((StatelessWidget) widget).updateProps(widget);
-        }
+    @Override
+    public void update() {
+        widget.update();
     }
-
 }

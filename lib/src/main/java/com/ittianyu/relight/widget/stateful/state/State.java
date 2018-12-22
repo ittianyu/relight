@@ -6,7 +6,7 @@ import android.os.Looper;
 
 import com.ittianyu.relight.thread.ThreadPool;
 import com.ittianyu.relight.widget.Widget;
-import com.ittianyu.relight.widget.stateful.state.listener.OnUpdateListener;
+import com.ittianyu.relight.widget.WidgetUpdater;
 import com.ittianyu.relight.widget.stateful.state.strategy.CacheStrategy;
 import com.ittianyu.relight.widget.stateful.state.strategy.CacheThenTaskStrategy;
 import com.ittianyu.relight.widget.stateful.state.strategy.FilterStrategy;
@@ -34,7 +34,7 @@ public abstract class State<T extends Widget> implements SetState {
     public static final FilterStrategy DEFAULT_UPDATE_STATE_STRATEGY = new NotRepeatFilterStrategy();
 
     private Handler handler = new Handler(Looper.getMainLooper());
-    private OnUpdateListener onUpdateListener;
+    private WidgetUpdater widgetUpdater;
     private FilterStrategy filterStrategy;
     private UpdateTask updateTask = new UpdateTask(this);
     private Map<Runnable, Future> updateStateMap = new HashMap<>();
@@ -52,8 +52,8 @@ public abstract class State<T extends Widget> implements SetState {
         this.filterStrategy = filterStrategy;
     }
 
-    public void setOnUpdateListener(OnUpdateListener onUpdateListener) {
-        this.onUpdateListener = onUpdateListener;
+    public void setOnUpdateListener(WidgetUpdater widgetUpdater) {
+        this.widgetUpdater = widgetUpdater;
     }
 
     public void init() {}
@@ -63,8 +63,8 @@ public abstract class State<T extends Widget> implements SetState {
     public void willUpdate() {}
 
     public void update() {
-        if (onUpdateListener != null)
-            onUpdateListener.update();
+        if (widgetUpdater != null)
+            widgetUpdater.update();
     }
 
     public void didUpdate() {

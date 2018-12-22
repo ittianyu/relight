@@ -55,7 +55,8 @@ public abstract class LceeWidget extends LifecycleStatefulWidget<FrameLayout, Fr
     }
 
     @Override
-    public void updateWidget(FrameWidget widget) {
+    public void update() {
+        super.update();
         updateWidget();
     }
 

@@ -9,14 +9,15 @@ import android.view.View;
 import com.ittianyu.relight.view.ActivityResultDelegation;
 import com.ittianyu.relight.view.ActivityResultDelegationManager;
 
-public abstract class Widget<T extends View> implements ActivityResultDelegation {
+public abstract class Widget<V extends View>
+        implements ActivityResultDelegation, WidgetUpdater {
     protected final Context context;
 
     public Widget(Context context) {
         this.context = context;
     }
 
-    public abstract T render();
+    public abstract V render();
 
     protected void startActivity(Intent intent) {
         startActivity(intent, null);

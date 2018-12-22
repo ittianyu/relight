@@ -121,7 +121,8 @@ public class CacheWidget extends LifecycleStatefulWidget<LinearLayout, LinearWid
     }
 
     @Override
-    public void updateWidget(LinearWidget widget) {
+    public void update() {
+        super.update();
         System.out.println("updateWidget: " + getUsername());
         tvResult.text("result: " + getUsername());
     }

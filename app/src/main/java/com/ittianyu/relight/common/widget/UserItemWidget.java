@@ -5,7 +5,6 @@ import android.content.Context;
 import android.widget.LinearLayout;
 
 import com.ittianyu.relight.common.bean.UserBean;
-import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.LinearWidget;
 import com.ittianyu.relight.widget.native_.TextWidget;
 import com.ittianyu.relight.widget.stateless.LifecycleStatelessWidget;
@@ -34,8 +33,8 @@ public class UserItemWidget extends LifecycleStatelessWidget<LinearLayout, Linea
     }
 
     @Override
-    public void update(Widget widget) {
-        super.update(widget);
+    public void update() {
+        super.update();
         if (user == null)
             return;
         twId.text(user.getId() + "");
@@ -44,7 +43,7 @@ public class UserItemWidget extends LifecycleStatelessWidget<LinearLayout, Linea
 
     public void setData(UserBean user) {
         this.user = user;
-        update(this);
+        update();
     }
 
 }
