@@ -1,0 +1,5 @@
+<resources>
+    <declare-styleable name="WidgetView">
+        <attr name="widget" format="string" />
+    </declare-styleable>
+</resources>

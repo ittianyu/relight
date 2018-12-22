@@ -7,8 +7,9 @@ import android.view.View;
 import com.ittianyu.relight.view.AndroidRender;
 import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.AndroidWidget;
-import com.ittianyu.relight.widget.stateful.state.State;
+import com.ittianyu.relight.widget.native_.LifecycleAndroidWidget;
 import com.ittianyu.relight.widget.stateful.StatefulWidget;
+import com.ittianyu.relight.widget.stateful.state.State;
 import com.ittianyu.relight.widget.stateful.state.strategy.FilterStrategy;
 import com.ittianyu.relight.widget.stateless.StatelessWidget;
 
@@ -19,9 +20,10 @@ public class StateUtils {
     }
 
     public static <V extends View> State<AndroidWidget<V>> create(AndroidRender<V> androidRender,
-                                                                       Lifecycle lifecycle, FilterStrategy updateStateStrategy) {
+                                                                           Lifecycle lifecycle,
+                                                                           FilterStrategy updateStateStrategy) {
         return new State<AndroidWidget<V>>(updateStateStrategy) {
-            private AndroidWidget<V> widget;
+            private LifecycleAndroidWidget<V> widget;
 
             @Override
             public AndroidWidget<V> build(Context context) {

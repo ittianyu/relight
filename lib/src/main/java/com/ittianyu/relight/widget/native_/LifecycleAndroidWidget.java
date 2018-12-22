@@ -1,6 +1,7 @@
-package com.ittianyu.relight.widget;
+package com.ittianyu.relight.widget.native_;
 
 import android.app.Activity;
+import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,12 +10,29 @@ import android.view.View;
 import com.ittianyu.relight.view.ActivityResultDelegation;
 import com.ittianyu.relight.view.ActivityResultDelegationManager;
 import com.ittianyu.relight.view.AndroidLifecycle;
+import com.ittianyu.relight.view.AndroidRender;
 
-public abstract class LifecycleWidget<T extends View> extends Widget<T> implements AndroidLifecycle {
+public abstract class LifecycleAndroidWidget<V extends View> extends AndroidWidget<V>
+        implements AndroidRender<V>, AndroidLifecycle {
+    protected final Lifecycle lifecycle;
+    private boolean addObserver;
     protected boolean hasRegisterActivityResultDelegation;
 
-    public LifecycleWidget(Context context) {
+    public LifecycleAndroidWidget(Context context, Lifecycle lifecycle) {
         super(context);
+        this.lifecycle = lifecycle;
+    }
+
+    @Override
+    public V render() {
+        V result = super.render();
+        if (!addObserver) {
+            addObserver = true;
+            if (null != lifecycle) {
+                lifecycle.addObserver(this);
+            }
+        }
+        return result;
     }
 
     @Override
@@ -25,7 +43,7 @@ public abstract class LifecycleWidget<T extends View> extends Widget<T> implemen
 
     @Override
     protected void startActivityForResult(Intent intent, int requestCode, Bundle options,
-        ActivityResultDelegation delegation) {
+                                          ActivityResultDelegation delegation) {
         super.startActivityForResult(intent, requestCode, options, delegation);
         hasRegisterActivityResultDelegation = true;
     }

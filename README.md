@@ -417,7 +417,7 @@ ThreadPool.set(executorService);
 需要实现一个 Widget<T> build() 方法，来完成 Widget 的构建
 
 ```
-render -> build -> initWidget -> widget.render
+render(first call) -> build -> widget.render -> initWidget
 ```
 
 #### state ####
@@ -432,23 +432,31 @@ onDestroy -> dispose
 需要实现一个 State<T> createState(Context context) 方法 来构建一个 State 对象
 
 ```
-render -> createState -> state.init -> state.build -> initWidget -> widget.render
+render(first call) -> createState -> state.init -> state.build -> widget.render -> initWidget 
 
 state.setState -> state.update -> update -> updateWidget
 ```
 
 #### AndroidWidget ####
-带有 Android 常用的构建方法 和 生命周期
+
+```
+构造方法 -> createView
+```
+
+```
+render(first call) -> initView -> bindEvent -> initData -> updateView
+```
+
+#### LifecycleXxxWidget ####
+带有生命周期的 Widget
 
 * 调用顺序
 
 ```
-构造方法 -> createView
-
 render(first call) -> bind lifecycle
-
-onStart -> initView -> bindEvent -> initData -> updateView
 ```
+
+需要注意的是，`bind lifecycle` 在控件初始化完之后才调用
 
 * 生命周期
 
@@ -462,12 +470,27 @@ onDestroy
 ```
 
 #### BaseAndroidWidget ####
+带有常用 View 属性设置的 native widget
 
-initView -> initProps -> updateProps
+```
+initView -> initProps
+```
+
+```
+onStart -> updateProps
+```
+
+initView 是在 render 之后触发的
 
 #### ViewGroupWidget ####
 
-构造方法 -> addChildren -> updateChildrenProps -> updateProps 
+```
+render(first call) -> children.render -> super.render(render self) -> add children to ViewGroup
+```
+
+```
+addChildren -> updateChildrenProps -> updateProps 
+```
 
 updateView 中，调用 children 的 updateView 或 setState 或 update 方法
 

@@ -13,7 +13,7 @@ import com.ittianyu.relight.widget.stateful.state.strategy.CacheStrategy;
 import com.ittianyu.relight.widget.stateless.StatelessWidget;
 
 public abstract class StatefulWidget<V extends View, T extends Widget<V>> extends Widget<V>
-    implements StatefulContainerWidget<V, T>, OnUpdateListener, SetState {
+        implements StatefulContainerWidget<V, T>, OnUpdateListener, SetState {
     protected State<T> state;
     protected T widget;
 
@@ -25,14 +25,23 @@ public abstract class StatefulWidget<V extends View, T extends Widget<V>> extend
 
     @Override
     public V render() {
-        if (null == state) {
-            state = createState(context);
-            state.setOnUpdateListener(this);
-            state.init();
-            widget = state.build(context);
-            initWidget(widget);
+        if (state != null) {
+            return widget.render();
         }
-        return widget.render();
+
+        state = createState(context);
+        if (state == null)
+            throw new IllegalStateException("can't create state");
+        state.setOnUpdateListener(this);
+        state.init();
+        widget = state.build(context);
+        if (widget == null)
+            throw new IllegalStateException("can't build widget");
+        V view = widget.render();
+        if (view == null)
+            throw new IllegalStateException("can't render view");
+        initWidget(widget);
+        return view;
     }
 
     @Override
@@ -52,7 +61,7 @@ public abstract class StatefulWidget<V extends View, T extends Widget<V>> extend
 
     @Override
     public void setStateAsyncWithCache(CacheStrategy cacheStrategy, Runnable cacheFunc,
-        Runnable func) {
+                                       Runnable func) {
         state.setStateAsyncWithCache(cacheStrategy, cacheFunc, func);
     }
 

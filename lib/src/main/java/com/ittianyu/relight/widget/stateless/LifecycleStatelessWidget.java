@@ -15,13 +15,22 @@ import com.ittianyu.relight.widget.Widget;
 public abstract class LifecycleStatelessWidget<V extends View, T extends Widget<V>> extends StatelessWidget<V, T> implements AndroidLifecycle {
     protected final Lifecycle lifecycle;
     protected boolean hasRegisterActivityResultDelegation;
+    private boolean addObserver;
 
     public LifecycleStatelessWidget(Context context, Lifecycle lifecycle) {
         super(context);
         this.lifecycle = lifecycle;
-        lifecycle.addObserver(this);
     }
 
+    @Override
+    public V render() {
+        V view = super.render();
+        if (!addObserver) {
+            addObserver = true;
+            lifecycle.addObserver(this);
+        }
+        return view;
+    }
 
     @Override
     protected void startActivity(Intent intent, Bundle options) {

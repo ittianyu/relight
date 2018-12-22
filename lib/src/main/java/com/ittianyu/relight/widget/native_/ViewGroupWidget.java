@@ -2,6 +2,7 @@ package com.ittianyu.relight.widget.native_;
 
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.ittianyu.relight.view.AndroidRender;
@@ -9,20 +10,40 @@ import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.stateful.StatefulWidget;
 import com.ittianyu.relight.widget.stateless.StatelessWidget;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public abstract class ViewGroupWidget<V extends ViewGroup, T extends ViewGroupWidget> extends BaseAndroidWidget<V, T> {
     protected List<Widget> children = new LinkedList<>();
+    private Widget[] tmpChildren;
 
     public ViewGroupWidget(Context context, Lifecycle lifecycle, Widget... children) {
         super(context, lifecycle);
+        tmpChildren = children;
+    }
 
-        // add children
-        if (null == children)
-            children = new Widget[0];
-
-        addChildren(false, true, children);
+    @Override
+    public V render() {
+        // render children first
+        List<View> views = null;
+        if (tmpChildren != null) {
+            views = new ArrayList<>(tmpChildren.length);
+            for (Widget child: tmpChildren) {
+                views.add(child.render());
+                children.add(child);
+            }
+            tmpChildren = null;
+        }
+        // render self
+        V view = super.render();
+        // add children to ViewGroup
+        if (views != null) {
+            for (View v : views) {
+                view.addView(v);
+            }
+        }
+        return view;
     }
 
     @Override
@@ -63,8 +84,8 @@ public abstract class ViewGroupWidget<V extends ViewGroup, T extends ViewGroupWi
     }
 
     public T addChild(Widget widget, boolean updateProps) {
-        children.add(widget);
         view.addView(widget.render());
+        children.add(widget);
         if (updateProps) {
             updateChildrenProps();
             updateProps(view);
@@ -100,9 +121,7 @@ public abstract class ViewGroupWidget<V extends ViewGroup, T extends ViewGroupWi
     }
 
     public T removeAllChildren() {
-        for (Widget widget : children) {
-            view.removeView(widget.render());
-        }
+        view.removeAllViews();
         children.clear();
         return self();
     }

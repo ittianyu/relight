@@ -18,7 +18,7 @@ import com.ittianyu.relight.utils.ViewUtils;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.ParameterizedType;
 
-public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWidget> extends AndroidWidget<V> {
+public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWidget> extends LifecycleAndroidWidget<V> {
     public static final int matchParent = ViewGroup.LayoutParams.MATCH_PARENT;
     public static final int wrapContent = ViewGroup.LayoutParams.WRAP_CONTENT;
 
@@ -46,6 +46,11 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
     }
 
     protected abstract void initProps();
+
+    @Override
+    public void onStart() {
+        updateProps(view);
+    }
 
     protected final T self() {
         //noinspection unchecked
@@ -333,9 +338,7 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
     @Override
     public void initView(V view) {
         super.initView(view);
-
         initProps();
-        updateProps(view);
     }
 
     public void updateProps(V view) {

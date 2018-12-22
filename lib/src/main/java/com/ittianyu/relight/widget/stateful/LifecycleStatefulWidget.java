@@ -16,13 +16,22 @@ public abstract class LifecycleStatefulWidget<V extends View, T extends Widget<V
         extends StatefulWidget<V, T> implements AndroidLifecycle {
     protected boolean hasRegisterActivityResultDelegation;
     protected final Lifecycle lifecycle;
+    private boolean addObserver;
 
     public LifecycleStatefulWidget(Context context, Lifecycle lifecycle) {
         super(context);
         this.lifecycle = lifecycle;
-        lifecycle.addObserver(this);
     }
 
+    @Override
+    public V render() {
+        V view = super.render();
+        if (!addObserver) {
+            addObserver = true;
+            lifecycle.addObserver(this);
+        }
+        return view;
+    }
 
     @Override
     protected void startActivity(Intent intent, Bundle options) {

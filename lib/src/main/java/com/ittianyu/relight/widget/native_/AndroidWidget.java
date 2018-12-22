@@ -1,38 +1,35 @@
 package com.ittianyu.relight.widget.native_;
 
-import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.view.View;
 
 import com.ittianyu.relight.view.AndroidRender;
-import com.ittianyu.relight.widget.LifecycleWidget;
+import com.ittianyu.relight.widget.Widget;
 
-public abstract class AndroidWidget<T extends View> extends LifecycleWidget<T> implements AndroidRender<T> {
-    protected T view;
-    protected final Lifecycle lifecycle;
-    private boolean addObserver = false;
+public abstract class AndroidWidget<V extends View> extends Widget<V> implements AndroidRender<V> {
+    protected V view;
+    private boolean init;
 
-    public AndroidWidget(Context context, Lifecycle lifecycle) {
+    public AndroidWidget(Context context) {
         super(context);
-        this.lifecycle = lifecycle;
         view = createView(context);
         if (view == null)
             throw new IllegalStateException("can't render view");
     }
 
     @Override
-    public void onStart() {
+    public V render() {
+        if (!init) {
+            init = true;
+            init();
+        }
+        return view;
+    }
+
+    private void init() {
         initView(view);
         bindEvent(view);
         initData();
         updateView(view);
-    }
-
-    public T render() {
-        if (!addObserver) {
-            addObserver = true;
-            lifecycle.addObserver(this);
-        }
-        return view;
     }
 }
