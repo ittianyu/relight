@@ -35,6 +35,7 @@
         <activity android:name=".medium._5.WidgetActivity"/>
         <activity android:name=".medium._6.WidgetActivity" />
         <activity android:name=".medium._7.WidgetActivity"/>
+        <activity android:name=".medium._8.WidgetActivity" />
 
     </application>
 
