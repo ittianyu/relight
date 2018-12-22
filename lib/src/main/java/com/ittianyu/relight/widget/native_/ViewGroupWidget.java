@@ -64,10 +64,16 @@ public abstract class ViewGroupWidget<V extends ViewGroup, T extends ViewGroupWi
         }
     }
 
+    @Override
+    public void updateProps(V view) {
+        updateChildrenProps();
+        super.updateProps(view);
+    }
+
     /**
      * call when add view which was removed
      */
-    public void updateChildrenProps() {
+    private void updateChildrenProps() {
         for (Widget widget : children) {
             if (widget instanceof BaseAndroidWidget) {
                 ((BaseAndroidWidget) widget).updateProps(widget.render());
@@ -87,7 +93,6 @@ public abstract class ViewGroupWidget<V extends ViewGroup, T extends ViewGroupWi
         view.addView(widget.render());
         children.add(widget);
         if (updateProps) {
-            updateChildrenProps();
             updateProps(view);
         }
         return self();
@@ -98,15 +103,8 @@ public abstract class ViewGroupWidget<V extends ViewGroup, T extends ViewGroupWi
     }
 
     public T addChildren(boolean updateProps, Widget... children) {
-        return addChildren(updateProps, updateProps, children);
-    }
-
-    public T addChildren(boolean updateProps, boolean updateChildrenProps, Widget... children) {
         for (Widget widget : children) {
             addChild(widget, false);
-        }
-        if (updateChildrenProps) {
-            updateChildrenProps();
         }
         if (updateProps) {
             updateProps(view);
