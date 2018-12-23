@@ -11,9 +11,9 @@ import com.ittianyu.relight.utils.StateUtils;
 import com.ittianyu.relight.widget.native_.FrameWidget;
 import com.ittianyu.relight.widget.native_.TextWidget;
 import com.ittianyu.relight.widget.stateful.state.State;
-import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
+import com.ittianyu.relight.widget.stateful.StatefulWidget;
 
-public class StatefulUserWidget extends LifecycleStatefulWidget<FrameLayout, FrameWidget> {
+public class StatefulUserWidget extends StatefulWidget<FrameLayout, FrameWidget> {
     private UserBean user = UserDataSource.getInstance().getUser();
     private TextWidget twId;
     private TextWidget twName;

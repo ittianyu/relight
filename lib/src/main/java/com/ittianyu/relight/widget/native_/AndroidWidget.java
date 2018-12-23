@@ -1,5 +1,6 @@
 package com.ittianyu.relight.widget.native_;
 
+import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.view.View;
 
@@ -11,8 +12,8 @@ public abstract class AndroidWidget<V extends View> extends Widget<V>
     protected V view;
     private boolean init;
 
-    public AndroidWidget(Context context) {
-        super(context);
+    public AndroidWidget(Context context, Lifecycle lifecycle) {
+        super(context, lifecycle);
         view = createView(context);
         if (view == null)
             throw new IllegalStateException("can't render view");
@@ -23,6 +24,9 @@ public abstract class AndroidWidget<V extends View> extends Widget<V>
         if (!init) {
             init = true;
             init();
+            if (null != lifecycle) {
+                lifecycle.addObserver(this);
+            }
         }
         return view;
     }

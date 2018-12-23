@@ -9,14 +9,14 @@ import android.view.View;
 
 import com.ittianyu.relight.view.AndroidRender;
 import com.ittianyu.relight.widget.Widget;
-import com.ittianyu.relight.widget.native_.LifecycleAndroidWidget;
+import com.ittianyu.relight.widget.native_.AndroidWidget;
 
 import java.lang.reflect.Constructor;
 
 public class WidgetUtils {
 
-    public static <T extends View> LifecycleAndroidWidget<T> createAndroidWidget(Context context, AndroidRender<T> androidRender, Lifecycle lifecycle) {
-        return new LifecycleAndroidWidget<T>(context, lifecycle) {
+    public static <T extends View> AndroidWidget<T> createAndroidWidget(Context context, AndroidRender<T> androidRender, Lifecycle lifecycle) {
+        return new AndroidWidget<T>(context, lifecycle) {
             @Override
             public T createView(Context context) {
                 return androidRender.createView(context);
@@ -39,8 +39,8 @@ public class WidgetUtils {
         };
     }
 
-    public static <T extends View> Widget<T> create(Context context, T view) {
-        return new Widget<T>(context) {
+    public static <T extends View> Widget<T> create(Context context, Lifecycle lifecycle, T view) {
+        return new Widget<T>(context, lifecycle) {
             @Override
             public void update() {
             }

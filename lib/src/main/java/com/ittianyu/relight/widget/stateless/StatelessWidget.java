@@ -1,5 +1,6 @@
 package com.ittianyu.relight.widget.stateless;
 
+import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.view.View;
 
@@ -11,8 +12,8 @@ public abstract class StatelessWidget<V extends View, T extends Widget<V>>
 
     protected T widget;
 
-    public StatelessWidget(Context context) {
-        super(context);
+    public StatelessWidget(Context context, Lifecycle lifecycle) {
+        super(context, lifecycle);
     }
 
     protected abstract T build(Context context);
@@ -31,6 +32,9 @@ public abstract class StatelessWidget<V extends View, T extends Widget<V>>
             throw new IllegalStateException("can't render view");
         initWidget(widget);
         update();
+        if (lifecycle != null) {
+            lifecycle.addObserver(this);
+        }
         return view;
     }
 

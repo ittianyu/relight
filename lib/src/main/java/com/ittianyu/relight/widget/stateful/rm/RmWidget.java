@@ -7,9 +7,9 @@ import android.view.View;
 import com.ittianyu.relight.utils.StateUtils;
 import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.stateful.state.State;
-import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
+import com.ittianyu.relight.widget.stateful.StatefulWidget;
 
-public abstract class RmWidget<V extends View, T extends Widget<V>> extends LifecycleStatefulWidget<V, T> {
+public abstract class RmWidget<V extends View, T extends Widget<V>> extends StatefulWidget<V, T> {
     protected RmStatus status = RmStatus.RefreshContent;
     protected Throwable lastError;
     private Runnable loadingTask = () -> {

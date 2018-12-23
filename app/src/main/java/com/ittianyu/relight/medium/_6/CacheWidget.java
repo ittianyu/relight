@@ -12,11 +12,11 @@ import com.ittianyu.relight.utils.StateUtils;
 import com.ittianyu.relight.widget.native_.ButtonWidget;
 import com.ittianyu.relight.widget.native_.LinearWidget;
 import com.ittianyu.relight.widget.native_.TextWidget;
-import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
+import com.ittianyu.relight.widget.stateful.StatefulWidget;
 import com.ittianyu.relight.widget.stateful.state.State;
 import com.ittianyu.relight.widget.stateful.state.strategy.CacheIfTaskErrorStrategy;
 
-public class CacheWidget extends LifecycleStatefulWidget<LinearLayout, LinearWidget> implements View.OnClickListener {
+public class CacheWidget extends StatefulWidget<LinearLayout, LinearWidget> implements View.OnClickListener {
     private static final int btnNormal1 = 1;
     private static final int btnCacheError1 = 2;
     private static final int btnNetworkError1 = 3;

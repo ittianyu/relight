@@ -8,10 +8,10 @@ import com.ittianyu.relight.utils.StateUtils;
 import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.FrameWidget;
 import com.ittianyu.relight.widget.stateful.state.State;
-import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
+import com.ittianyu.relight.widget.stateful.StatefulWidget;
 import com.ittianyu.relight.widget.stateful.lcee.LceeStatus;
 
-public abstract class LceermWidget extends LifecycleStatefulWidget<FrameLayout, FrameWidget> {
+public abstract class LceermWidget extends StatefulWidget<FrameLayout, FrameWidget> {
     protected LceeStatus status = LceeStatus.Loading;
     protected LoadType loadType = LoadType.FirstLoad;
     private Widget loading;

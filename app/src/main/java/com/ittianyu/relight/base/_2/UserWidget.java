@@ -7,9 +7,9 @@ import android.widget.TextView;
 
 import com.ittianyu.relight.R;
 import com.ittianyu.relight.common.bean.UserBean;
-import com.ittianyu.relight.widget.native_.LifecycleAndroidWidget;
+import com.ittianyu.relight.widget.native_.AndroidWidget;
 
-public class UserWidget extends LifecycleAndroidWidget<View> {
+public class UserWidget extends AndroidWidget<View> {
     private TextView tvId;
     private TextView tvName;
     private UserBean user;

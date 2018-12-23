@@ -192,9 +192,9 @@ public class UserModel {
 ```
 
 下面就是重点了，你需要记住的是，一切都是控件。
-为了渲染需求中的 activity，需要一个 Widget，并且能修改数据，所以新建一个类 UserLayoutStateful  继承  LifecycleStatefulWidget
+为了渲染需求中的 activity，需要一个 Widget，并且能修改数据，所以新建一个类 UserLayoutStateful  继承  StatefulWidget
 ```
-public class UserLayoutStateful extends LifecycleStatefulWidget<View> {
+public class UserLayoutStateful extends StatefulWidget<View> {
     public UserLayoutStateful(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
     }
@@ -326,9 +326,9 @@ public class UserActivity extends AppCompatActivity {
 
 目的：学习 AndroidWidget 的简单用法。
 
-#### [2. LifecycleStatefulWidget](./docs/base/2.LifecycleStatefulWidget.md) ####
+#### [2. StatefulWidget](./docs/base/2.StatefulWidget.md) ####
 
-目的：学习 LifecycleStatefulWidget 的简单用法。
+目的：学习 StatefulWidget 的简单用法。
 
 #### [3. TextWidget](./docs/base/3.TextWidget.md) ####
 
@@ -386,7 +386,7 @@ public class UserActivity extends AppCompatActivity {
 带有状态的控件。 
 
 * StatefulWidget：所有 stateful 控件的基类
-* LifecycleStatefulWidget：带有生命周期的 StatefulWidget
+* StatefulWidget：带有生命周期的 StatefulWidget
 * LceeWidget：封装了 Loading Content Empty Error 四种常见状态的控件
 
 #### stateless ####

@@ -7,9 +7,9 @@ import android.widget.LinearLayout;
 import com.ittianyu.relight.common.bean.UserBean;
 import com.ittianyu.relight.widget.native_.LinearWidget;
 import com.ittianyu.relight.widget.native_.TextWidget;
-import com.ittianyu.relight.widget.stateless.LifecycleStatelessWidget;
+import com.ittianyu.relight.widget.stateless.StatelessWidget;
 
-public class UserItemWidget extends LifecycleStatelessWidget<LinearLayout, LinearWidget> {
+public class UserItemWidget extends StatelessWidget<LinearLayout, LinearWidget> {
     private TextWidget twId;
     private TextWidget twName;
     private UserBean user;

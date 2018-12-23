@@ -12,9 +12,9 @@ import android.widget.LinearLayout;
 import com.ittianyu.relight.widget.native_.ButtonWidget;
 import com.ittianyu.relight.widget.native_.EditWidget;
 import com.ittianyu.relight.widget.native_.LinearWidget;
-import com.ittianyu.relight.widget.stateless.LifecycleStatelessWidget;
+import com.ittianyu.relight.widget.stateless.StatelessWidget;
 
-public class StartActivityWidget extends LifecycleStatelessWidget<LinearLayout, LinearWidget> {
+public class StartActivityWidget extends StatelessWidget<LinearLayout, LinearWidget> {
     private static final int REQ = 1;
     public static final String RESULT_MSG = "msg";
 

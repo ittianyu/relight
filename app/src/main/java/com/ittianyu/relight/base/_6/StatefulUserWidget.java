@@ -14,10 +14,10 @@ import com.ittianyu.relight.widget.native_.RelativeWidget.Prop;
 import com.ittianyu.relight.widget.native_.RelativeWidget.WidgetAndProps;
 import com.ittianyu.relight.widget.native_.TextWidget;
 import com.ittianyu.relight.widget.stateful.state.State;
-import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
+import com.ittianyu.relight.widget.stateful.StatefulWidget;
 
 
-public class StatefulUserWidget extends LifecycleStatefulWidget<RelativeLayout, RelativeWidget> {
+public class StatefulUserWidget extends StatefulWidget<RelativeLayout, RelativeWidget> {
     private UserBean user = UserDataSource.getInstance().getUser();
     private TextWidget twId;
     private TextWidget twName;

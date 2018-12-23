@@ -10,9 +10,9 @@ import com.ittianyu.relight.common.datasource.UserDataSource;
 import com.ittianyu.relight.utils.StateUtils;
 import com.ittianyu.relight.widget.native_.TextWidget;
 import com.ittianyu.relight.widget.stateful.state.State;
-import com.ittianyu.relight.widget.stateful.LifecycleStatefulWidget;
+import com.ittianyu.relight.widget.stateful.StatefulWidget;
 
-public class StatefulUserWidget extends LifecycleStatefulWidget<TextView, TextWidget> {
+public class StatefulUserWidget extends StatefulWidget<TextView, TextWidget> {
     private UserBean user = UserDataSource.getInstance().getUser();
 
     public StatefulUserWidget(Context context, Lifecycle lifecycle) {

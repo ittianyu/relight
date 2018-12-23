@@ -1,5 +1,6 @@
 package com.ittianyu.relight.widget.stateful;
 
+import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.view.View;
 
@@ -14,8 +15,8 @@ public abstract class StatefulWidget<V extends View, T extends Widget<V>> extend
     protected State<T> state;
     protected T widget;
 
-    public StatefulWidget(Context context) {
-        super(context);
+    public StatefulWidget(Context context, Lifecycle lifecycle) {
+        super(context, lifecycle);
     }
 
     abstract protected State<T> createState(Context context);
@@ -39,6 +40,9 @@ public abstract class StatefulWidget<V extends View, T extends Widget<V>> extend
             throw new IllegalStateException("can't render view");
         initWidget(widget);
         update();
+        if (lifecycle != null) {
+            lifecycle.addObserver(this);
+        }
         return view;
     }
 
@@ -71,5 +75,13 @@ public abstract class StatefulWidget<V extends View, T extends Widget<V>> extend
     @Override
     public void update() {
         widget.update();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (state != null) {
+            state.dispose();
+        }
     }
 }
