@@ -9,27 +9,26 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.view.ViewParent;
 import android.widget.FrameLayout;
-
 import android.widget.LinearLayout;
+
 import com.ittianyu.relight.convertor.JsonConvertor;
 import com.ittianyu.relight.lib.R;
 import com.ittianyu.relight.widget.ContainerWidget;
 import com.ittianyu.relight.widget.Widget;
-
 import com.ittianyu.relight.widget.native_.BaseAndroidWidget;
 import com.ittianyu.relight.widget.native_.ViewGroupWidget;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class WidgetView extends FrameLayout {
 
@@ -296,17 +295,13 @@ public class WidgetView extends FrameLayout {
 
 //        if (!(child instanceof WidgetView)) {
         ViewGroup viewGroup = (ViewGroup) widget.render();
-        String lpName = viewGroup.getClass().getName() + "$LayoutParams";
-        try {
-            Class<?> clazz = Class.forName(lpName);
-            Constructor<?> constructor = clazz.getConstructor(ViewGroup.LayoutParams.class);
-            params = (ViewGroup.LayoutParams) constructor.newInstance(params);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         viewGroup.addView(child, index, params);
 //            return;
 //        }
+        if (child instanceof WidgetView) {
+            Widget w = ((WidgetView) child).getWidget();
+            updateProps(w);
+        }
 
 //        Widget w = ((WidgetView) child).getWidget();
 //        View v = w.render();
