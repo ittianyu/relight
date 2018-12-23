@@ -141,184 +141,13 @@ implementation "android.arch.lifecycle:runtime:$lifecycle_version"
 implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
 ```
 
-#### hello relight ####
+#### 混淆 ####
 
-下面将介绍使用框架来构建一个显示 id 和 name 的 activity，点击之后，切换数据。
-
-为了展示数据，先建一个 User 实体类
+使用了 xml 支持，必须加入混淆，未使用的可以不加。
 ```
-public class User {
-    private int id;
-    private String name;
-
-    public User(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-... getter setter toString
-}
+-keep class * extends com.ittianyu.relight.widget.Widget {*;}
 ```
 
-然后先把数据源准备好，这里用随机数字和name来模拟的。
-```
-public class UserModel {
-    private static UserModel instance;
-
-    public static UserModel getInstance() {
-        if (null == instance)
-            instance = new UserModel();
-        return instance;
-    }
-
-    public int randomId() {
-        Random random = new Random();
-        return random.nextInt(100000);
-    }
-
-    public String randomName() {
-        String[] names = {"tom", "ketty", "marry", "jone", "bob", "jackson", "cat"};
-        Random random = new Random();
-        int index = random.nextInt(names.length);
-        return names[index];
-    }
-
-    public User getUser() {
-        int id = randomId();
-        String name = randomName();
-        return new User(id, name);
-    }
-}
-```
-
-下面就是重点了，你需要记住的是，一切都是控件。
-为了渲染需求中的 activity，需要一个 Widget，并且能修改数据，所以新建一个类 UserLayoutStateful  继承  StatefulWidget
-```
-public class UserLayoutStateful extends StatefulWidget<View> {
-    public UserLayoutStateful(Context context, Lifecycle lifecycle) {
-        super(context, lifecycle);
-    }
-
-    @Override
-    protected AsyncState<View> createState(Context context) {
-        return null;
-    }
-}
-```
-
-实现的方法需要返回一个 AsyncState。
-当然我们可以直接 new 一个 State，但已经有更方便的工具类可以节省代码。
-```
-    @Override
-    protected AsyncState<View> createState(Context context) {
-        return StateUtils.create(new UserLayout(context, lifecycle, new User(0, "")));
-    }
-```
-
-该方法需要一个 AndroidWidget，所以还需要一个类，为了方便使用，直接定义为内部类。
-因为后面需要使用 user，所以让外面传进来。
-createView 则直接使用我们最熟悉的 inflate xml 方式来创建。
-
-```
-class UserLayout extends AndroidWidget<View> {
-    private User user;
-
-    public UserLayout(Context context, Lifecycle lifecycle, User user) {
-        super(context, lifecycle);
-        this.user = user;
-    }
-
-    @Override
-    public View createView(Context context) {
-        return View.inflate(context, R.layout.a_activity_user, null);
-    }
-}
-```
-
-a_activity_user.xml
-```
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:id="@+id/v_root"
-    android:gravity="center"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/tv_id"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/tv_name"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-</LinearLayout>
-```
-
-
-为了渲染数据，重写里面的 `initView` `updateView`方法，这里都是常规操作。
-```
-class UserLayout extends AndroidWidget<View> {
-    private User user;
-
-    private TextView tvId;
-    private TextView tvName;
-
-    public UserLayout(Context context, Lifecycle lifecycle, User user) {
-        super(context, lifecycle);
-        this.user = user;
-    }
-
-    @Override
-    public View createView(Context context) {
-        return View.inflate(context, R.layout.a_activity_user, null);
-    }
-
-    @Override
-    public void initView(View view) {
-        tvId = view.findViewById(R.id.tv_id);
-        tvName = view.findViewById(R.id.tv_name);
-    }
-
-    @Override
-    public void updateView(View view) {
-        tvId.setText(user.getId() + "");
-        tvName.setText(user.getName());
-    }
-}
-```
-
-然后添加一个点击事件，点击之后触发数据更新
-```
-    @Override
-    public void initEvent(View view) {
-        view.setOnClickListener(v -> setState(() -> {
-            user = UserModel.getInstance().getUser();
-        }));
-    }
-```
-
-这里从数据源获取数据并不是什么耗时操作，所以，这里直接使用 `setState` 来更新数据。
-但如果这个数据源从网络获取数据，只需要把 换成 `setStateAsync` 来更新数据即可。
-
-
-最后一步是，让 activity 直接渲染这个 widget
-```
-public class UserActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(WidgetUtils.render(this, UserLayoutStateful.class));
-    }
-
-}
-```
 
 ## 入门教程 ##
 
@@ -447,7 +276,7 @@ state.setState -> state.update -> widget.update
 render(first call) -> initView -> initEvent -> initData -> update
 ```
 
-#### LifecycleXxxWidget ####
+#### Lifecycle ####
 带有生命周期的 Widget
 
 * 调用顺序

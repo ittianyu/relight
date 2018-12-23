@@ -39,6 +39,10 @@ public class MediumTutorialActivity extends AppCompatActivity {
             case R.id._7_StartActivity:
                 start(com.ittianyu.relight.medium._7.WidgetActivity.class);
                 break;
+            case R.id._8_Xml:
+                start(com.ittianyu.relight.medium._8.WidgetActivity.class);
+                break;
+
         }
     }
 

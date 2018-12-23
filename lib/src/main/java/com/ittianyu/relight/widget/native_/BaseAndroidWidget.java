@@ -19,8 +19,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.ParameterizedType;
 
 public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWidget> extends AndroidWidget<V> {
-    public static final int matchParent = ViewGroup.LayoutParams.MATCH_PARENT;
-    public static final int wrapContent = ViewGroup.LayoutParams.WRAP_CONTENT;
+    public static final Integer matchParent = ViewGroup.LayoutParams.MATCH_PARENT;
+    public static final Integer wrapContent = ViewGroup.LayoutParams.WRAP_CONTENT;
 
     public Integer id;
     public Drawable background;
@@ -60,7 +60,7 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
         return (T) this;
     }
 
-    public T id(int id) {
+    public T id(Integer id) {
         this.id = id;
         view.setId(id);
         return self();
@@ -76,157 +76,157 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
         return background(new BitmapDrawable(context.getResources(), bitmap));
     }
 
-    public T backgroundResource(@DrawableRes int res) {
+    public T backgroundResource(@DrawableRes Integer res) {
         return background(drawable(res));
     }
 
-    public T backgroundColor(@ColorInt int color) {
+    public T backgroundColor(@ColorInt Integer color) {
         return background(new ColorDrawable(color));
     }
 
-    public T margin(int px) {
+    public T margin(Integer px) {
         this.margin = px;
         setMargin(px);
         updateMargin();
         return self();
     }
 
-    public T margin(float dp) {
+    public T margin(Float dp) {
         return margin(dp(dp));
     }
 
-    public T marginStart(int px) {
+    public T marginStart(Integer px) {
         this.marginStart = px;
         updateMargin();
         return self();
     }
 
-    public T marginStart(float dp) {
+    public T marginStart(Float dp) {
         return marginStart(dp(dp));
     }
 
-    public T marginEnd(int px) {
+    public T marginEnd(Integer px) {
         this.marginEnd = px;
         updateMargin();
         return self();
     }
 
-    public T marginEnd(float dp) {
+    public T marginEnd(Float dp) {
         return marginEnd(dp(dp));
     }
 
-    public T marginTop(int px) {
+    public T marginTop(Integer px) {
         this.marginTop = px;
         updateMargin();
         return self();
     }
 
-    public T marginTop(float dp) {
+    public T marginTop(Float dp) {
         return marginTop(dp(dp));
     }
 
-    public T marginBottom(int px) {
+    public T marginBottom(Integer px) {
         this.marginBottom = px;
         updateMargin();
         return self();
     }
 
-    public T marginBottom(float dp) {
+    public T marginBottom(Float dp) {
         return marginBottom(dp(dp));
     }
 
-    public T padding(int px) {
+    public T padding(Integer px) {
         this.padding = px;
         setPadding(px);
         updatePadding();
         return self();
     }
 
-    public T padding(float dp) {
+    public T padding(Float dp) {
         return padding(dp(dp));
     }
 
-    public T paddingStart(int px) {
+    public T paddingStart(Integer px) {
         this.paddingStart = px;
         updatePadding();
         return self();
     }
 
-    public T paddingStart(float dp) {
+    public T paddingStart(Float dp) {
         return paddingStart(dp(dp));
     }
 
-    public T paddingEnd(int px) {
+    public T paddingEnd(Integer px) {
         this.paddingEnd = px;
         updatePadding();
         return self();
     }
 
-    public T paddingEnd(float dp) {
+    public T paddingEnd(Float dp) {
         return paddingEnd(dp(dp));
     }
 
-    public T paddingTop(int px) {
+    public T paddingTop(Integer px) {
         this.paddingTop = px;
         updatePadding();
         return self();
     }
 
-    public T paddingTop(float dp) {
+    public T paddingTop(Float dp) {
         return paddingTop(dp(dp));
     }
 
-    public T paddingBottom(int px) {
+    public T paddingBottom(Integer px) {
         this.paddingBottom = px;
         updatePadding();
         return self();
     }
 
-    public T paddingBottom(float dp) {
+    public T paddingBottom(Float dp) {
         return paddingBottom(dp(dp));
     }
 
-    public T paddingHorizontal(int px) {
+    public T paddingHorizontal(Integer px) {
         this.paddingStart = px;
         this.paddingEnd = px;
         updatePadding();
         return self();
     }
 
-    public T paddingHorizontal(float dp) {
+    public T paddingHorizontal(Float dp) {
         return paddingHorizontal(dp(dp));
     }
 
-    public T paddingVertical(int px) {
+    public T paddingVertical(Integer px) {
         this.paddingTop = px;
         this.paddingBottom = px;
         updatePadding();
         return self();
     }
 
-    public T paddingVertical(float dp) {
+    public T paddingVertical(Float dp) {
         return paddingVertical(dp(dp));
     }
 
 
 
-    public T width(int px) {
+    public T width(Integer px) {
         this.width = px;
         updateSize();
         return self();
     }
 
-    public T width(float dp) {
+    public T width(Float dp) {
         return width(dp(dp));
     }
 
-    public T height(int px) {
+    public T height(Integer px) {
         this.height = px;
         updateSize();
         return self();
     }
 
-    public T height(float dp) {
+    public T height(Float dp) {
         return height(dp(dp));
     }
 
@@ -257,12 +257,12 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
         return self();
     }
 
-    public T layoutGravity(int layoutGravity) {
+    public T layoutGravity(Integer layoutGravity) {
         this.layoutGravity = layoutGravity;
         return self();
     }
 
-    public T weight(int weight) {
+    public T weight(Integer weight) {
         this.weight = weight;
         return self();
     }
@@ -288,53 +288,53 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
         view.setPadding(paddingStart, paddingTop, paddingEnd, paddingBottom);
     }
 
-    private void setMargin(int margin) {
+    private void setMargin(Integer margin) {
         marginStart = margin;
         marginEnd = margin;
         marginTop = margin;
         marginBottom = margin;
     }
 
-    private void setPadding(int padding) {
+    private void setPadding(Integer padding) {
         paddingStart = padding;
         paddingEnd = padding;
         paddingTop = padding;
         paddingBottom = padding;
     }
 
-    protected int dp(float dp) {
+    protected Integer dp(Double dp) {
+        return dp(dp.floatValue());
+    }
+
+    protected Integer dp(Integer dp) {
+        return dp(dp.floatValue());
+    }
+
+    protected Integer dp(Float dp) {
         return DensityUtils.dip2px(context, dp);
     }
 
-    protected int dp(double dp) {
-        return dp((float) dp);
+    protected Integer sp(Integer sp) {
+        return sp(sp.floatValue());
     }
 
-    protected int dp(int dp) {
-        return dp((float) dp);
+    protected Integer sp(Double sp) {
+        return sp(sp.floatValue());
     }
 
-    protected int sp(int sp) {
-        return sp(sp);
-    }
-
-    protected int sp(double sp) {
-        return sp((float) sp);
-    }
-
-    protected int sp(float sp) {
+    protected Integer sp(Float sp) {
         return DensityUtils.sp2px(context, sp);
     }
 
-    protected int color(int resId) {
+    protected Integer color(Integer resId) {
         return ContextCompat.getColor(context, resId);
     }
 
-    protected String string(int resId) {
+    protected String string(Integer resId) {
         return context.getResources().getString(resId);
     }
 
-    protected Drawable drawable(int resId) {
+    protected Drawable drawable(Integer resId) {
         return ContextCompat.getDrawable(context, resId);
     }
 

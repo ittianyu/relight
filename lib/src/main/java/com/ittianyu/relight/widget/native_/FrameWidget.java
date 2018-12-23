@@ -11,6 +11,10 @@ import com.ittianyu.relight.widget.Widget;
 
 public class FrameWidget extends ViewGroupWidget<FrameLayout, FrameWidget> {
 
+    public FrameWidget(Context context, Lifecycle lifecycle) {
+        this(context, lifecycle, (Widget) null);
+    }
+
     public FrameWidget(Context context, Lifecycle lifecycle, Widget... children) {
         super(context, lifecycle, children);
     }

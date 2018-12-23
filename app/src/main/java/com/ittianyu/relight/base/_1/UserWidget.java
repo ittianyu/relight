@@ -14,9 +14,18 @@ public class UserWidget extends AndroidWidget<View> {
     private TextView tvName;
     private UserBean user;
 
+    public UserWidget(Context context, Lifecycle lifecycle) {
+        super(context, lifecycle);
+    }
+
     public UserWidget(Context context, Lifecycle lifecycle, UserBean user) {
         super(context, lifecycle);
         this.user = user;
+    }
+
+    public void user(UserBean user) {
+        this.user = user;
+        update();
     }
 
     @Override
@@ -34,7 +43,11 @@ public class UserWidget extends AndroidWidget<View> {
     @Override
     public void update() {
         super.update();
-        tvId.setText(user.getId() + "");
-        tvName.setText(user.getName());
+        if (user == null) {
+            tvName.setText("no data");
+        } else {
+            tvId.setText(user.getId() + "");
+            tvName.setText(user.getName());
+        }
     }
 }

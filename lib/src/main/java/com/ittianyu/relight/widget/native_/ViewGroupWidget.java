@@ -30,6 +30,9 @@ public abstract class ViewGroupWidget<V extends ViewGroup, T extends ViewGroupWi
         if (tmpChildren != null) {
             views = new ArrayList<>(tmpChildren.length);
             for (Widget child: tmpChildren) {
+                if (child == null) {
+                    continue;
+                }
                 views.add(child.render());
                 children.add(child);
             }
@@ -60,7 +63,7 @@ public abstract class ViewGroupWidget<V extends ViewGroup, T extends ViewGroupWi
     /**
      * called when add child
      */
-    protected void updateChildrenProps() {
+    public void updateChildrenProps() {
         for (Widget child : children) {
             Queue<Widget> widgets = new LinkedList<>();
             widgets.add(child);

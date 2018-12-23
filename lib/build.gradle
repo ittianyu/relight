@@ -41,6 +41,8 @@ dependencies {
     implementation "android.arch.lifecycle:runtime:$lifecycle_version"
     // alternately - if using Java8, use the following instead of compiler
     implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
+
+    provided 'com.google.code.gson:gson:2.8.5'
 }
 
 

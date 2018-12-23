@@ -1,2 +1,2 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ittianyu.relight" />
+    package="com.ittianyu.relight.lib" />

@@ -11,6 +11,10 @@ import com.ittianyu.relight.widget.Widget;
 public class RelativeWidget extends ViewGroupWidget<RelativeLayout, RelativeWidget> {
     protected WidgetAndProps[] childrenAndProps;
 
+    public RelativeWidget(Context context, Lifecycle lifecycle) {
+        this(context, lifecycle, (WidgetAndProps) null);
+    }
+
     public RelativeWidget(Context context, Lifecycle lifecycle, WidgetAndProps... childrenAndProps) {
         super(context, lifecycle, getChildren(childrenAndProps));
         this.childrenAndProps = childrenAndProps;

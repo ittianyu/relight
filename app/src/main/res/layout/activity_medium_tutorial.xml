@@ -65,6 +65,14 @@
             android:textAllCaps="false"
             android:text="7. StartActivity" />
 
+        <Button
+            android:id="@+id/_8_Xml"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:textAllCaps="false"
+            android:text="8. Xml" />
+
     </LinearLayout>
 
 </ScrollView>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.ittianyu.relight.view.WidgetView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:params="{
+            'orientation': 'vertical',
+            'matchParent': null
+       }"
+        app:widget="com.ittianyu.relight.widget.native_.LinearWidget">
+
+        <com.ittianyu.relight.view.WidgetView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:params="{
+                'user': {
+                    'class': 'com.ittianyu.relight.common.bean.UserBean',
+                    'id': 10086,
+                    'name': 'tomcat'
+                }
+           }"
+            app:widget="com.ittianyu.relight.base._1.UserWidget"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <com.ittianyu.relight.view.WidgetView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:widget="com.ittianyu.relight.base._2.StatefulUserWidget"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <com.ittianyu.relight.view.WidgetView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:widget="com.ittianyu.relight.base._3.StatefulUserWidget"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <com.ittianyu.relight.view.WidgetView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:widget="com.ittianyu.relight.base._4.StatefulUserWidget"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <com.ittianyu.relight.view.WidgetView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:widget="com.ittianyu.relight.base._5.StatefulUserWidget"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <com.ittianyu.relight.view.WidgetView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:widget="com.ittianyu.relight.base._6.StatefulUserWidget"/>
+
+
+
+    </com.ittianyu.relight.view.WidgetView>
+
+</ScrollView>
+
+
+    <!--
+    {
+            'width': 'wrap_content',
+            'height': 'wrap_content',
+            'text':'hello world',
+            'textColor': '#ff0000',
+            'textSize': '18sp',
+            'backgroundResource': 'R.color.colorPrimary',
+            'margin': '16dp',
+            'padding': 16.0,
+            'layoutGravity': 'center',
+
+            'user': {
+                'class': 'com.ittianyu.relight.common.bean.UserBean',
+                'id': 123,
+                'name': 'name'
+            }
+
+    }
+    -->

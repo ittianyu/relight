@@ -1,7 +1,5 @@
 package com.ittianyu.relight.common.datasource;
 
-import android.accounts.NetworkErrorException;
-
 import com.ittianyu.relight.common.bean.UserBean;
 
 import java.util.ArrayList;
@@ -97,5 +95,22 @@ public class UserDataSource {
     private String randomName() {
         int index = random.nextInt(NAMES.length);
         return NAMES[index];
+    }
+
+    public static class NetworkErrorException extends RuntimeException {
+        public NetworkErrorException() {
+        }
+
+        public NetworkErrorException(String message) {
+            super(message);
+        }
+
+        public NetworkErrorException(String message, Throwable cause) {
+            super(message, cause);
+        }
+
+        public NetworkErrorException(Throwable cause) {
+            super(cause);
+        }
     }
 }
