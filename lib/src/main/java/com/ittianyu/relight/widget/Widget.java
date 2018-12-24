@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import com.ittianyu.relight.utils.ContextUtils;
 import com.ittianyu.relight.view.ActivityResultDelegation;
 import com.ittianyu.relight.view.ActivityResultDelegationManager;
 import com.ittianyu.relight.view.AndroidLifecycle;
@@ -42,7 +43,10 @@ public abstract class Widget<V extends View>
 
     protected void startActivityForResult(Intent intent, int requestCode, Bundle options, ActivityResultDelegation delegation) {
         hasRegisterActivityResultDelegation = true;
-        Activity activity = (Activity) context;
+        Activity activity = ContextUtils.getActivity(context);
+        if (null == activity) {
+            throw new IllegalStateException("can't call startActivityForResult, the widget context is not Activity context!");
+        }
         ActivityResultDelegationManager.register(activity, delegation);
         activity.startActivityForResult(intent, requestCode, options);
     }

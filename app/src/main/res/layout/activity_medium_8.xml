@@ -16,6 +16,7 @@
         app:widget="com.ittianyu.relight.widget.native_.LinearWidget">
 
         <com.ittianyu.relight.view.WidgetView
+            android:id="@+id/w_1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:params="{
@@ -80,17 +81,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:widget="com.ittianyu.relight.base._7.StatefulUserWidget"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="16dp" />
-
-        <com.ittianyu.relight.view.WidgetView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:widget="com.ittianyu.relight.base._8.StatefulUserWidget"/>
-
-
 
     </com.ittianyu.relight.view.WidgetView>
 
