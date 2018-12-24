@@ -20,7 +20,7 @@
             app:params="{
                 'width': 'match_parent',
                 'height': 'wrap_content',
-                'text':'hello world',
+                'text':'hello ButtonWidget',
                 'textColor': '#ffffff',
                 'textSize': '14sp',
                 'backgroundResource': 'R.color.colorPrimary',
@@ -29,6 +29,21 @@
                 'layoutGravity': 'center'
            }"
             app:widget="com.ittianyu.relight.widget.native_.ButtonWidget" />
+
+        <com.ittianyu.relight.view.WidgetView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:params="{
+                'matchParent': null,
+                'text':'hello TextWidget',
+                'textColor': '#000000',
+                'backgroundColor': '#ffffff',
+                'gravity': 'center',
+                'allCaps': true,
+                'marginBottom': 16,
+                'drawableLeft': 'com.ittianyu.relight.R.mipmap.ic_launcher'
+           }"
+            app:widget="com.ittianyu.relight.widget.native_.TextWidget" />
 
         <com.ittianyu.relight.view.WidgetView
             android:id="@+id/w_1"
