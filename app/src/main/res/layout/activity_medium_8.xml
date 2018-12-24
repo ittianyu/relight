@@ -41,7 +41,7 @@
                 'gravity': 'center',
                 'allCaps': true,
                 'marginBottom': 16,
-                'drawableLeft': 'com.ittianyu.relight.R.mipmap.ic_launcher'
+                'drawableLeft': 'com.ittianyu.relight.R.mipmap.ic_launcher_round'
            }"
             app:widget="com.ittianyu.relight.widget.native_.TextWidget" />
 
