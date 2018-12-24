@@ -8,20 +8,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.LinearLayout;
+
 import com.ittianyu.relight.convertor.JsonConvertor;
 import com.ittianyu.relight.widget.ContainerWidget;
 import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.BaseAndroidWidget;
 import com.ittianyu.relight.widget.native_.ViewGroupWidget;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class WidgetInflateUtils {
     public static final String CLASS = "class";
@@ -63,6 +66,9 @@ public class WidgetInflateUtils {
     }
 
     private static JSONObject parseParams(String params) {
+        if (null == params) {
+            return null;
+        }
         params = params.replaceAll("'", "\"");
         try {
             return new JSONObject(params);
