@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <com.ittianyu.relight.view.WidgetView
         android:layout_width="match_parent"
@@ -14,6 +13,22 @@
             'matchParent': null
        }"
         app:widget="com.ittianyu.relight.widget.native_.LinearWidget">
+
+        <com.ittianyu.relight.view.WidgetView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:params="{
+                'width': 'match_parent',
+                'height': 'wrap_content',
+                'text':'hello world',
+                'textColor': '#ffffff',
+                'textSize': '14sp',
+                'backgroundResource': 'R.color.colorPrimary',
+                'margin': '16dp',
+                'padding': 16.0,
+                'layoutGravity': 'center'
+           }"
+            app:widget="com.ittianyu.relight.widget.native_.ButtonWidget" />
 
         <com.ittianyu.relight.view.WidgetView
             android:id="@+id/w_1"
@@ -26,7 +41,7 @@
                     'name': 'tomcat'
                 }
            }"
-            app:widget="com.ittianyu.relight.base._1.UserWidget"/>
+            app:widget="com.ittianyu.relight.base._1.UserWidget" />
 
         <View
             android:layout_width="match_parent"
@@ -35,7 +50,7 @@
         <com.ittianyu.relight.view.WidgetView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:widget="com.ittianyu.relight.base._2.StatefulUserWidget"/>
+            app:widget="com.ittianyu.relight.base._2.StatefulUserWidget" />
 
         <View
             android:layout_width="match_parent"
@@ -44,7 +59,7 @@
         <com.ittianyu.relight.view.WidgetView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:widget="com.ittianyu.relight.base._3.StatefulUserWidget"/>
+            app:widget="com.ittianyu.relight.base._3.StatefulUserWidget" />
 
         <View
             android:layout_width="match_parent"
@@ -53,7 +68,7 @@
         <com.ittianyu.relight.view.WidgetView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:widget="com.ittianyu.relight.base._4.StatefulUserWidget"/>
+            app:widget="com.ittianyu.relight.base._4.StatefulUserWidget" />
 
         <View
             android:layout_width="match_parent"
@@ -62,7 +77,7 @@
         <com.ittianyu.relight.view.WidgetView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:widget="com.ittianyu.relight.base._5.StatefulUserWidget"/>
+            app:widget="com.ittianyu.relight.base._5.StatefulUserWidget" />
 
         <View
             android:layout_width="match_parent"
@@ -71,7 +86,7 @@
         <com.ittianyu.relight.view.WidgetView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:widget="com.ittianyu.relight.base._6.StatefulUserWidget"/>
+            app:widget="com.ittianyu.relight.base._6.StatefulUserWidget" />
 
         <View
             android:layout_width="match_parent"
@@ -80,7 +95,70 @@
         <com.ittianyu.relight.view.WidgetView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:widget="com.ittianyu.relight.base._7.StatefulUserWidget"/>
+            app:widget="com.ittianyu.relight.base._7.StatefulUserWidget" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <com.ittianyu.relight.view.WidgetView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:widget="com.ittianyu.relight.medium._1.UserLceeWidget" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <com.ittianyu.relight.view.WidgetView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:widget="com.ittianyu.relight.medium._2.StatefulUserWidget" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <com.ittianyu.relight.view.WidgetView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:widget="com.ittianyu.relight.medium._3.UserLceermWidget" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <com.ittianyu.relight.view.WidgetView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:widget="com.ittianyu.relight.medium._4.UserLceeWidget" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <com.ittianyu.relight.view.WidgetView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:widget="com.ittianyu.relight.medium._5.StatefulUserWidget" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <com.ittianyu.relight.view.WidgetView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:widget="com.ittianyu.relight.medium._6.CacheWidget" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <com.ittianyu.relight.view.WidgetView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:widget="com.ittianyu.relight.medium._7.StartActivityWidget" />
 
     </com.ittianyu.relight.view.WidgetView>
 
