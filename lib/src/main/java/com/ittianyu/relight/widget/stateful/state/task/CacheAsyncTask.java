@@ -10,12 +10,13 @@ public class CacheAsyncTask implements Runnable {
     private Runnable mainThreadTask;
     private CacheStrategy cacheStrategy;
     volatile private boolean readyForNextTask = true;
+    private final CacheAsyncTask lock = this;
     private Runnable notifyReadyForNextTask = new Runnable() {
         @Override
         public void run() {
-            synchronized (this) {
+            synchronized (lock) {
                 readyForNextTask = true;
-                notify();
+                lock.notify();
             }
         }
     };
@@ -80,12 +81,12 @@ public class CacheAsyncTask implements Runnable {
             return;
         }
         handler.post(notifyReadyForNextTask);
-        synchronized (this) {
+        synchronized (lock) {
             if (readyForNextTask) {
                 return;
             }
             try {
-                wait();
+                lock.wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

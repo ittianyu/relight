@@ -104,7 +104,8 @@ class UserLayout extends AndroidWidget<View> {
 ## 快速开始 ##
 
 #### 引入库 ####
-添加 java8 支持
+
+【可选】 添加 java8 支持
 ```
 android {
 ...
@@ -334,6 +335,7 @@ addChildren -> updateChildrenProps -> updateProps
 - [ ] 完善 BaseAndroidWidget 基础属性 和 api
 - [x] startActivity 支持
 - [x] xml 支持
+- [ ] 单元测试支持
 - [ ] CoroutineState(kotlin 协程)
 - [ ] Android Studio 模版
 
