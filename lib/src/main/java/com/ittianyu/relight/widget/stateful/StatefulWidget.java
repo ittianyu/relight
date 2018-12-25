@@ -84,4 +84,8 @@ public abstract class StatefulWidget<V extends View, T extends Widget<V>> extend
             state.dispose();
         }
     }
+
+    @Override
+    public void initWidget(T widget) {
+    }
 }

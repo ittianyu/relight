@@ -3,6 +3,6 @@ package com.ittianyu.relight.widget;
 import android.view.View;
 
 public interface ContainerWidget<V extends View, T extends Widget<V>> {
-    default void initWidget(T widget){}
+    void initWidget(T widget);
     T getInnerWidget();
 }

@@ -56,9 +56,27 @@ public abstract class Widget<V extends View>
     }
 
     @Override
+    public void onStart() {
+    }
+
+    @Override
+    public void onResume() {
+    }
+
+    @Override
+    public void onPause() {
+    }
+
+    @Override
+    public void onStop() {
+    }
+
+    @Override
     public void onDestroy() {
         if (hasRegisterActivityResultDelegation) {
             ActivityResultDelegationManager.unregister((Activity) context, this);
         }
     }
+
+
 }

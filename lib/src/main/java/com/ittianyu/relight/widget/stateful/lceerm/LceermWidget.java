@@ -19,20 +19,23 @@ public abstract class LceermWidget extends StatefulWidget<FrameLayout, FrameWidg
     private Widget empty;
     private Widget error;
     protected Throwable lastError;
-    private Runnable loadingTask = () -> {
-        try {
-            switch (loadType) {
-                case Refresh:
-                case FirstLoad:
-                    this.status = onLoadData();
-                    break;
-                case LoadMore:
-                    this.status = onLoadMore();
-                    break;
+    private Runnable loadingTask = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                switch (loadType) {
+                    case Refresh:
+                    case FirstLoad:
+                        status = onLoadData();
+                        break;
+                    case LoadMore:
+                        status = onLoadMore();
+                        break;
+                }
+            } catch (Exception e) {
+                lastError = e;
+                status = LceeStatus.Error;
             }
-        } catch (Exception e) {
-            lastError = e;
-            this.status = LceeStatus.Error;
         }
     };
 
@@ -207,14 +210,17 @@ public abstract class LceermWidget extends StatefulWidget<FrameLayout, FrameWidg
         return updateStatus(LceeStatus.Error, loadType);
     }
 
-    public boolean updateStatus(LceeStatus status, LoadType loadType) {
+    public boolean updateStatus(final LceeStatus status, final LoadType loadType) {
         // don't allow update with same status.
         // For example, we don't allow loadMore when refreshing
         if (status == this.status)
             return false;
-        setState(() -> {
-            this.status = status;
-            this.loadType = loadType;
+        setState(new Runnable() {
+            @Override
+            public void run() {
+                LceermWidget.this.status = status;
+                LceermWidget.this.loadType = loadType;
+            }
         });
         return true;
     }

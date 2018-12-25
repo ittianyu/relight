@@ -16,8 +16,8 @@ public class StateUtils {
         return create(androidRender, lifecycle, State.DEFAULT_UPDATE_STATE_STRATEGY);
     }
 
-    public static <V extends View> State<AndroidWidget<V>> create(AndroidRender<V> androidRender,
-                                                                           Lifecycle lifecycle,
+    public static <V extends View> State<AndroidWidget<V>> create(final AndroidRender<V> androidRender,
+                                                                           final Lifecycle lifecycle,
                                                                            FilterStrategy updateStateStrategy) {
         return new State<AndroidWidget<V>>(updateStateStrategy) {
             private AndroidWidget<V> widget;
@@ -34,7 +34,7 @@ public class StateUtils {
         return create(widget, State.DEFAULT_UPDATE_STATE_STRATEGY);
     }
 
-    public static <V extends View, T extends Widget<V>> State<T> create(T widget, FilterStrategy updateStateStrategy) {
+    public static <V extends View, T extends Widget<V>> State<T> create(final T widget, FilterStrategy updateStateStrategy) {
         return new State<T>(updateStateStrategy) {
             @Override
             public T build(Context context) {

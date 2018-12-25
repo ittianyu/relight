@@ -17,12 +17,15 @@ public abstract class LceeWidget extends StatefulWidget<FrameLayout, FrameWidget
     private Widget empty;
     private Widget error;
     protected Throwable lastError;
-    private Runnable loadingTask = () -> {
-        try {
-            this.status = onLoadData();
-        } catch (Exception e) {
-            this.lastError = e;
-            this.status = LceeStatus.Error;
+    private Runnable loadingTask = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                status = onLoadData();
+            } catch (Exception e) {
+                lastError = e;
+                status = LceeStatus.Error;
+            }
         }
     };
 
@@ -122,11 +125,14 @@ public abstract class LceeWidget extends StatefulWidget<FrameLayout, FrameWidget
         return updateStatus(LceeStatus.Error);
     }
 
-    public boolean updateStatus(LceeStatus status) {
+    public boolean updateStatus(final LceeStatus status) {
         if (status == this.status)
             return false;
-        setState(() -> {
-            this.status = status;
+        setState(new Runnable() {
+            @Override
+            public void run() {
+                LceeWidget.this.status = status;
+            }
         });
         return true;
     }

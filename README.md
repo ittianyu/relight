@@ -333,7 +333,8 @@ addChildren -> updateChildrenProps -> updateProps
 - [x] 缓存支持
 - [ ] 完善 BaseAndroidWidget 基础属性 和 api
 - [x] startActivity 支持
-- [ ] xml 支持
+- [x] xml 支持
+- [ ] CoroutineState(kotlin 协程)
 - [ ] Android Studio 模版
 
 #### 基础控件 ####
@@ -358,6 +359,10 @@ addChildren -> updateChildrenProps -> updateProps
 - [x] RmWidget
 - [ ] List
 - [ ] Route 和 Navigator
+
+#### 主题控件 ####
+
+- [ ] material
 
 
 #### 文档 ####

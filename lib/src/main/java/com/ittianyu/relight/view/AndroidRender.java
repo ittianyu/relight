@@ -19,13 +19,10 @@ public interface AndroidRender<T extends View> {
 
     T createView(Context context);
 
-    default void initView(T view) {
-    }
+    void initView(T view);
 
-    default void initEvent(T view) {
-    }
+    void initEvent(T view);
 
-    default void initData() {
-    }
+    void initData();
 
 }

@@ -15,7 +15,7 @@ import java.lang.reflect.Constructor;
 
 public class WidgetUtils {
 
-    public static <T extends View> AndroidWidget<T> createAndroidWidget(Context context, AndroidRender<T> androidRender, Lifecycle lifecycle) {
+    public static <T extends View> AndroidWidget<T> createAndroidWidget(Context context, final AndroidRender<T> androidRender, Lifecycle lifecycle) {
         return new AndroidWidget<T>(context, lifecycle) {
             @Override
             public T createView(Context context) {
@@ -39,7 +39,7 @@ public class WidgetUtils {
         };
     }
 
-    public static <T extends View> Widget<T> create(Context context, Lifecycle lifecycle, T view) {
+    public static <T extends View> Widget<T> create(Context context, Lifecycle lifecycle, final T view) {
         return new Widget<T>(context, lifecycle) {
             @Override
             public void update() {

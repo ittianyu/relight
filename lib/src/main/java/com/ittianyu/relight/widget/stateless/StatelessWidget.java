@@ -47,4 +47,8 @@ public abstract class StatelessWidget<V extends View, T extends Widget<V>>
     public void update() {
         widget.update();
     }
+
+    @Override
+    public void initWidget(T widget) {
+    }
 }

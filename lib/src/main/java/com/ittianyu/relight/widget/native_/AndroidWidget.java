@@ -40,6 +40,17 @@ public abstract class AndroidWidget<V extends View> extends Widget<V>
 
     @Override
     public void update() {
+    }
 
+    @Override
+    public void initView(V view) {
+    }
+
+    @Override
+    public void initEvent(V view) {
+    }
+
+    @Override
+    public void initData() {
     }
 }

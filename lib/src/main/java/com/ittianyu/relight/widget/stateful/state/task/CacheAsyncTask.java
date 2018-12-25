@@ -10,10 +10,13 @@ public class CacheAsyncTask implements Runnable {
     private Runnable mainThreadTask;
     private CacheStrategy cacheStrategy;
     volatile private boolean readyForNextTask = true;
-    private Runnable notifyReadyForNextTask = () -> {
-        synchronized (this) {
-            readyForNextTask = true;
-            notify();
+    private Runnable notifyReadyForNextTask = new Runnable() {
+        @Override
+        public void run() {
+            synchronized (this) {
+                readyForNextTask = true;
+                notify();
+            }
         }
     };
 

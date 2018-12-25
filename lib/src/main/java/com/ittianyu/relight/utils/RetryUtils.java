@@ -11,17 +11,20 @@ public class RetryUtils {
      * @param func
      * @return
      */
-    public static Runnable create(final int retryCount, Callable<Boolean> func) {
-        return () -> {
-            int count = retryCount;
-            try {
-                boolean result;
-                do {
-                    result = func.call();
-                    count--;
-                } while (!result && count >= 0);
-            } catch (Exception e) {
-                e.printStackTrace();
+    public static Runnable create(final int retryCount, final Callable<Boolean> func) {
+        return new Runnable() {
+            @Override
+            public void run() {
+                int count = retryCount;
+                try {
+                    boolean result;
+                    do {
+                        result = func.call();
+                        count--;
+                    } while (!result && count >= 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         };
     }
