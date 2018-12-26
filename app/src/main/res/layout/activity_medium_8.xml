@@ -39,7 +39,7 @@
                 'textColor': '#000000',
                 'backgroundColor': '#ffffff',
                 'gravity': 'center',
-                'allCaps': true,
+                'allCaps': false,
                 'marginBottom': 16,
                 'drawableLeft': 'com.ittianyu.relight.R.mipmap.ic_launcher_round'
            }"
