@@ -37,8 +37,8 @@ public class StartActivityWidget extends StatelessWidget<LinearLayout, LinearWid
                 .hintText("result here")
                 .hintTextColor(0xFFCCCCCC);
         return new LinearWidget(context, lifecycle,
-            btnStartActivity,
-            btnStartActivityForResult,
+                btnStartActivity,
+                btnStartActivityForResult,
                 edtNote.marginTop(16.0f)
         );
     }

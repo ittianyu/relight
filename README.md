@@ -10,34 +10,48 @@
 作为初学者，你几乎不需要学习框架api就可以开始使用。
 下面是最贴近原来开发习惯的方式。
 
-UserLayout
+UserWidget
 ```
-class UserLayout extends AndroidWidget<View> {
-    private User user;
-
+public class UserWidget extends AndroidWidget<View> {
     private TextView tvId;
     private TextView tvName;
+    private UserBean user;
 
-    public UserLayout(Context context, Lifecycle lifecycle, User user) {
+    public UserWidget(Context context, Lifecycle lifecycle) {
+        super(context, lifecycle);
+    }
+
+    public UserWidget(Context context, Lifecycle lifecycle, UserBean user) {
         super(context, lifecycle);
         this.user = user;
     }
 
+    public void user(UserBean user) {
+        this.user = user;
+        update();
+    }
+
     @Override
     public View createView(Context context) {
-        return View.inflate(context, R.layout.a_activity_user, null);
+        return View.inflate(context, R.layout.activity_user, null);
     }
 
     @Override
     public void initView(View view) {
+        super.initView(view);
         tvId = view.findViewById(R.id.tv_id);
         tvName = view.findViewById(R.id.tv_name);
     }
 
     @Override
-    public void updateView(View view) {
-        tvId.setText(user.getId() + "");
-        tvName.setText(user.getName());
+    public void update() {
+        super.update();
+        if (user == null) {
+            tvName.setText("no data");
+        } else {
+            tvId.setText(user.getId() + "");
+            tvName.setText(user.getName());
+        }
     }
 }
 ```
@@ -47,43 +61,62 @@ UserActivity
 public class UserActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(WidgetUtils.render(this, UserLayout.class, new User(1, "tomcat")));
+        UserBean user = new UserBean(1, "ittianyu");
+        View root = WidgetUtils.render(this, UserWidget.class, user);
+        //View root = new UserWidget(this, getLifecycle(), user).render(); // this is ok too
+        setContentView(root);
     }
-
 }
 ```
 
-在 Activity 中，调用工具类直接对我们写的 UserLayout 进行渲染。
-也就是说，主要的工作已经完全转移到了 UserLayout 中。
-而 UserLayout 并不会让人感到陌生，仅仅是继承了 AndroidWidget，
-并重写了 `createView`、`initView`、`updateView`这几个方法，相信具体在里面干什么操作你应该很清楚了。
+在 Activity 中，调用工具类直接对我们写的 UserWidget 进行渲染。
+也就是说，主要的工作已经完全转移到了 UserWidget 中。
+而 UserWidget 并不会让人感到陌生，仅仅是继承了 [AndroidWidget](./docs/base/1.AndroidWidget.md)，
+并重写了 `createView`、`initView`、`update`这几个方法，相信具体在里面干什么操作你应该很清楚了。
 
 #### 强大 ####
 MVVM的强大之处在于，你不需要关注数据“方向”，你只需要拿着数据去渲染UI即可。
 
-就比如上面那个例子，数据是外面传进来的，只需要在 `updateView` 中做出相应的变化即可。
+就比如上面那个例子，数据是外面传进来的，只需要在 `update` 中做出相应的变化即可。
 
 但如果想更新UI呢？
 当然你可以直接操作View来设置新的数据，但这违背了MVVM框架的设计原则。
-你可以直接对数据进行修改，然后就会触发一次重新渲染，并不需要担心性能问题，因为默认情况下，原来的 View 并不会被抛弃掉，仅仅会触发一次 update 操作，对应于上面的就是 `updateView` 里面的操作。
+你可以直接对数据进行修改，然后就会触发一次重新渲染，并不需要担心性能问题，因为默认情况下，
+原来的 View 并不会被抛弃掉，仅仅会触发一次 update 操作，对应于上面的就是 `update` 里面的操作。
 ```
-class UserLayout extends AndroidWidget<View> {
-...
-        @Override
-        public void initEvent(View view) {
-            view.setOnClickListener(v -> setState(() -> {
-                user = UserModel.getInstance().getUser();
-            }));
-        }
-...
+public class StatefulUserWidget extends StatefulWidget<View, UserWidget> {
+    private UserBean user = UserDataSource.getInstance().getUser();
+
+    public StatefulUserWidget(Context context, Lifecycle lifecycle) {
+        super(context, lifecycle);
+    }
+
+    @Override
+    protected State<UserWidget> createState(Context context) {
+        return StateUtils.create(new UserWidget(context, lifecycle, user));
+    }
+
+    @Override
+    public void initWidget(UserWidget widget) {
+        widget.setOnClickListener(v -> setState(() -> {
+            //UserBean data = UserDataSource.getInstance().getUser();
+            //user.update(data);
+            user = UserDataSource.getInstance().getUser();
+        }));
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        widget.setUser(user);
+    }
 }
 ```
-这里对 view 设置了一个点击事件，点击后更新数据，进而触发 UI 的更新。
+这里对 widget 设置了一个点击事件，点击后更新数据，进而触发 UI 的更新。
 其实就是调用了 `setState` 方法来触发更新，类似于 react 和 flutter，更新数据的操作需要放到该方法中，否则不会触发更新。
-当然，AndroidWidget 里面并不具备这个方法，因为它是一个原子性的控件，并没有所谓的"状态"。具体用法会在后面讲到。
-
+例子中的 [StatefulWidget](./docs/base/2.StatefulWidget.md) ，具体用法后面会讲到。
 
 #### 高复用 ####
 
@@ -98,7 +131,8 @@ class UserLayout extends AndroidWidget<View> {
 修改数据时，各位开发者可自行选择合适的方法。
 
 * `setState`：同步执行数据修改操作(不需要切换线程，性能高)
-* `setStateAsync`：异步执行的数据修改操作，并在UI销毁时自动停止异步线程
+* `setStateAsync`：异步执行的数据修改操作，并在UI销毁时自动停止异步线程，具体用法会在后面讲到
+* `setStateAsyncWithCache`：类似于 setStateAsync ，支持数据缓存
 
 
 ## 快速开始 ##
@@ -120,10 +154,10 @@ android {
 添加 maven 仓库
 ```
 allprojects {
-	repositories {
-		...
-		maven { url 'https://jitpack.io' }
-	}
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
 }
 ```
 
@@ -197,35 +231,39 @@ implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
 
 ## Widgets ##
 
-本框架将 Widget 大致分为 3 大类。
+本框架所有的东西都视为控件，Widget 是带有生命周期的原子性控件，大致分为三类：native、stateful、stateless。
 
 #### native ####
 底层 Widget。 直接涉及原生 view 的渲染。
 
-* AndroidWidget：所有 native 控件的基类，含有 生命周期和 navite 构建方法
+* AndroidWidget：所有 native 控件的基类，含有生命周期和 navite 构建方法
 * BaseAndroidWidget：继承 AndroidWidget，封装了常用的 native 的属性和设置方法
 * ViewGroupWidget:继承 BaseAndroidWidget，类似于 ViewGroup，用于包容其他 AndroidWidget
 * FrameWidget：封装 FrameLayout
 * LinearWidget：封装 LinearLayout
 * RelativeWidget：封装 RelativeLayout
+* BaseTextWidget：封装了继承自 TextView 的所有 View  的常用属性和设置方法
 * TextWidget：封装 TextView
+* ImageWidget：封装 ImageView
+* ButtonWidget：封装 Button
+* EditWidget：封装 EditText
 * RecyclerWidget：封装 RecyclerView
+* SwipeRefreshWidget：封装 SwipeRefreshLayout
 
 #### stateful ####
 
 带有状态的控件。 
 
-* StatefulWidget：所有 stateful 控件的基类
-* StatefulWidget：带有生命周期的 StatefulWidget
-* LceeWidget：封装了 Loading Content Empty Error 四种常见状态的控件
+* StatefulWidget：所有 stateful 控件的基类，带有生命周期
+* LceeWidget：封装了 Loading、Content、Empty、Error 四种常见状态的控件
+* RmWidget：封装了 Refresh、LoadMore 两种常见状态的控件
+* LceermWidget：封装了 Loading、Content、Empty、Error、Refresh、LoadMore 六种常见状态的控件
 
 #### stateless ####
 
 无状态的控件。
 
-* StatelessWidget：所有 stateless 控件的基类
-* LifecycleStatelessWidget：带有生命周期的 StatelessWidget
-
+* StatelessWidget：所有 stateless 控件的基类，带有生命周期
 
 ## 异步线程策略 ##
 
@@ -332,7 +370,7 @@ addChildren -> updateChildrenProps -> updateProps
 - [x] 重试支持
 - [x] 过滤支持
 - [x] 缓存支持
-- [ ] 完善 BaseAndroidWidget 基础属性 和 api
+- [ ] 完善 BaseAndroidWidget 基础属性 和 API
 - [x] startActivity 支持
 - [x] xml 支持
 - [ ] 单元测试支持
@@ -350,7 +388,7 @@ addChildren -> updateChildrenProps -> updateProps
 - [x] SwipeRefreshWidget
 - [x] ButtonWidget
 - [ ] ToolBarWidget
-- [ ] EditWidget
+- [x] EditWidget
 - [ ] FloatingActionButtonWidget
 - [ ] DrawerWidget
 
