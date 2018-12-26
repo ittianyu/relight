@@ -9,7 +9,11 @@ public abstract class JsonConvertor {
 
     public static JsonConvertor getInstance() {
         if (null == convertor) {
-            convertor = new GsonConvertor();
+            try {
+                convertor = new GsonConvertor();
+            } catch (Throwable e) {
+                throw new UninitException("please init before use. You can choose to add gson lib or set a custom JsonConvertor by call 'JsonConvertor.setInstance(instance);'", e);
+            }
         }
         return convertor;
     }
@@ -17,4 +21,11 @@ public abstract class JsonConvertor {
     public abstract String toJson(Object obj);
 
     public abstract <T> T fromJson(String json, Class<T> beanClass);
+
+    public static class UninitException extends RuntimeException {
+
+        public UninitException(String message, Throwable cause) {
+            super(message, cause);
+        }
+    }
 }

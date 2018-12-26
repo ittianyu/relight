@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import com.ittianyu.relight.utils.ContextUtils;
+import com.ittianyu.relight.utils.WidgetInflateUtils;
 import com.ittianyu.relight.view.ActivityResultDelegation;
 import com.ittianyu.relight.view.ActivityResultDelegationManager;
 import com.ittianyu.relight.view.AndroidLifecycle;
@@ -78,5 +79,11 @@ public abstract class Widget<V extends View>
         }
     }
 
-
+    /**
+     * use json to call the widget method
+     * @param params
+     */
+    public void initWithParams(String params) {
+        WidgetInflateUtils.initWidgetWithParams(context, this, params);
+    }
 }
