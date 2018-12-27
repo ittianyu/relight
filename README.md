@@ -4,7 +4,7 @@
 ## 优势 ##
 
 #### 轻量 ####
-整个lib只有十几个类，仅依赖 lifecycle 和 support lib.
+整个lib只有十几个类，仅依赖 [lifecycle](https://developer.android.google.cn/topic/libraries/architecture/lifecycle) 和 [support lib](https://developer.android.google.cn/topic/libraries/support-library/features).
 
 #### 简单 ####
 作为初学者，你几乎不需要学习框架api就可以开始使用。
@@ -56,9 +56,9 @@ public class UserWidget extends AndroidWidget<View> {
 }
 ```
 
-UserActivity
+WidgetActivity
 ```
-public class UserActivity extends AppCompatActivity {
+public class WidgetActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +101,6 @@ public class StatefulUserWidget extends StatefulWidget<View, UserWidget> {
     @Override
     public void initWidget(UserWidget widget) {
         widget.setOnClickListener(v -> setState(() -> {
-            //UserBean data = UserDataSource.getInstance().getUser();
-            //user.update(data);
             user = UserDataSource.getInstance().getUser();
         }));
     }
@@ -115,24 +113,26 @@ public class StatefulUserWidget extends StatefulWidget<View, UserWidget> {
 }
 ```
 这里对 widget 设置了一个点击事件，点击后更新数据，进而触发 UI 的更新。
-其实就是调用了 `setState` 方法来触发更新，类似于 react 和 flutter，更新数据的操作需要放到该方法中，否则不会触发更新。
+其实就是调用了 `setState` 方法来触发更新，类似于 [react](http://react-china.org)
+和 [flutter](https://flutterchina.club)，更新数据的操作需要放到该方法中，否则不会触发更新。
 例子中的 [StatefulWidget](./docs/base/2.StatefulWidget.md) ，具体用法后面会讲到。
 
 #### 高复用 ####
 
-框架的设计思想是所有的东西都视为控件，各个控件之间保持独立，容器控件可以组合一个或多个控件。每个控件都有独立的生命周期。
+本框架的设计思想类似于`flutter`的“Everything's a Widget”，即把所有的东西都视为控件。
+各个控件之间保持独立，容器控件可以组合一个或多个控件，每个控件都有独立的生命周期。
 因此，控件的复用性大大提高。
 
 #### 异步处理和生命周期管理 ####
 
 对于客户端编程来说，最麻烦的是各种异步调用和状态同步。
 多线程编程很难，稍有不慎，轻则内存泄漏，重则直接蹦溃。
-本框架内部做了处理异步请求，并在 onDestroy 时，自动取消子线程的操作，防止内存泄漏 或者 异步导致的空指针问题。
+本框架内部做了处理异步请求，并在 `onDestroy` 时，自动取消子线程的操作，防止内存泄漏 或者 异步导致的空指针问题。
 修改数据时，各位开发者可自行选择合适的方法。
 
 * `setState`：同步执行数据修改操作(不需要切换线程，性能高)
 * `setStateAsync`：异步执行的数据修改操作，并在UI销毁时自动停止异步线程，具体用法会在后面讲到
-* `setStateAsyncWithCache`：类似于 setStateAsync ，支持数据缓存
+* `setStateAsyncWithCache`：类似于 `setStateAsync` ，支持数据缓存
 
 
 ## 快速开始 ##
@@ -170,7 +170,7 @@ implementation 'com.github.ittianyu:relight:master-SNAPSHOT'
 implementation "com.android.support:appcompat-v7:$support_version"
 implementation "com.android.support:design:$support_version"
 
-//     Support library depends on this lightweight import
+// Support library depends on this lightweight import
 implementation "android.arch.lifecycle:runtime:$lifecycle_version"
 // alternately - if using Java8, use the following instead of compiler
 implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
@@ -224,19 +224,20 @@ implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
 
 目的：学习 AsyncState 的更新策略。
 
-#### [3. LceermWidget](./docs/medium/3.LceermWidget.md) ####
+#### [5.Retryable](./docs/medium/5.Retryable.md) ####
 
-目的：学习 LceermWidget 的使用。
+目的：学习请求重试api。
 
 
 ## Widgets ##
 
-本框架所有的东西都视为控件，Widget 是带有生命周期的原子性控件，大致分为三类：native、stateful、stateless。
+前面说过本框架的设计思想是“Everything's a Widget”，`Widget` 是带有生命周期的原子性控件，
+大致分为三类：native、stateful、stateless。
 
 #### native ####
-底层 Widget。 直接涉及原生 view 的渲染。
+底层 widget。 直接涉及原生 view 的渲染。
 
-* AndroidWidget：所有 native 控件的基类，含有生命周期和 navite 构建方法
+* AndroidWidget：所有 native 控件的基类，含有生命周期和 native 构建方法
 * BaseAndroidWidget：继承 AndroidWidget，封装了常用的 native 的属性和设置方法
 * ViewGroupWidget:继承 BaseAndroidWidget，类似于 ViewGroup，用于包容其他 AndroidWidget
 * FrameWidget：封装 FrameLayout
@@ -267,22 +268,23 @@ implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
 
 ## 异步线程策略 ##
 
-框架内部采用线程池来执行异步操作，考虑到不同的应用有不同的需求，所以，开发者可以自行设置相应的线程池策略(建议在初始化时设置)。
+框架内部采用线程池来执行异步操作，考虑到不同的应用有不同的需求，
+所以，开发者可以自行设置相应的线程池策略(建议在初始化时设置)。
 ```
 ThreadPool.set(executorService);
 ```
 
-默认使用的是 `Executors.newCachedThreadPool()`
-也就是一段时间内没有异步任务时，自动释放内部的线程，符合大部分应用的需求。
+默认使用的是 `Executors.newCachedThreadPool()`，也就是一段时间内没有异步任务时，
+自动释放内部的线程，符合大部分应用的需求。
 
 ## 内部结构 ##
 
 #### Widget ####
 
-外部通过调用 render 方法，获得一个 View，进行渲染
+外部通过调用 `render` 方法，获得一个 View，进行渲染
 
 #### StatelessWidget ####
-需要实现一个 Widget<T> build() 方法，来完成 Widget 的构建
+需要实现一个 `Widget<T> build()` 方法，来完成 `Widget` 的构建
 
 ```
 render(first call) -> build -> widget.render -> initWidget -> update
@@ -297,7 +299,7 @@ onDestroy -> dispose
 ```
 
 #### StatefulWidget ####
-需要实现一个 State<T> createState(Context context) 方法 来构建一个 State 对象
+需要实现一个 `State<T> createState(Context context)` 方法 来构建一个 `State` 对象
 
 ```
 render(first call) -> createState -> state.init -> state.build -> widget.render -> initWidget -> update
@@ -309,9 +311,7 @@ state.setState -> state.update -> widget.update
 
 ```
 构造方法 -> createView
-```
 
-```
 render(first call) -> initView -> initEvent -> initData -> update
 ```
 
@@ -328,7 +328,7 @@ render(first call) -> bind lifecycle
 
 * 生命周期
 
-通过绑定 Lifecycle 来让 Widget 获得完整的生命周期
+通过绑定 `Lifecycle` 来让 `Widget` 获得完整的生命周期
 ```
 onStart
 onResume
@@ -342,22 +342,18 @@ onDestroy
 
 ```
 initView -> initProps
-```
 
-```
 onStart -> updateProps(when has LayoutParams)
 ```
 
-initView 是在 render 之后触发的
+`initView` 是在 `render` 之后触发的
 
 #### ViewGroupWidget ####
 
 ```
 render(first call) -> children.render -> super.render(render self) -> add children to ViewGroup
-```
 
-```
-addChildren -> updateChildrenProps -> updateProps 
+addChildren -> updateChildrenProps -> updateProps
 ```
 
 
@@ -370,7 +366,7 @@ addChildren -> updateChildrenProps -> updateProps
 - [x] 重试支持
 - [x] 过滤支持
 - [x] 缓存支持
-- [ ] 完善 BaseAndroidWidget 基础属性 和 API
+- [ ] 完善 BaseAndroidWidget 基础属性 和 api
 - [x] startActivity 支持
 - [x] xml 支持
 - [ ] 单元测试支持

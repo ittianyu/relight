@@ -16,7 +16,7 @@ import java.util.List;
  * Created by 86839 on 2017/10/18.
  */
 
-public class UserItemAdapter extends RecyclerView.Adapter<UserItemAdapter.ProjectViewHolder> {
+public class UserItemAdapter extends RecyclerView.Adapter<UserItemAdapter.ViewHolder> {
     private List<UserBean> data = new ArrayList<>();
     private Lifecycle lifecycle;
 
@@ -25,13 +25,13 @@ public class UserItemAdapter extends RecyclerView.Adapter<UserItemAdapter.Projec
     }
 
     @Override
-    public ProjectViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         UserItemWidget widget = new UserItemWidget(parent.getContext(), lifecycle);
-        return new ProjectViewHolder(widget);
+        return new ViewHolder(widget);
     }
 
     @Override
-    public void onBindViewHolder(ProjectViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         UserBean item = getData().get(position);
         holder.widget.setData(item);
 
@@ -66,10 +66,10 @@ public class UserItemAdapter extends RecyclerView.Adapter<UserItemAdapter.Projec
     }
 
 
-    public static class ProjectViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         UserItemWidget widget;
 
-        public ProjectViewHolder(UserItemWidget widget) {
+        public ViewHolder(UserItemWidget widget) {
             super(widget.render());
             this.widget = widget;
         }
@@ -85,7 +85,7 @@ public class UserItemAdapter extends RecyclerView.Adapter<UserItemAdapter.Projec
         this.itemClickListener = itemClickListener;
     }
 
-    public static interface ItemClickListener {
+    public interface ItemClickListener {
         void onClick(View view, int position);
     }
 }
