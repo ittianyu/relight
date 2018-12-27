@@ -31,8 +31,8 @@ import java.util.concurrent.Future;
  * You can call dispose to stop the state operations and release resources.
  */
 public abstract class State<T extends Widget> implements SetState {
-    public static final FilterStrategy DEFAULT_UPDATE_STATE_STRATEGY = new NotRepeatFilterStrategy();
-
+    public static FilterStrategy defaultFilterStrategy = new NotRepeatFilterStrategy();
+    private static Class<? extends CacheStrategy> defaultCacheStrategy = CacheThenTaskStrategy.class;
     private Handler handler = new Handler(Looper.getMainLooper());
     private WidgetUpdater widgetUpdater;
     private FilterStrategy filterStrategy;
@@ -41,7 +41,7 @@ public abstract class State<T extends Widget> implements SetState {
     private boolean disposed;
 
     public State() {
-        this(DEFAULT_UPDATE_STATE_STRATEGY);
+        this(null);
     }
 
     /**
@@ -49,11 +49,22 @@ public abstract class State<T extends Widget> implements SetState {
      * @param filterStrategy if null, it don't filter any func
      */
     public State(FilterStrategy filterStrategy) {
+        if (null == filterStrategy) {
+            filterStrategy = defaultFilterStrategy;
+        }
         this.filterStrategy = filterStrategy;
     }
 
     public void setOnUpdateListener(WidgetUpdater widgetUpdater) {
         this.widgetUpdater = widgetUpdater;
+    }
+
+    public static void setDefaultFilterStrategy(FilterStrategy defaultFilterStrategy) {
+        State.defaultFilterStrategy = defaultFilterStrategy;
+    }
+
+    public static void setDefaultCacheStrategy(Class<? extends CacheStrategy> defaultCacheStrategy) {
+        State.defaultCacheStrategy = defaultCacheStrategy;
     }
 
     public void init() {}
@@ -118,7 +129,11 @@ public abstract class State<T extends Widget> implements SetState {
 
     @Override
     public void setStateAsyncWithCache(Runnable cacheFunc, Runnable func) {
-        setStateAsyncWithCache(new CacheThenTaskStrategy(), cacheFunc, func);
+        try {
+            setStateAsyncWithCache(defaultCacheStrategy.newInstance(), cacheFunc, func);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
