@@ -2,12 +2,14 @@ package com.ittianyu.relight.widget.stateful.rm;
 
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
+import android.support.annotation.CallSuper;
+import android.support.annotation.WorkerThread;
 import android.view.View;
 
 import com.ittianyu.relight.utils.StateUtils;
 import com.ittianyu.relight.widget.Widget;
-import com.ittianyu.relight.widget.stateful.state.State;
 import com.ittianyu.relight.widget.stateful.StatefulWidget;
+import com.ittianyu.relight.widget.stateful.state.State;
 
 public abstract class RmWidget<V extends View, T extends Widget<V>> extends StatefulWidget<V, T> {
     protected RmStatus status = RmStatus.RefreshContent;
@@ -153,6 +155,7 @@ public abstract class RmWidget<V extends View, T extends Widget<V>> extends Stat
         return status == RmStatus.Refreshing || status == RmStatus.LoadingMore;
     }
 
+    @CallSuper
     protected void onStatusChanged(RmStatus status) {
         switch (status) {
             case Refreshing:
@@ -187,6 +190,7 @@ public abstract class RmWidget<V extends View, T extends Widget<V>> extends Stat
      * If some error happen, it will auto set RefreshError status
      * @return return the next status after data load complete
      */
+    @WorkerThread
     abstract protected RmStatus onLoadData() throws Exception;
 
     /**
@@ -194,6 +198,7 @@ public abstract class RmWidget<V extends View, T extends Widget<V>> extends Stat
      * If some error happen, it will auto set LoadMoreError status
      * @return return the next status after data load complete
      */
+    @WorkerThread
     abstract protected RmStatus onLoadMore() throws Exception;
 
 }

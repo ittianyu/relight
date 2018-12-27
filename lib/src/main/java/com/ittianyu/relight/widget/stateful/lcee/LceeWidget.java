@@ -2,13 +2,15 @@ package com.ittianyu.relight.widget.stateful.lcee;
 
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
+import android.support.annotation.CallSuper;
+import android.support.annotation.WorkerThread;
 import android.widget.FrameLayout;
 
 import com.ittianyu.relight.utils.StateUtils;
 import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.FrameWidget;
-import com.ittianyu.relight.widget.stateful.state.State;
 import com.ittianyu.relight.widget.stateful.StatefulWidget;
+import com.ittianyu.relight.widget.stateful.state.State;
 
 public abstract class LceeWidget extends StatefulWidget<FrameLayout, FrameWidget> {
     protected LceeStatus status = LceeStatus.Loading;
@@ -137,6 +139,7 @@ public abstract class LceeWidget extends StatefulWidget<FrameLayout, FrameWidget
         return true;
     }
 
+    @CallSuper
     protected void onStatusChanged(LceeStatus status) {
         if (status == LceeStatus.Loading) {
             setStateAsync(loadingTask);
@@ -148,6 +151,7 @@ public abstract class LceeWidget extends StatefulWidget<FrameLayout, FrameWidget
      * If some showError happen, it will auto set showError status
      * @return return the next status after data load complete
      */
+    @WorkerThread
     abstract protected LceeStatus onLoadData() throws Exception;
 
 }

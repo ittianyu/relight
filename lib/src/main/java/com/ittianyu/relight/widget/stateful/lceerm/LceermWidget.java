@@ -2,14 +2,16 @@ package com.ittianyu.relight.widget.stateful.lceerm;
 
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
+import android.support.annotation.CallSuper;
+import android.support.annotation.WorkerThread;
 import android.widget.FrameLayout;
 
 import com.ittianyu.relight.utils.StateUtils;
 import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.FrameWidget;
-import com.ittianyu.relight.widget.stateful.state.State;
 import com.ittianyu.relight.widget.stateful.StatefulWidget;
 import com.ittianyu.relight.widget.stateful.lcee.LceeStatus;
+import com.ittianyu.relight.widget.stateful.state.State;
 
 public abstract class LceermWidget extends StatefulWidget<FrameLayout, FrameWidget> {
     protected LceeStatus status = LceeStatus.Loading;
@@ -225,6 +227,7 @@ public abstract class LceermWidget extends StatefulWidget<FrameLayout, FrameWidg
         return true;
     }
 
+    @CallSuper
     protected void onStatusChanged(LceeStatus status, LoadType loadType) {
         if (status == LceeStatus.Loading) {
             setStateAsync(loadingTask);
@@ -237,6 +240,7 @@ public abstract class LceermWidget extends StatefulWidget<FrameLayout, FrameWidg
      *
      * @return return the next status after data load complete
      */
+    @WorkerThread
     abstract protected LceeStatus onLoadData() throws Exception;
 
     /**
@@ -245,6 +249,7 @@ public abstract class LceermWidget extends StatefulWidget<FrameLayout, FrameWidg
      *
      * @return return the next status after data load complete
      */
+    @WorkerThread
     abstract protected LceeStatus onLoadMore() throws Exception;
 
 
