@@ -12,7 +12,11 @@ public class RelativeWidget extends ViewGroupWidget<RelativeLayout, RelativeWidg
     protected WidgetAndProps[] childrenAndProps;
 
     public RelativeWidget(Context context, Lifecycle lifecycle) {
-        this(context, lifecycle, (WidgetAndProps) null);
+        super(context, lifecycle);
+    }
+
+    public RelativeWidget(Context context, Lifecycle lifecycle, Widget... children) {
+        super(context, lifecycle, children);
     }
 
     public RelativeWidget(Context context, Lifecycle lifecycle, WidgetAndProps... childrenAndProps) {

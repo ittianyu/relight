@@ -12,6 +12,8 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import com.ittianyu.relight.utils.DensityUtils;
 import com.ittianyu.relight.utils.ViewUtils;
 
@@ -40,6 +42,7 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
     public Integer weight;
     public Integer visibility;
     public View.OnClickListener onClickListener;
+    private RelativeRule relativeRule;
 
     public BaseAndroidWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
@@ -267,6 +270,16 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
         return self();
     }
 
+    public T addRule(int verb, int rule) {
+        relative().add(verb, rule);
+        return self();
+    }
+
+    public T removeRule(int verb) {
+        relative().remove(verb);
+        return self();
+    }
+
     private void updateMargin() {
         ViewUtils.setMargin(view, marginStart, marginTop, marginEnd, marginBottom);
     }
@@ -358,6 +371,9 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
         updatePadding();
         onClickListener(onClickListener);
         updateVisible();
+        if (relativeRule != null) {
+            relativeRule.apply(view.getLayoutParams());
+        }
     }
 
     private void updateVisible() {
@@ -379,4 +395,41 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
         return null;
     }
 
+    public RelativeRule relative() {
+        if (relativeRule == null) {
+            relativeRule = new RelativeRule();
+        }
+        return relativeRule;
+    }
+
+    public class RelativeRule {
+        private RelativeLayout.LayoutParams params;
+
+        RelativeRule() {
+            params = new RelativeLayout.LayoutParams(wrapContent, wrapContent);
+        }
+
+        public RelativeRule add(int verb, int subject) {
+            params.addRule(verb, subject);
+            return this;
+        }
+
+        public RelativeRule remove(int verb) {
+            params.removeRule(verb);
+            return this;
+        }
+
+        final void apply(ViewGroup.LayoutParams lp) {
+            if (!(lp instanceof RelativeLayout.LayoutParams)) {
+                return;
+            }
+            RelativeLayout.LayoutParams rlp = (LayoutParams) lp;
+            int[] rules = params.getRules();
+            for (int i = 0; i < rules.length; i++) {
+                rlp.addRule(i, rules[i]);
+            }
+            rlp.alignWithParent = params.alignWithParent;
+            view.setLayoutParams(rlp);
+        }
+    }
 }

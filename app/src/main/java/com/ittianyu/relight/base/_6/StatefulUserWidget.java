@@ -39,10 +39,15 @@ public class StatefulUserWidget extends StatefulWidget<RelativeLayout, RelativeW
         };
         twName = new TextWidget(context, lifecycle);
         twName.id(R.id.tw_name);
+//        RelativeWidget root = new RelativeWidget(context, lifecycle,
+//                new WidgetAndProps(twId, new Prop(RelativeLayout.CENTER_IN_PARENT, Prop.TRUE)),
+//                new WidgetAndProps(twName, new Prop(RelativeLayout.BELOW, R.id.tw_id),
+//                        new Prop(RelativeLayout.CENTER_HORIZONTAL, Prop.TRUE))
+//        );
         RelativeWidget root = new RelativeWidget(context, lifecycle,
-                new WidgetAndProps(twId, new Prop(RelativeLayout.CENTER_IN_PARENT, Prop.TRUE)),
-                new WidgetAndProps(twName, new Prop(RelativeLayout.BELOW, R.id.tw_id),
-                        new Prop(RelativeLayout.CENTER_HORIZONTAL, Prop.TRUE))
+            twId.addRule(RelativeLayout.CENTER_IN_PARENT, Prop.TRUE),
+            twName.addRule(RelativeLayout.BELOW, R.id.tw_id)
+                .addRule(RelativeLayout.CENTER_HORIZONTAL, Prop.TRUE)
         );
         return StateUtils.create(root);
     }
