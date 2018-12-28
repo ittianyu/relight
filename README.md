@@ -167,7 +167,7 @@ allprojects {
 def support_version = '28.0.0'
 def lifecycle_version = '1.1.1'
 
-implementation 'com.github.ittianyu:relight:master-SNAPSHOT'
+implementation 'com.github.ittianyu:relight:0.1.0'
 implementation "com.android.support:appcompat-v7:$support_version"
 implementation "com.android.support:design:$support_version"
 
@@ -441,3 +441,11 @@ addChildren -> updateChildrenProps -> updateProps
 - [ ] 英文版
 - [x] To Do List
 
+## 致谢 ##
+
+感谢 [贵州穿青人](https://github.com/liyujiang-gzu) 一直以来的支持和帮忙
+
+
+## 版权 ##
+
+[Apache License 2.0](https://github.com/ittianyu/relight/blob/master/LICENSE)
