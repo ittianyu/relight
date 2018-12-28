@@ -3,6 +3,10 @@
 
 ## 优势 ##
 
+#### 稳定 ####
+- 减少内存泄漏：新手很容易在线程切换的地方写出导致内存泄漏的代码，但如果把线程切换交给框架来做，出错的概率就大大降低。
+- 减少 crash：根据我的开发经历，大部分 crash 都是空指针导致的。一般线程回调里最容易出现问题，当UI销毁后，子线程依旧去操作UI，容易导致 crash。 本框架有完善的生命周期，UI销毁后，框架对子线程做了强制的停止操作，大大减少 crash 的概率。
+
 #### 轻量 ####
 - 最少依赖：仅依赖 [lifecycle](https://developer.android.google.cn/topic/libraries/architecture/lifecycle) 和 [support lib](https://developer.android.google.cn/topic/libraries/support-library/features).
 - 实现精简：只有几十个类
