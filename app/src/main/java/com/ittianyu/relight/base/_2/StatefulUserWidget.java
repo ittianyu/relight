@@ -10,7 +10,7 @@ import com.ittianyu.relight.utils.StateUtils;
 import com.ittianyu.relight.widget.stateful.StatefulWidget;
 import com.ittianyu.relight.widget.stateful.state.State;
 
-public class StatefulUserWidget extends StatefulWidget<View, UserWidget> implements View.OnClickListener, Runnable {
+public class StatefulUserWidget extends StatefulWidget<View, UserWidget> {
     private UserBean user = UserDataSource.getInstance().getUser();
 
     public StatefulUserWidget(Context context, Lifecycle lifecycle) {
@@ -24,24 +24,15 @@ public class StatefulUserWidget extends StatefulWidget<View, UserWidget> impleme
 
     @Override
     public void initWidget(UserWidget widget) {
-        widget.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        setState(this);
-    }
-
-    @Override
-    public void run() {
-        //UserBean data = UserDataSource.getInstance().getUser();
-        //user.update(data);
-        user = UserDataSource.getInstance().getUser();
+        widget.setOnClickListener(v -> setState(() -> {
+            user = UserDataSource.getInstance().getUser();
+        }));
+        update();
     }
 
     @Override
     public void update() {
-        super.update();
         widget.setUser(user);
+        super.update();
     }
 }

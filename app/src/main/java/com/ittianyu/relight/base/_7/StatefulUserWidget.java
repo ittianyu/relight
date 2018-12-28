@@ -39,7 +39,7 @@ public class StatefulUserWidget extends StatefulWidget<LinearLayout, LinearWidge
                 .onClickListener(v -> setStateAsync(() -> {
                     user = UserDataSource.getInstance().getUserFromRemote();
                 }));
-
+        update();
     }
 
     @Override

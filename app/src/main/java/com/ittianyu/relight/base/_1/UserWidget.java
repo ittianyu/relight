@@ -38,6 +38,7 @@ public class UserWidget extends AndroidWidget<View> {
         super.initView(view);
         tvId = view.findViewById(R.id.tv_id);
         tvName = view.findViewById(R.id.tv_name);
+        update();
     }
 
     @Override

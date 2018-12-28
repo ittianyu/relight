@@ -40,7 +40,7 @@ public class StatefulUserWidget extends StatefulWidget<LinearLayout, LinearWidge
                 .gravity(Gravity.CENTER)
                 .matchParent()
                 .onClickListener(v -> setStateAsync(updateTask));
-
+        update();
     }
 
     @Override

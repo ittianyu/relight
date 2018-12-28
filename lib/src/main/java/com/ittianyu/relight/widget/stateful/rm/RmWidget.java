@@ -47,8 +47,8 @@ public abstract class RmWidget<V extends View, T extends Widget<V>> extends Stat
 
     @Override
     public void update() {
-        super.update();
         updateWidget();
+        super.update();
     }
 
     private void updateWidget() {

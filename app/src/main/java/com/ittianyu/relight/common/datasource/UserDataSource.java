@@ -63,7 +63,7 @@ public class UserDataSource {
         }
 
         // mock empty and error
-        switch (random.nextInt(3)) {
+        switch (random.nextInt(4)) {
             case 0: {// empty
                 return Collections.emptyList();
             }

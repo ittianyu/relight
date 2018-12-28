@@ -35,7 +35,6 @@ public abstract class AndroidWidget<V extends View> extends Widget<V>
         initView(view);
         initEvent(view);
         initData();
-        update();
     }
 
     @Override

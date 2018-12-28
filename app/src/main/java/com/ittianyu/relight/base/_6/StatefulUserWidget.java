@@ -59,7 +59,7 @@ public class StatefulUserWidget extends StatefulWidget<RelativeLayout, RelativeW
                 .onClickListener(v -> setState(() -> {
                     user = UserDataSource.getInstance().getUser();
                 }));
-
+        update();
     }
 
     @Override

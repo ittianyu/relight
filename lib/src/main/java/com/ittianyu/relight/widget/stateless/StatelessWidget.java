@@ -31,7 +31,6 @@ public abstract class StatelessWidget<V extends View, T extends Widget<V>>
         if (view == null)
             throw new IllegalStateException("can't render view");
         initWidget(widget);
-        update();
         if (lifecycle != null) {
             lifecycle.addObserver(this);
         }

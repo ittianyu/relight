@@ -89,8 +89,8 @@ public abstract class LceermWidget extends StatefulWidget<FrameLayout, FrameWidg
 
     @Override
     public void update() {
-        super.update();
         updateWidget();
+        super.update();
     }
 
     @Override

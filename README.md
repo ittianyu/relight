@@ -41,6 +41,7 @@ public class StatefulUserWidget extends StatefulWidget<View, UserWidget> {
         widget.setOnClickListener(v -> setState(() -> {
             user = UserDataSource.getInstance().getUser();
         }));
+		update();
     }
 
     @Override
@@ -307,13 +308,14 @@ ThreadPool.set(executorService);
 
 #### Widget ####
 
-外部通过调用 `render` 方法，获得一个 View，进行渲染
+- render: 外部通过调用 `render` 方法，获得一个 View，进行渲染
+- update: 当 `StatefulWidget` 状态变更时，被动触发
 
 #### StatelessWidget ####
 需要实现一个 `Widget<T> build()` 方法，来完成 `Widget` 的构建
 
 ```
-render(first call) -> build -> widget.render -> initWidget -> update
+render(first call) -> build -> widget.render -> initWidget
 ```
 
 #### state ####
@@ -328,7 +330,7 @@ onDestroy -> dispose
 需要实现一个 `State<T> createState(Context context)` 方法 来构建一个 `State` 对象
 
 ```
-render(first call) -> createState -> state.init -> state.build -> widget.render -> initWidget -> update
+render(first call) -> createState -> state.init -> state.build -> widget.render -> initWidget
 
 state.setState -> state.update -> widget.update
 ```
@@ -338,7 +340,7 @@ state.setState -> state.update -> widget.update
 ```
 构造方法 -> createView
 
-render(first call) -> initView -> initEvent -> initData -> update
+render(first call) -> initView -> initEvent -> initData
 ```
 
 #### Lifecycle ####
