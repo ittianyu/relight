@@ -41,6 +41,7 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
     public Integer layoutGravity;
     public Integer weight;
     public Integer visibility;
+    public Boolean clickable;
     public View.OnClickListener onClickListener;
     private RelativeLayout.LayoutParams relativeParams;
 
@@ -254,6 +255,12 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
         return self();
     }
 
+    public T clickable(boolean clickable) {
+        this.clickable = clickable;
+        view.setClickable(clickable);
+        return self();
+    }
+
     public T onClickListener(View.OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
         view.setOnClickListener(onClickListener);
@@ -387,10 +394,13 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
             setPadding(padding);
         if (background != null)
             background(background);
+        if (clickable != null)
+            clickable(clickable);
+        if (onClickListener != null)
+            onClickListener(onClickListener);
         updateSize();
         updateMargin();
         updatePadding();
-        onClickListener(onClickListener);
         updateVisible();
     }
 

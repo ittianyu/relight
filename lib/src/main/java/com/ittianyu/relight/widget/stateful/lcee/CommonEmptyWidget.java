@@ -42,7 +42,7 @@ public class CommonEmptyWidget extends StatelessWidget<FrameLayout, FrameWidget>
                 .textSize(16.0f)
                 .textColor(Color.BLACK)
                 .layoutGravity(Gravity.CENTER)
-                .onClickListener(onClickListener);
+                .clickable(false);
         widget.matchParent().onClickListener(onClickListener);
     }
 
