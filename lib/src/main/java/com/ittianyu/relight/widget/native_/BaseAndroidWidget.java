@@ -11,9 +11,9 @@ import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
+
 import com.ittianyu.relight.utils.DensityUtils;
 import com.ittianyu.relight.utils.ViewUtils;
 
@@ -41,8 +41,9 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
     public Integer layoutGravity;
     public Integer weight;
     public Integer visibility;
+    public Boolean clickable;
     public View.OnClickListener onClickListener;
-    private RelativeRule relativeRule;
+    private RelativeLayout.LayoutParams relativeParams;
 
     public BaseAndroidWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
@@ -53,7 +54,9 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
     @Override
     public void onStart() {
         // no need to run updateProps if no LayoutParams(when it not attach to parent, it won't has it)
-        if (view.getLayoutParams() != null) {
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        if (null != layoutParams) {
+            mergeLayoutParams(layoutParams);
             updateProps(view);
         }
     }
@@ -211,8 +214,6 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
         return paddingVertical(dp(dp));
     }
 
-
-
     public T width(Integer px) {
         this.width = px;
         updateSize();
@@ -254,6 +255,12 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
         return self();
     }
 
+    public T clickable(boolean clickable) {
+        this.clickable = clickable;
+        view.setClickable(clickable);
+        return self();
+    }
+
     public T onClickListener(View.OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
         view.setOnClickListener(onClickListener);
@@ -271,13 +278,34 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
     }
 
     public T addRule(int verb, int rule) {
-        relative().add(verb, rule);
+        if (null == relativeParams) {
+            relativeParams = new RelativeLayout.LayoutParams(wrapContent, wrapContent);
+        }
+        relativeParams.addRule(verb, rule);
         return self();
     }
 
     public T removeRule(int verb) {
-        relative().remove(verb);
+        if (null != relativeParams) {
+            relativeParams.removeRule(verb);
+        }
         return self();
+    }
+
+    private void mergeLayoutParams(ViewGroup.LayoutParams lp) {
+        if (!(lp instanceof RelativeLayout.LayoutParams)) {
+            return;
+        }
+        if (null == relativeParams) {
+            return;
+        }
+        RelativeLayout.LayoutParams rlp = (LayoutParams) lp;
+        int[] rules = relativeParams.getRules();
+        for (int i = 0, n = rules.length; i < n; i++) {
+            rlp.addRule(i, rules[i]);
+        }
+        rlp.alignWithParent = relativeParams.alignWithParent;
+        view.setLayoutParams(rlp);
     }
 
     private void updateMargin() {
@@ -366,14 +394,14 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
             setPadding(padding);
         if (background != null)
             background(background);
+        if (clickable != null)
+            clickable(clickable);
+        if (onClickListener != null)
+            onClickListener(onClickListener);
         updateSize();
         updateMargin();
         updatePadding();
-        onClickListener(onClickListener);
         updateVisible();
-        if (relativeRule != null) {
-            relativeRule.apply(view.getLayoutParams());
-        }
     }
 
     private void updateVisible() {
@@ -385,8 +413,12 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
     @Override
     public V createView(Context context) {
         try {
+            ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
+            if (null == parameterizedType) {
+                return null;
+            }
             //noinspection unchecked
-            Class<V> clazz = (Class<V>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+            Class<V> clazz = (Class<V>) parameterizedType.getActualTypeArguments()[0];
             Constructor<V> constructor = clazz.getConstructor(Context.class);
             return constructor.newInstance(context);
         } catch (Exception e) {
@@ -395,41 +427,4 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
         return null;
     }
 
-    public RelativeRule relative() {
-        if (relativeRule == null) {
-            relativeRule = new RelativeRule();
-        }
-        return relativeRule;
-    }
-
-    public class RelativeRule {
-        private RelativeLayout.LayoutParams params;
-
-        RelativeRule() {
-            params = new RelativeLayout.LayoutParams(wrapContent, wrapContent);
-        }
-
-        public RelativeRule add(int verb, int subject) {
-            params.addRule(verb, subject);
-            return this;
-        }
-
-        public RelativeRule remove(int verb) {
-            params.removeRule(verb);
-            return this;
-        }
-
-        final void apply(ViewGroup.LayoutParams lp) {
-            if (!(lp instanceof RelativeLayout.LayoutParams)) {
-                return;
-            }
-            RelativeLayout.LayoutParams rlp = (LayoutParams) lp;
-            int[] rules = params.getRules();
-            for (int i = 0; i < rules.length; i++) {
-                rlp.addRule(i, rules[i]);
-            }
-            rlp.alignWithParent = params.alignWithParent;
-            view.setLayoutParams(rlp);
-        }
-    }
 }

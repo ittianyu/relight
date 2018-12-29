@@ -1,12 +1,15 @@
 package com.ittianyu.relight.medium._8;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.ittianyu.relight.R;
 import com.ittianyu.relight.utils.WidgetInflaterFactory;
+import com.ittianyu.relight.view.ActivityResultDelegationManager;
 import com.ittianyu.relight.widget.Widget;
 
 public class WidgetActivity extends AppCompatActivity {
@@ -21,4 +24,11 @@ public class WidgetActivity extends AppCompatActivity {
         Widget widget = (Widget) view.getTag();
         System.out.println(widget);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ActivityResultDelegationManager.onActivityResult(this, requestCode, resultCode, data);
+    }
+    
 }
