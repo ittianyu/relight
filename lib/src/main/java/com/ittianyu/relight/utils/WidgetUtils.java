@@ -15,20 +15,20 @@ import java.lang.reflect.Constructor;
 
 public class WidgetUtils {
 
-    public static <T extends View> AndroidWidget<T> createAndroidWidget(Context context, final AndroidRender<T> androidRender, Lifecycle lifecycle) {
-        return new AndroidWidget<T>(context, lifecycle) {
+    public static <V extends View> AndroidWidget<V> createAndroidWidget(Context context, final AndroidRender<V> androidRender, Lifecycle lifecycle) {
+        return new AndroidWidget<V>(context, lifecycle) {
             @Override
-            public T createView(Context context) {
+            public V createView(Context context) {
                 return androidRender.createView(context);
             }
 
             @Override
-            public void initView(T view) {
+            public void initView(V view) {
                 androidRender.initView(view);
             }
 
             @Override
-            public void initEvent(T view) {
+            public void initEvent(V view) {
                 androidRender.initEvent(view);
             }
 
@@ -39,28 +39,20 @@ public class WidgetUtils {
         };
     }
 
-    public static <T extends View> Widget<T> create(Context context, Lifecycle lifecycle, final T view) {
-        return new Widget<T>(context, lifecycle) {
+    public static <V extends View> Widget<V> create(Context context, Lifecycle lifecycle, final V view) {
+        return new Widget<V>(context, lifecycle) {
             @Override
             public void update() {
             }
 
             @Override
-            public T render() {
+            public V render() {
                 return view;
             }
         };
     }
 
-    public static <T extends View> T render(Fragment fragment, Class<? extends Widget<T>> widgetClass, Object... params) {
-        return render(fragment.getActivity(), fragment, widgetClass, params);
-    }
-
-    public static <T extends View> T render(AppCompatActivity activity, Class<? extends Widget<T>> widgetClass, Object... params) {
-        return render(activity, activity, widgetClass, params);
-    }
-
-    public static <T extends View> T render(Context context, LifecycleOwner lifecycleOwner, Class<? extends Widget<T>> widgetClass, Object... params) {
+    public static <V extends View> Widget<V> create(Context context, Lifecycle lifecycle, Class<? extends Widget<V>> widgetClass, Object... params) {
         Class[] clazzs = new Class[params.length + 2];
         clazzs[0] = Context.class;
         clazzs[1] = Lifecycle.class;
@@ -71,17 +63,28 @@ public class WidgetUtils {
 
         Object[] ps = new Object[params.length + 2];
         ps[0] = context;
-        ps[1] = lifecycleOwner.getLifecycle();
+        ps[1] = lifecycle;
         for (int i = 0; i < params.length; i++) {
             ps[i + 2] = params[i];
         }
         try {
-            Constructor<? extends Widget<T>> constructor = widgetClass.getConstructor(clazzs);
-            Widget<T> widget = constructor.newInstance(ps);
-            return widget.render();
+            Constructor<? extends Widget<V>> constructor = widgetClass.getConstructor(clazzs);
+            return constructor.newInstance(ps);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+    
+    public static <V extends View> V render(Fragment fragment, Class<? extends Widget<V>> widgetClass, Object... params) {
+        return render(fragment.getActivity(), fragment, widgetClass, params);
+    }
+
+    public static <V extends View> V render(AppCompatActivity activity, Class<? extends Widget<V>> widgetClass, Object... params) {
+        return render(activity, activity, widgetClass, params);
+    }
+
+    public static <V extends View> V render(Context context, LifecycleOwner lifecycleOwner, Class<? extends Widget<V>> widgetClass, Object... params) {
+        return create(context, lifecycleOwner.getLifecycle(), widgetClass, params).render();
     }
 }
