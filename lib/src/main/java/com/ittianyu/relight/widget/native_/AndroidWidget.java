@@ -26,6 +26,8 @@ public abstract class AndroidWidget<V extends View> extends Widget<V>
             init();
             if (null != lifecycle) {
                 lifecycle.addObserver(this);
+            } else {
+                onStart();
             }
         }
         return view;

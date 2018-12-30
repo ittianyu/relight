@@ -41,6 +41,8 @@ public abstract class StatefulWidget<V extends View, T extends Widget<V>> extend
         initWidget(widget);
         if (lifecycle != null) {
             lifecycle.addObserver(this);
+        } else {
+            onStart();
         }
         return view;
     }

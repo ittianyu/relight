@@ -43,7 +43,7 @@ dependencies {
     implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
 
     implementation project(':lib')
-//    implementation 'com.github.ittianyu:relight:master-SNAPSHOT'
+//    implementation 'com.github.ittianyu:relight:0.1.0'
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.2'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
