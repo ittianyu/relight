@@ -2,6 +2,7 @@ package com.ittianyu.relight.advance._1;
 
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,6 +13,7 @@ import com.ittianyu.relight.widget.native_.TextWidget;
 import com.ittianyu.relight.widget.stateful.navigator.Navigator;
 
 public class Screen extends LinearWidget implements OnClickListener {
+
     private static final int ID_BW_PUSH_FIRST = 1;
     private static final int ID_BW_PUSH_SECOND = 2;
     private static final int ID_BW_POP = 3;
@@ -20,8 +22,10 @@ public class Screen extends LinearWidget implements OnClickListener {
         super(context, lifecycle);
         this.addChildren(
             new TextWidget(context, lifecycle).text(text),
-            new ButtonWidget(context, lifecycle).id(ID_BW_PUSH_FIRST).text("push first").onClickListener(this),
-            new ButtonWidget(context, lifecycle).id(ID_BW_PUSH_SECOND).text("push second").onClickListener(this),
+            new ButtonWidget(context, lifecycle).id(ID_BW_PUSH_FIRST).text("push first")
+                .onClickListener(this),
+            new ButtonWidget(context, lifecycle).id(ID_BW_PUSH_SECOND).text("push second")
+                .onClickListener(this),
             new ButtonWidget(context, lifecycle).id(ID_BW_POP).text("pop").onClickListener(this)
         );
     }
@@ -30,10 +34,11 @@ public class Screen extends LinearWidget implements OnClickListener {
     protected void initProps() {
         super.initProps();
         matchParent()
-        .gravity(Gravity.CENTER)
-        .orientation(vertical);
+            .backgroundColor(Color.WHITE)
+            .elevation(6.0f)
+            .gravity(Gravity.CENTER)
+            .orientation(vertical);
     }
-
 
     @Override
     public void onClick(View v) {

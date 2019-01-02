@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
@@ -44,6 +46,7 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
     public Boolean clickable;
     public View.OnClickListener onClickListener;
     private RelativeLayout.LayoutParams relativeParams;
+    private Float elevation;
 
     public BaseAndroidWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
@@ -292,6 +295,14 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
         return self();
     }
 
+    public T elevation(Float dp) {
+        this.elevation = dp;
+        if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
+            view.setElevation(dp);
+        }
+        return self();
+    }
+
     private void mergeLayoutParams(ViewGroup.LayoutParams lp) {
         if (!(lp instanceof RelativeLayout.LayoutParams)) {
             return;
@@ -402,6 +413,9 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
         updateMargin();
         updatePadding();
         updateVisible();
+        if (elevation != null) {
+            elevation(elevation);
+        }
     }
 
     private void updateVisible() {

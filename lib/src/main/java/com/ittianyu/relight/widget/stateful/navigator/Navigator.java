@@ -3,6 +3,10 @@ package com.ittianyu.relight.widget.stateful.navigator;
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import com.ittianyu.relight.utils.ContextUtils;
 import com.ittianyu.relight.utils.StateUtils;
@@ -22,6 +26,21 @@ public class Navigator extends StatefulWidget<FrameLayout, FrameWidget> {
     private final boolean finishWhenEmpty;
     private Stack<Widget> stack = new Stack<>();
     private Map<String, Route> routeMap = new HashMap<>();
+    private Action action;
+    private boolean pop;
+    private Runnable pushTask = new Runnable() {
+        @Override
+        public void run() {
+            action = Action.PUSH;
+        }
+    };
+    private Runnable popTask = new Runnable() {
+        @Override
+        public void run() {
+            action = Action.POP;
+        }
+    };
+
 
     public Navigator(Context context, Lifecycle lifecycle, String name, Route initRoute, Route... routes) {
         this(context, lifecycle, name, true, initRoute, routes);
@@ -30,18 +49,30 @@ public class Navigator extends StatefulWidget<FrameLayout, FrameWidget> {
     public Navigator(Context context, Lifecycle lifecycle, String name, boolean finishWhenEmpty, Route initRoute, Route... routes) {
         super(context, lifecycle);
         map.put(name, this);
-        stack.push(initRoute.build(context, lifecycle));
         this.finishWhenEmpty = finishWhenEmpty;
-        bindRoute(initRoute);
+        bindRoute(initRoute, routes);
+        stack.push(initRoute.build(context, lifecycle));
+    }
+
+    @Override
+    public void initWidget(FrameWidget widget) {
+        super.initWidget(widget);
+        widget
+            .matchParent()
+            .addChild(stack.peek(), false);
+    }
+
+    private void bindRoute(Route initRoute, Route[] routes) {
+        addRoute(initRoute);
         if (routes == null) {
             return;
         }
         for (Route route : routes) {
-            bindRoute(route);
+            addRoute(route);
         }
     }
 
-    private void bindRoute(Route route) {
+    private void addRoute(Route route) {
         routeMap.put(route.path(), route);
     }
 
@@ -57,13 +88,60 @@ public class Navigator extends StatefulWidget<FrameLayout, FrameWidget> {
     }
 
     private void updateWidget() {
-        widget.removeAllChildren();
-        widget.addChild(stack.peek());
+        switch (action) {
+            case PUSH: {
+                Widget topWidget = stack.peek();
+                widget.addChild(topWidget);
+                View view = topWidget.render();
+                Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+                view.startAnimation(animation);
+                break;
+            }
+            case POP: {
+                if (pop) {
+                    Widget popWidget = stack.pop();
+                    widget.removeChild(popWidget);
+                    pop = false;
+                    break;
+                }
+
+                pop = true;
+                final Widget popWidget = stack.pop();
+                final View view = popWidget.render();
+                Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_out_right);
+                animation.setAnimationListener(new AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        if (isDestroyed()) {
+                            pop = false;
+                            return;
+                        }
+                        view.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                widget.removeChild(popWidget);
+                                pop = false;
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+                });
+                view.startAnimation(animation);
+                break;
+            }
+        }
     }
 
     public void push(Widget widget) {
         stack.push(widget);
-        setState(null);
+        setState(pushTask);
     }
 
     public void push(String path) {
@@ -84,12 +162,15 @@ public class Navigator extends StatefulWidget<FrameLayout, FrameWidget> {
         if (stack.isEmpty()) {
             return;
         }
-        stack.pop();
-        if (stack.isEmpty() && finishWhenEmpty) {
-            ContextUtils.getActivity(context).finish();
+        if (stack.size() == 1 && finishWhenEmpty) {
+            finish();
         } else {
-            setState(null);
+            setState(popTask);
         }
+    }
+
+    private void finish() {
+        ContextUtils.getActivity(context).finish();
     }
 
     public static Navigator get(String name) {
@@ -118,5 +199,10 @@ public class Navigator extends StatefulWidget<FrameLayout, FrameWidget> {
     public static void pop(String name) {
         Navigator navigator = getNavigator(name);
         navigator.pop();
+    }
+
+    private enum Action {
+        PUSH,
+        POP
     }
 }

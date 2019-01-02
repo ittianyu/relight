@@ -2,6 +2,7 @@ package com.ittianyu.relight.widget;
 
 import android.app.Activity;
 import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.Lifecycle.State;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -85,5 +86,12 @@ public abstract class Widget<V extends View>
      */
     public void initWithParams(String params) {
         WidgetInflateUtils.initWidgetWithParams(context, this, params);
+    }
+
+    public boolean isDestroyed() {
+        if (lifecycle == null) {
+            return false;
+        }
+        return lifecycle.getCurrentState() == State.DESTROYED;
     }
 }
