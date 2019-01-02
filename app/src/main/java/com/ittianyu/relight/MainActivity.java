@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.ittianyu.relight.advance.AdvanceTutorialActivity;
 import com.ittianyu.relight.base.BaseTutorialActivity;
 import com.ittianyu.relight.medium.MediumTutorialActivity;
 
@@ -24,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.MediumTutorial:
                 start(MediumTutorialActivity.class);
+                break;
+            case R.id.AdvanceTutorial:
+                start(AdvanceTutorialActivity.class);
                 break;
         }
     }

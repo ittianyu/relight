@@ -2,20 +2,21 @@ package com.ittianyu.relight.widget.stateful.navigator.route;
 
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
+import android.view.View;
 import com.ittianyu.relight.utils.WidgetUtils;
 import com.ittianyu.relight.widget.Widget;
 import java.util.UUID;
 
-public class WidgetRouter implements Route {
-    private Class<? extends Widget> widgetClass;
+public class WidgetRouter<V extends View> implements Route<V> {
+    private Class<? extends Widget<V>> widgetClass;
     private Object[] params;
     private String path;
 
-    public WidgetRouter(Class<? extends Widget> widgetClass, Object... params) {
+    public WidgetRouter(Class<? extends Widget<V>> widgetClass, Object... params) {
         this(null, widgetClass, params);
     }
 
-    public WidgetRouter(String path, Class<? extends Widget> widgetClass, Object... params) {
+    public WidgetRouter(String path, Class<? extends Widget<V>> widgetClass, Object... params) {
         this.path = path;
         this.widgetClass = widgetClass;
         this.params = params;

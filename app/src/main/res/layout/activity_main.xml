@@ -21,4 +21,12 @@
         android:text="MediumTutorial"
         android:textAllCaps="false" />
 
+    <Button
+        android:id="@+id/AdvanceTutorial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"
+        android:text="AdvanceTutorial"
+        android:textAllCaps="false" />
+
 </LinearLayout>
