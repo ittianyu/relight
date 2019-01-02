@@ -6,10 +6,12 @@ import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import com.ittianyu.relight.R;
 import com.ittianyu.relight.advance._1.RouterConfig.Advance1;
 import com.ittianyu.relight.widget.native_.ButtonWidget;
 import com.ittianyu.relight.widget.native_.LinearWidget;
 import com.ittianyu.relight.widget.native_.TextWidget;
+import com.ittianyu.relight.widget.native_.ToolbarWidget;
 import com.ittianyu.relight.widget.stateful.navigator.Navigator;
 
 public class Screen extends LinearWidget implements OnClickListener {
@@ -21,12 +23,11 @@ public class Screen extends LinearWidget implements OnClickListener {
     public Screen(Context context, Lifecycle lifecycle, String text) {
         super(context, lifecycle);
         this.addChildren(
-            new TextWidget(context, lifecycle).text(text),
-            new ButtonWidget(context, lifecycle).id(ID_BW_PUSH_FIRST).text("push first")
-                .onClickListener(this),
-            new ButtonWidget(context, lifecycle).id(ID_BW_PUSH_SECOND).text("push second")
-                .onClickListener(this),
-            new ButtonWidget(context, lifecycle).id(ID_BW_POP).text("pop").onClickListener(this)
+            new ToolbarWidget(context, lifecycle).backgroundResource(R.color.colorPrimary).marginBottom(16.0f),
+            new ButtonWidget(context, lifecycle).id(ID_BW_PUSH_FIRST).text("push first").onClickListener(this),
+            new ButtonWidget(context, lifecycle).id(ID_BW_PUSH_SECOND).text("push second").onClickListener(this),
+            new ButtonWidget(context, lifecycle).id(ID_BW_POP).text("pop").onClickListener(this),
+            new TextWidget(context, lifecycle).text(text).marginTop(50.0f)
         );
     }
 
@@ -34,9 +35,9 @@ public class Screen extends LinearWidget implements OnClickListener {
     protected void initProps() {
         super.initProps();
         matchParent()
+            .gravity(Gravity.CENTER_HORIZONTAL)
             .backgroundColor(Color.WHITE)
-            .elevation(6.0f)
-            .gravity(Gravity.CENTER)
+            .elevation(8.0f)
             .orientation(vertical);
     }
 

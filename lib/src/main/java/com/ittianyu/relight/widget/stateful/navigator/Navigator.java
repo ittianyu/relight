@@ -28,6 +28,8 @@ public class Navigator extends StatefulWidget<FrameLayout, FrameWidget> {
     private Map<String, Route> routeMap = new HashMap<>();
     private Action action;
     private boolean pop;
+    private Integer pushAnim = android.R.anim.slide_in_left;
+    private Integer popAnim = android.R.anim.slide_out_right;
     private Runnable pushTask = new Runnable() {
         @Override
         public void run() {
@@ -40,7 +42,6 @@ public class Navigator extends StatefulWidget<FrameLayout, FrameWidget> {
             action = Action.POP;
         }
     };
-
 
     public Navigator(Context context, Lifecycle lifecycle, String name, Route initRoute, Route... routes) {
         this(context, lifecycle, name, true, initRoute, routes);
@@ -93,12 +94,15 @@ public class Navigator extends StatefulWidget<FrameLayout, FrameWidget> {
                 Widget topWidget = stack.peek();
                 widget.addChild(topWidget);
                 View view = topWidget.render();
-                Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+                if (pushAnim == null || pushAnim == 0) {
+                    break;
+                }
+                Animation animation = AnimationUtils.loadAnimation(context, pushAnim);
                 view.startAnimation(animation);
                 break;
             }
             case POP: {
-                if (pop) {
+                if (pop || pushAnim == null || pushAnim == 0) {
                     Widget popWidget = stack.pop();
                     widget.removeChild(popWidget);
                     pop = false;
@@ -108,7 +112,7 @@ public class Navigator extends StatefulWidget<FrameLayout, FrameWidget> {
                 pop = true;
                 final Widget popWidget = stack.pop();
                 final View view = popWidget.render();
-                Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_out_right);
+                Animation animation = AnimationUtils.loadAnimation(context, popAnim);
                 animation.setAnimationListener(new AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
@@ -140,13 +144,22 @@ public class Navigator extends StatefulWidget<FrameLayout, FrameWidget> {
     }
 
     public void push(Widget widget) {
+        push(widget, pushAnim);
+    }
+
+    public void push(Widget widget, Integer animRes) {
+        this.pushAnim = animRes;
         stack.push(widget);
         setState(pushTask);
     }
 
     public void push(String path) {
+        push(path, pushAnim);
+    }
+
+    public void push(String path, Integer animRes) {
         Route route = getRoute(path);
-        push(route.build(context, lifecycle));
+        push(route.build(context, lifecycle), animRes);
     }
 
     @NonNull
@@ -159,9 +172,14 @@ public class Navigator extends StatefulWidget<FrameLayout, FrameWidget> {
     }
 
     public void pop() {
+        pop(popAnim);
+    }
+
+    public void pop(Integer animRes) {
         if (stack.isEmpty()) {
             return;
         }
+        this.popAnim = animRes;
         if (stack.size() == 1 && finishWhenEmpty) {
             finish();
         } else {

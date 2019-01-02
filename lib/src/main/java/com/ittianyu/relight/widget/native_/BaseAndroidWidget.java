@@ -298,7 +298,7 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
     public T elevation(Float dp) {
         this.elevation = dp;
         if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
-            view.setElevation(dp);
+            view.setElevation(dp(dp));
         }
         return self();
     }

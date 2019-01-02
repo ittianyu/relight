@@ -418,7 +418,7 @@ addChildren -> updateChildrenProps -> updateProps
 - [x] ImageWidget
 - [x] SwipeRefreshWidget
 - [x] ButtonWidget
-- [ ] ToolBarWidget
+- [x] ToolbarWidget
 - [x] EditWidget
 - [ ] FloatingActionButtonWidget
 - [ ] DrawerWidget
