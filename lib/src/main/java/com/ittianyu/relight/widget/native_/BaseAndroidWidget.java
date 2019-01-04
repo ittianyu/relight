@@ -264,6 +264,10 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
         return self();
     }
 
+    public T onClick(View.OnClickListener onClickListener) {
+        return onClickListener(onClickListener);
+    }
+
     public T onClickListener(View.OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
         view.setOnClickListener(onClickListener);

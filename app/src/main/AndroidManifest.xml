@@ -39,7 +39,9 @@
         <activity android:name=".medium._7.WidgetActivity"/>
         <activity android:name=".medium._8.WidgetActivity" />
         <activity android:name=".advance.AdvanceTutorialActivity"/>
-        <activity android:name=".advance._1.WidgetActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".advance._1.WidgetActivity"/>
+        <activity android:name=".advance._1.widget.WidgetActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".advance._1.activity.WidgetActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
     </application>
 

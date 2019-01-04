@@ -37,7 +37,6 @@ public class Screen extends LinearWidget implements OnClickListener {
         matchParent()
             .gravity(Gravity.CENTER_HORIZONTAL)
             .backgroundColor(Color.WHITE)
-            .elevation(8.0f)
             .orientation(vertical);
     }
 

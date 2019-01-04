@@ -7,16 +7,16 @@ import com.ittianyu.relight.utils.WidgetUtils;
 import com.ittianyu.relight.widget.Widget;
 import java.util.UUID;
 
-public class WidgetRouter<V extends View> implements Route<V> {
+public class WidgetRoute<V extends View> implements Route<V> {
     private Class<? extends Widget<V>> widgetClass;
     private Object[] params;
     private String path;
 
-    public WidgetRouter(Class<? extends Widget<V>> widgetClass, Object... params) {
+    public WidgetRoute(Class<? extends Widget<V>> widgetClass, Object... params) {
         this(null, widgetClass, params);
     }
 
-    public WidgetRouter(String path, Class<? extends Widget<V>> widgetClass, Object... params) {
+    public WidgetRoute(String path, Class<? extends Widget<V>> widgetClass, Object... params) {
         this.path = path;
         this.widgetClass = widgetClass;
         this.params = params;

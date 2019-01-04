@@ -1,2 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ittianyu.relight.lib" />
+    package="com.ittianyu.relight.lib" >
+
+    <application>
+        <activity android:name="com.ittianyu.relight.widget.stateful.navigator.DelagationActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+    </application>
+</manifest>

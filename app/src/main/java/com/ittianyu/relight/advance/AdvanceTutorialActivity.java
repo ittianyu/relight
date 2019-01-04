@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import com.ittianyu.relight.R;
+import com.ittianyu.relight.advance._1.activity.WidgetActivity;
 
 public class AdvanceTutorialActivity extends AppCompatActivity {
 
