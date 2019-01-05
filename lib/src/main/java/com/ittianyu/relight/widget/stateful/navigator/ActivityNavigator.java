@@ -6,19 +6,14 @@ import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.content.Intent;
 import android.view.KeyEvent;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
-import android.view.animation.AnimationUtils;
+
 import com.ittianyu.relight.thread.ThreadPool;
 import com.ittianyu.relight.utils.ContextUtils;
-import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.FrameWidget;
 import com.ittianyu.relight.widget.stateful.navigator.route.Route;
-import java.io.Serializable;
+
 import java.lang.ref.WeakReference;
 import java.util.Stack;
-import java.util.WeakHashMap;
 
 public class ActivityNavigator extends Navigator {
     protected Stack<Route> stack = new Stack<>();
@@ -64,11 +59,11 @@ public class ActivityNavigator extends Navigator {
     }
 
     @Override
-    public void pop(Integer animRes) {
+    public boolean pop(Integer animRes) {
         if (stack.isEmpty()) {
-            return;
+            return false;
         }
-        super.pop(animRes);
+        return super.pop(animRes);
     }
 
     @Override

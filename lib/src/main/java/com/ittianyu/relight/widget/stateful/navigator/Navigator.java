@@ -79,13 +79,14 @@ public abstract class Navigator extends StatefulWidget<FrameLayout, FrameWidget>
         return route;
     }
 
-    public void pop() {
-        pop(popAnim);
+    public boolean pop() {
+        return pop(popAnim);
     }
 
-    public void pop(Integer animRes) {
+    public boolean pop(Integer animRes) {
         this.popAnim = animRes;
         setState(popTask);
+        return true;
     }
 
     public static Navigator get(String name) {
@@ -109,12 +110,12 @@ public abstract class Navigator extends StatefulWidget<FrameLayout, FrameWidget>
         return navigator;
     }
 
-    public static void pop(String name) {
-        getNavigator(name).pop();
+    public static boolean pop(String name) {
+        return getNavigator(name).pop();
     }
 
-    public static void pop(String name, Integer animRes) {
-        getNavigator(name).pop(animRes);
+    public static boolean pop(String name, Integer animRes) {
+        return getNavigator(name).pop(animRes);
     }
 
     protected enum Action {

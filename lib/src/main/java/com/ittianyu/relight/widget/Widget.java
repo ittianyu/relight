@@ -7,15 +7,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.View;
 import com.ittianyu.relight.utils.ContextUtils;
 import com.ittianyu.relight.utils.WidgetInflateUtils;
-import com.ittianyu.relight.view.ActivityResultDelegation;
-import com.ittianyu.relight.view.ActivityResultDelegationManager;
+import com.ittianyu.relight.view.ActivityDelegation;
+import com.ittianyu.relight.view.ActivityDelegationManager;
 import com.ittianyu.relight.view.AndroidLifecycle;
 
 public abstract class Widget<V extends View>
-        implements ActivityResultDelegation, WidgetUpdater, AndroidLifecycle {
+        implements ActivityDelegation, WidgetUpdater, AndroidLifecycle {
     protected final Context context;
     protected final Lifecycle lifecycle;
     protected boolean hasRegisterActivityResultDelegation;
@@ -43,18 +44,23 @@ public abstract class Widget<V extends View>
         startActivityForResult(intent, requestCode, options, this);
     }
 
-    protected void startActivityForResult(Intent intent, int requestCode, Bundle options, ActivityResultDelegation delegation) {
+    protected void startActivityForResult(Intent intent, int requestCode, Bundle options, ActivityDelegation delegation) {
         hasRegisterActivityResultDelegation = true;
         Activity activity = ContextUtils.getActivity(context);
         if (null == activity) {
             throw new IllegalStateException("can't call startActivityForResult, the widget context is not Activity context!");
         }
-        ActivityResultDelegationManager.register(activity, delegation);
+        ActivityDelegationManager.register(activity, delegation);
         activity.startActivityForResult(intent, requestCode, options);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return false;
     }
 
     @Override
@@ -76,7 +82,7 @@ public abstract class Widget<V extends View>
     @Override
     public void onDestroy() {
         if (hasRegisterActivityResultDelegation) {
-            ActivityResultDelegationManager.unregister((Activity) context, this);
+            ActivityDelegationManager.unregister((Activity) context, this);
         }
     }
 

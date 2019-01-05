@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.ittianyu.relight.R;
 import com.ittianyu.relight.utils.WidgetInflaterFactory;
-import com.ittianyu.relight.view.ActivityResultDelegationManager;
+import com.ittianyu.relight.view.ActivityDelegationManager;
 import com.ittianyu.relight.widget.Widget;
 
 public class WidgetActivity extends AppCompatActivity {
@@ -28,7 +28,7 @@ public class WidgetActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        ActivityResultDelegationManager.onActivityResult(this, requestCode, resultCode, data);
+        ActivityDelegationManager.onActivityResult(this, requestCode, resultCode, data);
     }
     
 }

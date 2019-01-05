@@ -2,10 +2,11 @@ package com.ittianyu.relight.widget.stateful.navigator;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+
+import com.ittianyu.relight.activity.WidgetActivity;
 import com.ittianyu.relight.widget.stateful.navigator.route.Route;
 
-public class DelagationActivity extends AppCompatActivity {
+public class DelagationActivity extends WidgetActivity {
     public static final String EXTRA_ROUTE = "route";
     public static final String EXTRA_NAME = "name";
     private String name;

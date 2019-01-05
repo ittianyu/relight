@@ -2,11 +2,13 @@ package com.ittianyu.relight.widget.stateful.navigator;
 
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import com.ittianyu.relight.utils.ContextUtils;
+import com.ittianyu.relight.view.ActivityDelegationManager;
 import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.FrameWidget;
 import com.ittianyu.relight.widget.stateful.navigator.route.Route;
@@ -25,6 +27,7 @@ public class WidgetNavigator extends Navigator {
     public WidgetNavigator(Context context, Lifecycle lifecycle, String name, boolean finishWhenEmpty, Route initRoute, Route... routes) {
         super(context, lifecycle, name, initRoute, routes);
         this.finishWhenEmpty = finishWhenEmpty;
+        ActivityDelegationManager.register(ContextUtils.getActivity(context), this);
         stack.push(initRoute.build(context, lifecycle));
     }
 
@@ -119,11 +122,19 @@ public class WidgetNavigator extends Navigator {
     }
 
     @Override
-    public void pop(Integer animRes) {
+    public boolean pop(Integer animRes) {
         if (stack.isEmpty()) {
-            return;
+            return false;
         }
-        super.pop(animRes);
+        return super.pop(animRes);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return pop();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private void finish(Context context) {

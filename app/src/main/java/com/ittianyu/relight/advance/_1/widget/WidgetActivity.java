@@ -1,14 +1,14 @@
 package com.ittianyu.relight.advance._1.widget;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+
 import com.ittianyu.relight.advance._1.RouterConfig.Advance1;
 import com.ittianyu.relight.advance._1.Screen;
 import com.ittianyu.relight.widget.stateful.navigator.Navigator;
 import com.ittianyu.relight.widget.stateful.navigator.WidgetNavigator;
 import com.ittianyu.relight.widget.stateful.navigator.route.WidgetRoute;
 
-public class WidgetActivity extends AppCompatActivity {
+public class WidgetActivity extends com.ittianyu.relight.activity.WidgetActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
