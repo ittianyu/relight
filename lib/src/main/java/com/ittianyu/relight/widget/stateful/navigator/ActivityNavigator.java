@@ -49,7 +49,7 @@ public class ActivityNavigator extends Navigator {
     }
 
     public void push(Route route) {
-        push(route, pushAnim);
+        push(route, DEFAULT_PUSH_ANIM);
     }
 
     public void push(Route route, Integer animRes) {

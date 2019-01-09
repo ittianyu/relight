@@ -50,11 +50,9 @@ public class UserLceermWidget extends LceermWidget {
     @Override
     protected Widget renderContent() {
         srw = new SwipeRefreshWidget(context, lifecycle,
-                new FrameWidget(context, lifecycle,
-                        renderRecycler(),
-                        renderFab()
-                )
-        );
+            renderRecycler(),
+            renderFab()
+        ).matchParent();
         return srw.onRefreshListener(refresh).matchParent();
     }
 

@@ -15,12 +15,14 @@ import java.util.WeakHashMap;
 
 public abstract class Navigator extends StatefulWidget<FrameLayout, FrameWidget> {
     protected static final Map<String, Navigator> map = new WeakHashMap<>();
+    protected static final int DEFAULT_PUSH_ANIM = android.R.anim.slide_in_left;
+    protected static final int DEFAULT_POP_ANIM = android.R.anim.slide_out_right;
 
     protected Map<String, Route> routeMap = new HashMap<>();
     protected String name;
     protected Action action;
-    protected Integer pushAnim = android.R.anim.slide_in_left;
-    protected Integer popAnim = android.R.anim.slide_out_right;
+    protected Integer pushAnim = DEFAULT_PUSH_ANIM;
+    protected Integer popAnim = DEFAULT_POP_ANIM;
     protected Runnable pushTask = new Runnable() {
         @Override
         public void run() {
@@ -80,7 +82,7 @@ public abstract class Navigator extends StatefulWidget<FrameLayout, FrameWidget>
     }
 
     public boolean pop() {
-        return pop(popAnim);
+        return pop(DEFAULT_POP_ANIM);
     }
 
     public boolean pop(Integer animRes) {

@@ -46,11 +46,9 @@ public class UserRmWidget extends RmWidget<SwipeRefreshLayout, SwipeRefreshWidge
     @Override
     protected SwipeRefreshWidget build(Context context) {
         srw = new SwipeRefreshWidget(context, lifecycle,
-                new FrameWidget(context, lifecycle,
-                        renderRecycler(),
-                        renderFab()
-                )
-        );
+            renderRecycler(),
+            renderFab()
+        ).matchParent();
         return srw;
     }
 

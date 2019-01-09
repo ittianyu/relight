@@ -61,7 +61,7 @@ public class WidgetNavigator extends Navigator {
                     finish(context);
                     return;
                 }
-                if (pop || pushAnim == null || pushAnim == 0) {
+                if (pop || popAnim == null || popAnim == 0) {
                     Widget popWidget = stack.pop();
                     widget.removeChild(popWidget);
                     pop = false;
@@ -103,7 +103,7 @@ public class WidgetNavigator extends Navigator {
     }
 
     public void push(Widget widget) {
-        push(widget, pushAnim);
+        push(widget, DEFAULT_PUSH_ANIM);
     }
 
     public void push(Widget widget, Integer animRes) {
@@ -113,7 +113,7 @@ public class WidgetNavigator extends Navigator {
     }
 
     public void push(String path) {
-        push(path, pushAnim);
+        push(path, DEFAULT_PUSH_ANIM);
     }
 
     public void push(String path, Integer animRes) {
@@ -127,6 +127,17 @@ public class WidgetNavigator extends Navigator {
             return false;
         }
         return super.pop(animRes);
+    }
+
+    public void replace(Widget widget) {
+        Widget popWidget = stack.pop();
+        this.widget.removeChild(popWidget);
+        push(widget, null);
+    }
+
+    public void replace(String path) {
+        Route route = getRoute(path);
+        replace(route.build(context, lifecycle));
     }
 
     @Override
@@ -143,6 +154,14 @@ public class WidgetNavigator extends Navigator {
 
     public static void push(String name, Widget widget) {
         getNavigator(name).push(widget);
+    }
+
+    public static void replace(String name, Widget widget) {
+        getNavigator(name).replace(widget);
+    }
+
+    public static void replace(String name, String path) {
+        getNavigator(name).replace(path);
     }
 
     public static Widget getTopWidget(String name) {
