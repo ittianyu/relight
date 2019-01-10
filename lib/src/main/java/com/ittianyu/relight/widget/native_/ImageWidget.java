@@ -8,49 +8,9 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.widget.ImageView;
 
-public class ImageWidget extends BaseAndroidWidget<ImageView, ImageWidget> {
-    protected Drawable drawable;
-    protected ImageView.ScaleType scaleType;
-
+public class ImageWidget extends BaseImageWidget<ImageView, ImageWidget> {
     public ImageWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
-    }
-
-    @Override
-    protected void initProps() {
-    }
-
-    public ImageView createView(Context context) {
-        return new ImageView(context);
-    }
-
-    public ImageWidget imageBitmap(Bitmap bitmap) {
-        return imageDrawable(new BitmapDrawable(context.getResources(), bitmap));
-    }
-
-    public ImageWidget imageDrawable(Drawable drawable) {
-        this.drawable = drawable;
-        view.setImageDrawable(drawable);
-        return self();
-    }
-
-    public ImageWidget imageResource(@DrawableRes int res) {
-        return imageDrawable(drawable(res));
-    }
-
-    public ImageWidget scaleType(ImageView.ScaleType scaleType) {
-        this.scaleType = scaleType;
-        view.setScaleType(this.scaleType);
-        return self();
-    }
-
-    @Override
-    public void updateProps(ImageView view) {
-        super.updateProps(view);
-        if (this.scaleType != null)
-            scaleType(scaleType);
-        if (this.drawable != null)
-            imageDrawable(drawable);
     }
 
 }

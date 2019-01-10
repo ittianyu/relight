@@ -8,12 +8,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.ittianyu.relight.common.adapter.UserItemAdapter;
 import com.ittianyu.relight.common.bean.UserBean;
 import com.ittianyu.relight.common.datasource.UserDataSource;
-import com.ittianyu.relight.widget.native_.BaseAndroidWidget;
+import com.ittianyu.relight.widget.native_.FloatingActionButtonWidget;
 import com.ittianyu.relight.widget.native_.FrameWidget;
 import com.ittianyu.relight.widget.native_.RecyclerWidget;
 import com.ittianyu.relight.widget.native_.SwipeRefreshWidget;
@@ -23,9 +24,9 @@ import com.ittianyu.relight.widget.stateful.rm.RmStatus;
 import java.util.Collections;
 import java.util.List;
 
-public class UserRmWidget extends RmWidget<SwipeRefreshLayout, SwipeRefreshWidget> {
+public class UserRmWidget extends RmWidget<FrameLayout, FrameWidget> {
     private SwipeRefreshWidget srw;
-    private BaseAndroidWidget<FloatingActionButton, BaseAndroidWidget> fabWidget;
+    private FloatingActionButtonWidget fabWidget;
 
     private List<UserBean> data = Collections.emptyList();
     private boolean noMoreData;
@@ -44,17 +45,19 @@ public class UserRmWidget extends RmWidget<SwipeRefreshLayout, SwipeRefreshWidge
     }
 
     @Override
-    protected SwipeRefreshWidget build(Context context) {
+    protected FrameWidget build(Context context) {
         srw = new SwipeRefreshWidget(context, lifecycle,
-            renderRecycler(),
-            renderFab()
+            renderRecycler()
         ).matchParent();
-        return srw;
+        return new FrameWidget(context, lifecycle,
+            srw,
+            renderFab()
+        );
     }
 
     @Override
-    public void initWidget(SwipeRefreshWidget widget) {
-        widget.onRefreshListener(refresh).matchParent();
+    public void initWidget(FrameWidget widget) {
+        srw.onRefreshListener(refresh).matchParent();
     }
 
     private RecyclerWidget renderRecycler() {
@@ -97,16 +100,13 @@ public class UserRmWidget extends RmWidget<SwipeRefreshLayout, SwipeRefreshWidge
         };
     }
 
-    private BaseAndroidWidget renderFab() {
-        fabWidget = new BaseAndroidWidget<FloatingActionButton, BaseAndroidWidget>(context, lifecycle) {
-            @Override
-            protected void initProps() {
-                layoutGravity = Gravity.END | Gravity.BOTTOM;
-                margin = dp(16);
-                wrapContent();
-            }
-        };
-        return fabWidget.onClickListener(reloadListener);
+    private FloatingActionButtonWidget renderFab() {
+        fabWidget = new FloatingActionButtonWidget(context, lifecycle)
+            .wrapContent()
+            .layoutGravity(Gravity.END | Gravity.BOTTOM)
+            .margin(16.f)
+            .onClick(reloadListener);
+        return fabWidget;
     }
 
     @Override

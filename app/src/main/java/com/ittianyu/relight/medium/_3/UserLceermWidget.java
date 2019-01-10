@@ -16,6 +16,7 @@ import com.ittianyu.relight.common.bean.UserBean;
 import com.ittianyu.relight.common.datasource.UserDataSource;
 import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.BaseAndroidWidget;
+import com.ittianyu.relight.widget.native_.FloatingActionButtonWidget;
 import com.ittianyu.relight.widget.native_.FrameWidget;
 import com.ittianyu.relight.widget.native_.RecyclerWidget;
 import com.ittianyu.relight.widget.native_.SwipeRefreshWidget;
@@ -28,6 +29,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class UserLceermWidget extends LceermWidget {
+
     private List<UserBean> data = Collections.emptyList();
     private SwipeRefreshWidget srw;
     private boolean noMoreData;
@@ -50,10 +52,14 @@ public class UserLceermWidget extends LceermWidget {
     @Override
     protected Widget renderContent() {
         srw = new SwipeRefreshWidget(context, lifecycle,
-            renderRecycler(),
+            renderRecycler()
+        )
+            .onRefreshListener(refresh)
+            .matchParent();
+        return new FrameWidget(context, lifecycle,
+            srw,
             renderFab()
-        ).matchParent();
-        return srw.onRefreshListener(refresh).matchParent();
+        );
     }
 
     @Override
@@ -98,8 +104,9 @@ public class UserLceermWidget extends LceermWidget {
     protected LceeStatus onLoadData() throws NetworkErrorException {
         noMoreData = false;
         data = UserDataSource.getInstance().getUsersFromRemote();
-        if (data.isEmpty())
+        if (data.isEmpty()) {
             return LceeStatus.Empty;
+        }
         return LceeStatus.Content;
     }
 
@@ -125,16 +132,19 @@ public class UserLceermWidget extends LceermWidget {
                 // load more
                 view.addOnScrollListener(new RecyclerView.OnScrollListener() {
                     private int mLastVisibleItemPosition;
+
                     @Override
                     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                        if (adapter == null || noMoreData || status == LceeStatus.Loading)
+                        if (adapter == null || noMoreData || status == LceeStatus.Loading) {
                             return;
+                        }
                         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
                         if (layoutManager instanceof LinearLayoutManager) {
-                            mLastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
+                            mLastVisibleItemPosition = ((LinearLayoutManager) layoutManager)
+                                .findLastVisibleItemPosition();
                         }
                         if (newState == RecyclerView.SCROLL_STATE_IDLE
-                                && mLastVisibleItemPosition + 1 == adapter.getItemCount()) {
+                            && mLastVisibleItemPosition + 1 == adapter.getItemCount()) {
                             loadMore();
                         }
                     }
@@ -145,8 +155,9 @@ public class UserLceermWidget extends LceermWidget {
             public void update() {
                 super.update();
                 // attention: must check status before update view data
-                if (status != LceeStatus.Content)
+                if (status != LceeStatus.Content) {
                     return;
+                }
                 switch (loadType) {
                     case FirstLoad:
                     case Refresh:
@@ -161,14 +172,11 @@ public class UserLceermWidget extends LceermWidget {
     }
 
     private BaseAndroidWidget renderFab() {
-        return new BaseAndroidWidget<FloatingActionButton, BaseAndroidWidget>(context, lifecycle) {
-            @Override
-            protected void initProps() {
-                layoutGravity = Gravity.END | Gravity.BOTTOM;
-                margin = dp(16);
-                wrapContent();
-            }
-        }.onClickListener(reload);
+        return new FloatingActionButtonWidget(context, lifecycle)
+            .wrapContent()
+            .layoutGravity(Gravity.END | Gravity.BOTTOM)
+            .margin(16.f)
+            .onClick(reload);
     }
 
 }

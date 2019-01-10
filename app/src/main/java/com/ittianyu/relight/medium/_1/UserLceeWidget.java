@@ -13,6 +13,7 @@ import com.ittianyu.relight.common.bean.UserBean;
 import com.ittianyu.relight.common.datasource.UserDataSource;
 import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.native_.BaseAndroidWidget;
+import com.ittianyu.relight.widget.native_.FloatingActionButtonWidget;
 import com.ittianyu.relight.widget.native_.FrameWidget;
 import com.ittianyu.relight.widget.native_.RecyclerWidget;
 import com.ittianyu.relight.widget.stateful.lcee.CommonEmptyWidget;
@@ -83,14 +84,11 @@ public class UserLceeWidget extends LceeWidget {
     }
 
     private BaseAndroidWidget renderFab() {
-        return new BaseAndroidWidget<FloatingActionButton, BaseAndroidWidget>(context, lifecycle) {
-            @Override
-            protected void initProps() {
-                layoutGravity = Gravity.END | Gravity.BOTTOM;
-                margin = dp(16);
-                wrapContent();
-            }
-        }.onClickListener(reload);
+        return new FloatingActionButtonWidget(context, lifecycle)
+            .wrapContent()
+            .layoutGravity(Gravity.END | Gravity.BOTTOM)
+            .margin(16.f)
+            .onClick(reload);
     }
 
 }
