@@ -5,17 +5,13 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
 public class RecyclerWidget<V extends RecyclerView.Adapter> extends BaseAndroidWidget<RecyclerView, RecyclerWidget> {
-    public RecyclerView.LayoutManager layoutManager;
     public V adapter;
-    public Boolean hasFixedSize;
-    public Boolean nestedScrollingEnabled;
 
     public RecyclerWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
     }
 
     public RecyclerWidget layoutManager(RecyclerView.LayoutManager layoutManager) {
-        this.layoutManager = layoutManager;
         view.setLayoutManager(layoutManager);
         return self();
     }
@@ -27,13 +23,11 @@ public class RecyclerWidget<V extends RecyclerView.Adapter> extends BaseAndroidW
     }
 
     public RecyclerWidget hasFixedSize(Boolean hasFixedSize) {
-        this.hasFixedSize = hasFixedSize;
         view.setHasFixedSize(hasFixedSize);
         return self();
     }
 
     public RecyclerWidget nestedScrollingEnabled(Boolean nestedScrollingEnabled) {
-        this.nestedScrollingEnabled = nestedScrollingEnabled;
         view.setNestedScrollingEnabled(nestedScrollingEnabled);
         return self();
     }
@@ -56,13 +50,7 @@ public class RecyclerWidget<V extends RecyclerView.Adapter> extends BaseAndroidW
     @Override
     public void updateProps(RecyclerView view) {
         super.updateProps(view);
-        if (null != layoutManager)
-            layoutManager(layoutManager);
         if (null != adapter)
             adapter(adapter);
-        if (null != hasFixedSize)
-            hasFixedSize(hasFixedSize);
-        if (null != nestedScrollingEnabled)
-            nestedScrollingEnabled(nestedScrollingEnabled);
     }
 }

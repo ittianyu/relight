@@ -32,9 +32,9 @@ public class StatefulUserWidget extends StatefulWidget<RelativeLayout, RelativeW
             @Override
             protected void initProps() {
                 super.initProps();
-                id = R.id.tw_id;
-                textSize = dp(16);
-                textColor = Color.BLACK;
+                id(R.id.tw_id);
+                textSize(dp(16));
+                textColor(Color.BLACK);
             }
         };
         twName = new TextWidget(context, lifecycle);

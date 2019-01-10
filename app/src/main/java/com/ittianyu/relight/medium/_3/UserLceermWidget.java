@@ -126,7 +126,7 @@ public class UserLceermWidget extends LceermWidget {
             protected void initProps() {
                 width = matchParent;
                 height = matchParent;
-                layoutManager = new LinearLayoutManager(context);
+                layoutManager(new LinearLayoutManager(context));
                 adapter = new UserItemAdapter(lifecycle);
 
                 // load more

@@ -10,10 +10,6 @@ public class TextWidget extends BaseTextWidget<TextView, TextWidget> {
         super(context, lifecycle);
     }
 
-    public TextWidget(Context context, Lifecycle lifecycle, CharSequence text) {
-        super(context, lifecycle, text);
-    }
-
     @Override
     public TextView createView(Context context) {
         return new TextView(context);

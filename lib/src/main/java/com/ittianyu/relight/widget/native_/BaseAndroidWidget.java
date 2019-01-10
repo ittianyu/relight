@@ -26,8 +26,6 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
     public static final Integer matchParent = ViewGroup.LayoutParams.MATCH_PARENT;
     public static final Integer wrapContent = ViewGroup.LayoutParams.WRAP_CONTENT;
 
-    public Integer id;
-    public Drawable background;
     public Integer marginStart;
     public Integer marginEnd;
     public Integer marginTop;
@@ -42,11 +40,7 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
     public Integer height = wrapContent;
     public Integer layoutGravity;
     public Integer weight;
-    public Integer visibility;
-    public Boolean clickable;
-    public View.OnClickListener onClickListener;
     private RelativeLayout.LayoutParams relativeParams;
-    private Float elevation;
 
     public BaseAndroidWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
@@ -70,14 +64,12 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
     }
 
     public T id(Integer id) {
-        this.id = id;
         view.setId(id);
         return self();
     }
 
     public T background(Drawable drawable) {
-        background = drawable;
-        view.setBackground(background);
+        view.setBackground(drawable);
         return self();
     }
 
@@ -259,7 +251,6 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
     }
 
     public T clickable(boolean clickable) {
-        this.clickable = clickable;
         view.setClickable(clickable);
         return self();
     }
@@ -269,7 +260,6 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
     }
 
     public T onClickListener(View.OnClickListener onClickListener) {
-        this.onClickListener = onClickListener;
         view.setOnClickListener(onClickListener);
         return self();
     }
@@ -300,7 +290,6 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
     }
 
     public T elevation(Float dp) {
-        this.elevation = dp;
         if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
             view.setElevation(dp(dp));
         }
@@ -401,31 +390,12 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
     }
 
     public void updateProps(V view) {
-        if (id != null)
-            id(id);
         if (margin != null)
             setMargin(margin);
         if (padding != null)
             setPadding(padding);
-        if (background != null)
-            background(background);
-        if (clickable != null)
-            clickable(clickable);
-        if (onClickListener != null)
-            onClickListener(onClickListener);
         updateSize();
         updateMargin();
-        updatePadding();
-        updateVisible();
-        if (elevation != null) {
-            elevation(elevation);
-        }
-    }
-
-    private void updateVisible() {
-        if (visibility != null) {
-            view.setVisibility(visibility);
-        }
     }
 
     @Override

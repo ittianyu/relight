@@ -13,9 +13,6 @@ public class LinearWidget extends ViewGroupWidget<LinearLayout, LinearWidget> {
     public static final Integer horizontal = LinearLayout.HORIZONTAL;
     public static final Integer vertical = LinearLayout.VERTICAL;
 
-    protected Integer orientation = horizontal;
-    protected Integer gravity;
-
     public LinearWidget(Context context, Lifecycle lifecycle) {
         this(context, lifecycle, (Widget) null);
     }
@@ -30,13 +27,11 @@ public class LinearWidget extends ViewGroupWidget<LinearLayout, LinearWidget> {
     }
 
     public LinearWidget orientation(Integer orientation) {
-        this.orientation = orientation;
         view.setOrientation(orientation);
         return self();
     }
 
     public LinearWidget gravity(Integer gravity) {
-        this.gravity = gravity;
         view.setGravity(gravity);
         return self();
     }
@@ -44,12 +39,6 @@ public class LinearWidget extends ViewGroupWidget<LinearLayout, LinearWidget> {
     @Override
     public void updateProps(LinearLayout view) {
         super.updateProps(view);
-        // set orientation
-        orientation(orientation);
-
-        if (gravity != null)
-            gravity(gravity);
-
         // update children layout params
         for (Widget widget : children) {
             if (widget instanceof BaseAndroidWidget) {

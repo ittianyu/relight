@@ -71,7 +71,7 @@ public class UserLceeWidget extends LceeWidget {
             protected void initProps() {
                 width = matchParent;
                 height = matchParent;
-                layoutManager = new LinearLayoutManager(context);
+                layoutManager(new LinearLayoutManager(context));
                 adapter = new UserItemAdapter(lifecycle);
             }
 

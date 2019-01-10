@@ -28,8 +28,8 @@ public class StartActivityWidget extends StatelessWidget<LinearLayout, LinearWid
 
     @Override
     protected LinearWidget build(Context context) {
-        btnStartActivity = new ButtonWidget(context, lifecycle, "startActivity").allCaps(false);
-        btnStartActivityForResult = new ButtonWidget(context, lifecycle, "startActivityForResult").allCaps(false);
+        btnStartActivity = new ButtonWidget(context, lifecycle).text("startActivity").allCaps(false);
+        btnStartActivityForResult = new ButtonWidget(context, lifecycle).text("startActivityForResult").allCaps(false);
         edtNote = new EditWidget(context, lifecycle)
                 .textColor(Color.BLACK)
                 .gravity(Gravity.CENTER)

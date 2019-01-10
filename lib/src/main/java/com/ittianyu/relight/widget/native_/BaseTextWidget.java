@@ -12,83 +12,15 @@ import com.ittianyu.relight.utils.DensityUtils;
 
 public class BaseTextWidget<V extends TextView, T extends BaseTextWidget> extends BaseAndroidWidget<V, T> {
 
-    protected Integer gravity;
-    protected CharSequence text;
-    protected Integer textColor;
-    protected Integer textSize;
-    protected Integer lines;
-    protected Integer maxLines;
-    protected Integer drawablePadding;
-    protected Drawable drawableBottom;
-    protected Drawable drawableLeft;
-    protected Drawable drawableRight;
-    protected Drawable drawableTop;
-    protected Boolean allCaps;
-    protected Boolean enabled;
-    protected TextUtils.TruncateAt ellipsize;
-
     public BaseTextWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
-    }
-
-    public BaseTextWidget(Context context, Lifecycle lifecycle, CharSequence text) {
-        super(context, lifecycle);
-        this.text = text;
     }
 
     @Override
     protected void initProps() {
     }
 
-    @Override
-    public void updateProps(V view) {
-        super.updateProps(view);
-        if (gravity != null) {
-            gravity(gravity);
-        }
-        if (text != null) {
-            text(text);
-        }
-        if (textColor != null) {
-            textColor(textColor);
-        }
-        if (textSize != null) {
-            textSize(textSize);
-        }
-        if (lines != null) {
-            lines(lines);
-        }
-        if (maxLines != null) {
-            maxLines(maxLines);
-        }
-        if (drawablePadding != null) {
-            drawablePadding(drawablePadding);
-        }
-        if (drawableLeft != null) {
-            drawableLeft(drawableLeft);
-        }
-        if (drawableTop != null) {
-            drawableTop(drawableTop);
-        }
-        if (drawableRight != null) {
-            drawableRight(drawableRight);
-        }
-        if (drawableBottom != null) {
-            drawableBottom(drawableBottom);
-        }
-        if (allCaps != null) {
-            allCaps(allCaps);
-        }
-        if (enabled != null) {
-            enabled(enabled);
-        }
-        if (ellipsize != null) {
-            ellipsize(ellipsize);
-        }
-    }
-
     public T text(CharSequence text) {
-        this.text = text;
         view.setText(text);
         return self();
     }
@@ -98,46 +30,41 @@ public class BaseTextWidget<V extends TextView, T extends BaseTextWidget> extend
     }
 
     public T gravity(Integer gravity) {
-        this.gravity = gravity;
         view.setGravity(gravity);
         return self();
     }
 
     public T textColor(Integer textColor) {
-        this.textColor = textColor;
         view.setTextColor(textColor);
         return self();
     }
 
     public T textSize(Integer px) {
-        this.textSize = px;
-        view.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+        view.setTextSize(TypedValue.COMPLEX_UNIT_PX, px);
         return self();
     }
 
     public T textSize(Float sp) {
-        return textSize(DensityUtils.sp2px(context, sp));
+        view.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp);
+        return self();
     }
 
     public T textSize(Double sp) {
-        return textSize(DensityUtils.sp2px(context, sp.floatValue()));
+        return textSize(sp.floatValue());
     }
 
     public T lines(Integer lines) {
-        this.lines = lines;
         view.setLines(lines);
         return self();
     }
 
     public T maxLines(Integer maxLines) {
-        this.maxLines = maxLines;
         view.setMaxLines(maxLines);
         return self();
     }
 
-    public T drawablePadding(Integer res) {
-        drawablePadding = res;
-        view.setCompoundDrawablePadding(drawablePadding);
+    public T drawablePadding(Integer padding) {
+        view.setCompoundDrawablePadding(padding);
         return self();
     }
 
@@ -146,11 +73,10 @@ public class BaseTextWidget<V extends TextView, T extends BaseTextWidget> extend
     }
 
     public T drawableLeft(Drawable drawable) {
-        drawableLeft = drawable;
-        drawableLeft.setBounds(0, 0, drawableLeft.getMinimumWidth(),
-                drawableLeft.getMinimumHeight());
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+            drawable.getMinimumHeight());
         Drawable[] drawables = view.getCompoundDrawables();
-        view.setCompoundDrawables(drawableLeft, drawables[1], drawables[2], drawables[3]);
+        view.setCompoundDrawables(drawable, drawables[1], drawables[2], drawables[3]);
         return self();
     }
 
@@ -159,11 +85,10 @@ public class BaseTextWidget<V extends TextView, T extends BaseTextWidget> extend
     }
 
     public T drawableTop(Drawable drawable) {
-        drawableTop = drawable;
-        drawableTop.setBounds(0, 0, drawableTop.getMinimumWidth(),
-                drawableTop.getMinimumHeight());
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+            drawable.getMinimumHeight());
         Drawable[] drawables = view.getCompoundDrawables();
-        view.setCompoundDrawables(drawables[0], drawableTop, drawables[2], drawables[3]);
+        view.setCompoundDrawables(drawables[0], drawable, drawables[2], drawables[3]);
         return self();
     }
 
@@ -172,11 +97,10 @@ public class BaseTextWidget<V extends TextView, T extends BaseTextWidget> extend
     }
 
     public T drawableRight(Drawable drawable) {
-        drawableRight = drawable;
-        drawableRight.setBounds(0, 0, drawableRight.getMinimumWidth(),
-                drawableRight.getMinimumHeight());
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+            drawable.getMinimumHeight());
         Drawable[] drawables = view.getCompoundDrawables();
-        view.setCompoundDrawables(drawables[0], drawables[1], drawableRight, drawables[3]);
+        view.setCompoundDrawables(drawables[0], drawables[1], drawable, drawables[3]);
         return self();
     }
 
@@ -185,28 +109,24 @@ public class BaseTextWidget<V extends TextView, T extends BaseTextWidget> extend
     }
 
     public T drawableBottom(Drawable drawable) {
-        drawableBottom = drawable;
-        drawableBottom.setBounds(0, 0, drawableBottom.getMinimumWidth(),
-                drawableBottom.getMinimumHeight());
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+            drawable.getMinimumHeight());
         Drawable[] drawables = view.getCompoundDrawables();
-        view.setCompoundDrawables(drawables[0], drawables[1], drawables[2], drawableBottom);
+        view.setCompoundDrawables(drawables[0], drawables[1], drawables[2], drawable);
         return self();
     }
 
     public T allCaps(Boolean enable) {
-        this.allCaps = enable;
-        view.setAllCaps(allCaps);
+        view.setAllCaps(enable);
         return self();
     }
 
     public T enabled(Boolean enabled) {
-        this.enabled = enabled;
         view.setEnabled(enabled);
         return self();
     }
 
     public T ellipsize(TextUtils.TruncateAt ellipsize) {
-        this.ellipsize = ellipsize;
         view.setEllipsize(ellipsize);
         return self();
     }
