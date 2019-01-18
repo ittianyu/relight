@@ -189,6 +189,9 @@ public abstract class LceermWidget extends StatefulWidget<FrameLayout, FrameWidg
     }
 
     public boolean refresh() {
+        if (status != LceeStatus.Content) {
+            throw new IllegalStateException("you can only call refresh when current status is Content !");
+        }
         return showLoading(LoadType.Refresh);
     }
 

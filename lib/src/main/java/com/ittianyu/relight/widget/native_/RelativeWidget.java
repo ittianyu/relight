@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.ittianyu.relight.widget.ContainerWidget;
 import com.ittianyu.relight.widget.Widget;
 
 public class RelativeWidget extends ViewGroupWidget<RelativeLayout, RelativeWidget> {
@@ -33,24 +34,34 @@ public class RelativeWidget extends ViewGroupWidget<RelativeLayout, RelativeWidg
     public void updateProps(RelativeLayout view) {
         super.updateProps(view);
 
-        if (null == childrenAndProps)
-            return;
-        for (WidgetAndProps widgetAndProps: childrenAndProps) {
-            Widget widget = widgetAndProps.widget;
-            Prop[] props = widgetAndProps.props;
-            if (null == props || props.length == 0)
-                continue;
+        if (null != childrenAndProps) {
+            for (WidgetAndProps widgetAndProps: childrenAndProps) {
+                Widget widget = widgetAndProps.widget;
+                Prop[] props = widgetAndProps.props;
+                if (null == props || props.length == 0)
+                    continue;
 
-            View child = widget.render();
-            ViewGroup.LayoutParams lp = child.getLayoutParams();
-            if (!(lp instanceof RelativeLayout.LayoutParams))
-                continue;
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) lp;
-            for (Prop prop : props) {
-                params.addRule(prop.type, prop.id);
+                View child = widget.render();
+                ViewGroup.LayoutParams lp = child.getLayoutParams();
+                if (!(lp instanceof RelativeLayout.LayoutParams))
+                    continue;
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) lp;
+                for (Prop prop : props) {
+                    params.addRule(prop.type, prop.id);
+                }
+            }
+            view.requestLayout();
+            return;
+        }
+
+        for (Widget widget : children) {
+            if (widget instanceof ContainerWidget) {
+                widget = ((ContainerWidget) widget).getInnerWidget();
+            }
+            if (widget instanceof BaseAndroidWidget) {
+                ((BaseAndroidWidget) widget).mergeLayoutParams();
             }
         }
-        view.requestLayout();
     }
 
     protected static Widget[] getChildren(WidgetAndProps[] childrenAndProps) {

@@ -38,6 +38,11 @@ public abstract class ViewGroupWidget<V extends ViewGroup, T extends ViewGroupWi
             }
             tmpChildren = null;
         }
+
+        return renderSelf(views);
+    }
+
+    protected V renderSelf(List<View> views) {
         // render self
         V view = super.render();
         // add children to ViewGroup
@@ -58,28 +63,7 @@ public abstract class ViewGroupWidget<V extends ViewGroup, T extends ViewGroupWi
         for (Widget widget : children) {
             widget.update();
         }
-    }
-
-    /**
-     * called when add child
-     */
-    public void updateChildrenProps() {
-        for (Widget child : children) {
-            Queue<Widget> widgets = new LinkedList<>();
-            widgets.add(child);
-            while (!widgets.isEmpty()) {
-                Widget widget = widgets.poll();
-                if (widget instanceof ViewGroupWidget) {
-                    ((ViewGroupWidget) widget).updateChildrenProps();
-                    ((ViewGroupWidget) widget).updateProps(widget.render());
-                } else if (widget instanceof BaseAndroidWidget) {
-                    ((BaseAndroidWidget) widget).updateProps(widget.render());
-                } else if (widget instanceof ContainerWidget) {
-                    Widget innerWidget = ((ContainerWidget) widget).getInnerWidget();
-                    widgets.add(innerWidget);
-                }
-            }
-        }
+        super.update();
     }
 
     public T addChild(Widget widget) {
@@ -90,7 +74,6 @@ public abstract class ViewGroupWidget<V extends ViewGroup, T extends ViewGroupWi
         view.addView(widget.render());
         children.add(widget);
         if (updateProps) {
-            updateChildrenProps();
             updateProps(view);
         }
         return self();
@@ -105,7 +88,6 @@ public abstract class ViewGroupWidget<V extends ViewGroup, T extends ViewGroupWi
             addChild(widget, false);
         }
         if (updateProps) {
-            updateChildrenProps();
             updateProps(view);
         }
         return self();
@@ -121,6 +103,14 @@ public abstract class ViewGroupWidget<V extends ViewGroup, T extends ViewGroupWi
         view.removeAllViews();
         children.clear();
         return self();
+    }
+
+    public List<Widget> children() {
+        return children;
+    }
+
+    public int childrenSize() {
+        return children.size();
     }
 
 }

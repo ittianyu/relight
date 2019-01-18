@@ -50,10 +50,30 @@ public class WidgetInflateUtils {
             String key = keys.next();
             try {
                 Object obj = dealParam(context, json.get(key));
-                Method method;
+                Method method = null;
                 if (obj != null) {
-                    method = widget.getClass().getMethod(key, obj.getClass());
-                    method.invoke(widget, obj);
+                    try {
+                        method = widget.getClass().getMethod(key, obj.getClass());
+                    } catch (Exception t) {
+                        Class paramClass = null;
+                        if (obj instanceof Integer) {
+                            paramClass = int.class;
+                        } else if (obj instanceof Long) {
+                            paramClass = long.class;
+                        } else if (obj instanceof Float) {
+                            paramClass = float.class;
+                        } else if (obj instanceof Double) {
+                            paramClass = double.class;
+                        } else if (obj instanceof Boolean) {
+                            paramClass = boolean.class;
+                        }
+                        if (paramClass != null) {
+                            method = widget.getClass().getMethod(key, paramClass);
+                        }
+                    }
+                    if (null != method) {
+                        method.invoke(widget, obj);
+                    }
                 } else {
                     method = widget.getClass().getMethod(key);
                     method.invoke(widget);
@@ -231,10 +251,7 @@ public class WidgetInflateUtils {
         widgets.add(w);
         while (!widgets.isEmpty()) {
             Widget widget = widgets.poll();
-            if (widget instanceof ViewGroupWidget) {
-                ((ViewGroupWidget) widget).updateChildrenProps();
-                ((ViewGroupWidget) widget).updateProps(widget.render());
-            } else if (widget instanceof BaseAndroidWidget) {
+            if (widget instanceof BaseAndroidWidget) {
                 ((BaseAndroidWidget) widget).updateProps(widget.render());
             } else if (widget instanceof ContainerWidget) {
                 Widget innerWidget = ((ContainerWidget) widget).getInnerWidget();

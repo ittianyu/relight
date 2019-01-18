@@ -33,8 +33,8 @@ public class StatefulUserWidget extends StatefulWidget<FrameLayout, FrameWidget>
     @Override
     public void initWidget(FrameWidget widget) {
         twId.layoutGravity(Gravity.CENTER);
-        twName.layoutGravity(Gravity.CENTER)
-                .paddingTop(20.f);
+        twName.layoutGravity(Gravity.CENTER).wrapContent()
+                .paddingTop(30.f);
 
         widget
                 .matchParent()

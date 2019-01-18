@@ -59,6 +59,11 @@ public class SwipeRefreshWidget extends ViewGroupWidget<SwipeRefreshLayout, Swip
         return self();
     }
 
+    public SwipeRefreshWidget onRefresh(SwipeRefreshLayout.OnRefreshListener listener) {
+        view.setOnRefreshListener(listener);
+        return self();
+    }
+
     public Boolean isRefreshing() {
         return view.isRefreshing();
     }

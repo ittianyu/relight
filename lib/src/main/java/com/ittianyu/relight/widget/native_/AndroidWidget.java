@@ -41,6 +41,7 @@ public abstract class AndroidWidget<V extends View> extends Widget<V>
 
     @Override
     public void update() {
+        super.update();
     }
 
     @Override

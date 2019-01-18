@@ -2,6 +2,6 @@
     package="com.ittianyu.relight.lib" >
 
     <application>
-        <activity android:name="com.ittianyu.relight.widget.stateful.navigator.DelagationActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name="com.ittianyu.relight.widget.stateful.navigator.DelagationActivity" />
     </application>
 </manifest>

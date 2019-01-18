@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION_CODES;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.RequiresApi;
+import android.support.v4.widget.ImageViewCompat;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -40,9 +41,8 @@ public class BaseImageWidget<V extends ImageView, T extends BaseImageWidget> ext
         return self();
     }
 
-    @RequiresApi(api = VERSION_CODES.LOLLIPOP)
     public T imageTintList(ColorStateList tint) {
-        view.setImageTintList(tint);
+        ImageViewCompat.setImageTintList(view, tint);
         return self();
     }
 }

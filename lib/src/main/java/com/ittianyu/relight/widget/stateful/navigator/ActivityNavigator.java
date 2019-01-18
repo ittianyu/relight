@@ -39,19 +39,6 @@ public class ActivityNavigator extends Navigator {
     }
 
     @Override
-    public void push(String path) {
-        push(getRoute(path));
-    }
-
-    @Override
-    public void push(String path, Integer animRes) {
-        push(getRoute(path), animRes);
-    }
-
-    public void push(Route route) {
-        push(route, DEFAULT_PUSH_ANIM);
-    }
-
     public void push(Route route, Integer animRes) {
         this.pushAnim = animRes;
         stack.push(route);
@@ -67,9 +54,14 @@ public class ActivityNavigator extends Navigator {
     }
 
     @Override
+    public int size() {
+        return stack.size();
+    }
+
+    @Override
     public void update() {
         updateWidget();
-        super.update();
+//        super.update();
     }
 
     private void updateWidget() {

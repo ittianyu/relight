@@ -377,7 +377,7 @@ onDestroy
 ```
 initView -> initProps
 
-onStart -> updateProps(when has LayoutParams)
+onStart -> onViewAttachedToWindow -> updateProps(when has LayoutParams)
 ```
 
 `initView` 是在 `render` 之后触发的
@@ -400,7 +400,7 @@ addChildren -> updateChildrenProps -> updateProps
 - [x] 重试支持
 - [x] 过滤支持
 - [x] 缓存支持
-- [ ] 完善 BaseAndroidWidget 基础属性 和 api
+- [x] 完善 BaseAndroidWidget 基础属性 和 api
 - [x] startActivity 支持
 - [x] xml 支持
 - [ ] 单元测试支持
@@ -420,7 +420,7 @@ addChildren -> updateChildrenProps -> updateProps
 - [x] ButtonWidget
 - [x] ToolbarWidget
 - [x] EditWidget
-- [ ] FloatingActionButtonWidget
+- [x] FloatingActionButtonWidget
 - [ ] DrawerWidget
 
 #### 高级控件 ####
@@ -429,11 +429,16 @@ addChildren -> updateChildrenProps -> updateProps
 - [x] LceermWidget
 - [x] RmWidget
 - [ ] List
-- [ ] Route 和 Navigator
+- [x] Route、Navigator
 
 #### 主题控件 ####
 
-- [ ] material
+- material
+	- [x] ChipWidget
+	- [x] ChipGroupWidget
+	- [x] MaterialButtonWidget
+	- [x] TextInputLayout
+	- [x] TextInputEditText
 
 
 #### 文档 ####

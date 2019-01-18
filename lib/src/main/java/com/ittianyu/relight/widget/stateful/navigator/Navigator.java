@@ -12,6 +12,7 @@ import com.ittianyu.relight.widget.stateful.state.State;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
+import javax.security.auth.callback.Callback;
 
 public abstract class Navigator extends StatefulWidget<FrameLayout, FrameWidget> {
     protected static final Map<String, Navigator> map = new WeakHashMap<>();
@@ -59,7 +60,7 @@ public abstract class Navigator extends StatefulWidget<FrameLayout, FrameWidget>
         }
     }
 
-    private void addRoute(Route route) {
+    protected void addRoute(Route route) {
         routeMap.put(route.path(), route);
     }
 
@@ -68,9 +69,20 @@ public abstract class Navigator extends StatefulWidget<FrameLayout, FrameWidget>
         return StateUtils.create(new FrameWidget(context, lifecycle));
     }
 
-    public abstract void push(String path);
+    public void push(String path) {
+        push(path, DEFAULT_PUSH_ANIM);
+    }
 
-    public abstract void push(String path, Integer animRes);
+    public void push(String path, Integer animRes) {
+        Route route = getRoute(path);
+        push(route, animRes);
+    }
+
+    public void push(Route route) {
+        push(route, DEFAULT_PUSH_ANIM);
+    }
+
+    public abstract void push(Route route, Integer animRes);
 
     @NonNull
     protected Route getRoute(String path) {
@@ -91,6 +103,8 @@ public abstract class Navigator extends StatefulWidget<FrameLayout, FrameWidget>
         return true;
     }
 
+    public abstract int size();
+
     public static Navigator get(String name) {
         return map.get(name);
     }
@@ -101,6 +115,14 @@ public abstract class Navigator extends StatefulWidget<FrameLayout, FrameWidget>
 
     public static void push(String name, String path, Integer animRes) {
         getNavigator(name).push(path, animRes);
+    }
+
+    public static void push(String name, Route route, Integer animRes) {
+        getNavigator(name).push(route, animRes);
+    }
+
+    public static void push(String name, Route route) {
+        getNavigator(name).push(route);
     }
 
     @NonNull
@@ -118,6 +140,10 @@ public abstract class Navigator extends StatefulWidget<FrameLayout, FrameWidget>
 
     public static boolean pop(String name, Integer animRes) {
         return getNavigator(name).pop(animRes);
+    }
+
+    public static int size(String name) {
+        return getNavigator(name).size();
     }
 
     protected enum Action {

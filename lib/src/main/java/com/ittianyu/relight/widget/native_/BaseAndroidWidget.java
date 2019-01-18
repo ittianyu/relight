@@ -1,8 +1,11 @@
 package com.ittianyu.relight.widget.native_;
 
+import android.animation.StateListAnimator;
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -10,9 +13,14 @@ import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.view.View;
+import android.view.View.OnAttachStateChangeListener;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
@@ -41,6 +49,22 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
     public Integer layoutGravity;
     public Integer weight;
     private RelativeLayout.LayoutParams relativeParams;
+    private boolean addOnAttachListener;
+    private OnAttachStateChangeListener onAttachStateChangeListener = new OnAttachStateChangeListener() {
+        @Override
+        public void onViewAttachedToWindow(View v) {
+            // no need to run updateProps if no LayoutParams(when it not attach to parent, it won't has it)
+            ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+            if (null != layoutParams) {
+                updateProps(view);
+            }
+        }
+
+        @Override
+        public void onViewDetachedFromWindow(View v) {
+
+        }
+    };
 
     public BaseAndroidWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
@@ -50,12 +74,16 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
 
     @Override
     public void onStart() {
-        // no need to run updateProps if no LayoutParams(when it not attach to parent, it won't has it)
-        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-        if (null != layoutParams) {
-            mergeLayoutParams(layoutParams);
-            updateProps(view);
+        if (!addOnAttachListener) {
+            addOnAttachListener = true;
+            view.addOnAttachStateChangeListener(onAttachStateChangeListener);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        view.removeOnAttachStateChangeListener(onAttachStateChangeListener);
     }
 
     protected final T self() {
@@ -199,14 +227,36 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
     }
 
     public T paddingVertical(Integer px) {
-        this.paddingTop = px;
-        this.paddingBottom = px;
+        this.marginTop = px;
+        this.marginBottom = px;
         updatePadding();
         return self();
     }
 
     public T paddingVertical(Float dp) {
         return paddingVertical(dp(dp));
+    }
+
+    public T marginVertical(Integer px) {
+        this.marginTop = px;
+        this.marginBottom = px;
+        updateMargin();
+        return self();
+    }
+
+    public T marginVertical(Float dp) {
+        return marginVertical(dp(dp));
+    }
+
+    public T marginHorizontal(Integer px) {
+        this.marginStart = px;
+        this.marginEnd = px;
+        updateMargin();
+        return self();
+    }
+
+    public T marginHorizontal(Float dp) {
+        return marginHorizontal(dp(dp));
     }
 
     public T width(Integer px) {
@@ -250,7 +300,7 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
         return self();
     }
 
-    public T clickable(boolean clickable) {
+    public T clickable(Boolean clickable) {
         view.setClickable(clickable);
         return self();
     }
@@ -271,10 +321,18 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
 
     public T weight(Integer weight) {
         this.weight = weight;
+        ViewGroup.LayoutParams lp = view.getLayoutParams();
+//        if (lp == null) {
+//            lp = new LinearLayout.LayoutParams(width, height, weight);
+//            view.setLayoutParams(lp);
+//        } else
+        if (lp instanceof LinearLayout.LayoutParams) {
+            ViewUtils.setWeight((LinearLayout.LayoutParams) lp, view, weight);
+        }
         return self();
     }
 
-    public T addRule(int verb, int rule) {
+    public T addRule(Integer verb, Integer rule) {
         if (null == relativeParams) {
             relativeParams = new RelativeLayout.LayoutParams(wrapContent, wrapContent);
         }
@@ -282,7 +340,7 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
         return self();
     }
 
-    public T removeRule(int verb) {
+    public T removeRule(Integer verb) {
         if (null != relativeParams) {
             relativeParams.removeRule(verb);
         }
@@ -290,13 +348,90 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
     }
 
     public T elevation(Float dp) {
+        ViewCompat.setElevation(view, dp);
+        return self();
+    }
+
+    public T backgroundTintList(ColorStateList list) {
         if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
-            view.setElevation(dp(dp));
+            view.setBackgroundTintList(list);
         }
         return self();
     }
 
-    private void mergeLayoutParams(ViewGroup.LayoutParams lp) {
+    public T backgroundTintMode(@Nullable Mode tintMode) {
+        if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
+            view.setBackgroundTintMode(tintMode);
+        }
+        return self();
+    }
+
+    public T foreground(Drawable foreground) {
+        if (VERSION.SDK_INT >= VERSION_CODES.M) {
+            view.setForeground(foreground);
+        }
+        return self();
+    }
+
+    public T foregroundGravity(Integer gravity) {
+        if (VERSION.SDK_INT >= VERSION_CODES.M) {
+            view.setForegroundGravity(gravity);
+        }
+        return self();
+    }
+
+    public T focusable(Boolean focusable) {
+        view.setFocusable(focusable);
+        return self();
+    }
+
+    @RequiresApi(api = VERSION_CODES.O)
+    public T focusable(Integer focusable) {
+        view.setFocusable(focusable);
+        return self();
+    }
+
+    public T stateListAnimator(StateListAnimator stateListAnimator) {
+        if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
+            view.setStateListAnimator(stateListAnimator);
+        }
+        return self();
+    }
+
+    public T setEnabled(Boolean enabled) {
+        view.setEnabled(enabled);
+        return self();
+    }
+
+    public T visibility(Integer visibility) {
+        view.setVisibility(visibility);
+        return self();
+    }
+
+    public T visibility(Boolean visible) {
+        view.setVisibility(visible ? View.VISIBLE : View.GONE);
+        return self();
+    }
+
+    public T gone() {
+        return visibility(View.GONE);
+    }
+
+    public T visible() {
+        return visibility(View.VISIBLE);
+    }
+
+    public T invisible() {
+        return visibility(View.INVISIBLE);
+    }
+
+    public T fadingEdgeLength(int length) {
+        view.setFadingEdgeLength(length);
+        return self();
+    }
+
+    protected void mergeLayoutParams() {
+        ViewGroup.LayoutParams lp = view.getLayoutParams();
         if (!(lp instanceof RelativeLayout.LayoutParams)) {
             return;
         }
@@ -390,10 +525,6 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
     }
 
     public void updateProps(V view) {
-        if (margin != null)
-            setMargin(margin);
-        if (padding != null)
-            setPadding(padding);
         updateSize();
         updateMargin();
     }

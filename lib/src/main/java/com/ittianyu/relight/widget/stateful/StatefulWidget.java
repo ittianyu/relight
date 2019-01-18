@@ -76,6 +76,7 @@ public abstract class StatefulWidget<V extends View, T extends Widget<V>> extend
     @Override
     public void update() {
         widget.update();
+        super.update();
     }
 
     @Override

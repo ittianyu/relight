@@ -20,6 +20,7 @@ public abstract class Widget<V extends View>
     protected final Context context;
     protected final Lifecycle lifecycle;
     protected boolean hasRegisterActivityResultDelegation;
+    private WidgetUpdater widgetUpdater;
 
     public Widget(Context context, Lifecycle lifecycle) {
         this.context = context;
@@ -28,23 +29,24 @@ public abstract class Widget<V extends View>
 
     public abstract V render();
 
-    protected void startActivity(Intent intent) {
-        startActivity(intent, null);
+    protected Widget<V> startActivity(Intent intent) {
+        return startActivity(intent, null);
     }
 
-    protected void startActivity(Intent intent, Bundle options) {
+    protected Widget<V> startActivity(Intent intent, Bundle options) {
         context.startActivity(intent, options);
+        return this;
     }
 
-    protected void startActivityForResult(Intent intent, int requestCode) {
-        startActivityForResult(intent, requestCode, null);
+    protected Widget<V> startActivityForResult(Intent intent, int requestCode) {
+        return startActivityForResult(intent, requestCode, null);
     }
 
-    protected void startActivityForResult(Intent intent, int requestCode, Bundle options) {
-        startActivityForResult(intent, requestCode, options, this);
+    protected Widget<V> startActivityForResult(Intent intent, int requestCode, Bundle options) {
+        return startActivityForResult(intent, requestCode, options, this);
     }
 
-    protected void startActivityForResult(Intent intent, int requestCode, Bundle options, ActivityDelegation delegation) {
+    protected Widget<V> startActivityForResult(Intent intent, int requestCode, Bundle options, ActivityDelegation delegation) {
         hasRegisterActivityResultDelegation = true;
         Activity activity = ContextUtils.getActivity(context);
         if (null == activity) {
@@ -52,6 +54,7 @@ public abstract class Widget<V extends View>
         }
         ActivityDelegationManager.register(activity, delegation);
         activity.startActivityForResult(intent, requestCode, options);
+        return this;
     }
 
     @Override
@@ -90,8 +93,9 @@ public abstract class Widget<V extends View>
      * use json to call the widget method
      * @param params
      */
-    public void initWithParams(String params) {
+    public Widget<V> initWithParams(String params) {
         WidgetInflateUtils.initWidgetWithParams(context, this, params);
+        return this;
     }
 
     public boolean isDestroyed() {
@@ -99,5 +103,22 @@ public abstract class Widget<V extends View>
             return false;
         }
         return lifecycle.getCurrentState() == State.DESTROYED;
+    }
+
+    /**
+     * listen widget update event
+     * @param widgetUpdater
+     * @return
+     */
+    public Widget<V> onUpdate(WidgetUpdater widgetUpdater) {
+        this.widgetUpdater = widgetUpdater;
+        return this;
+    }
+
+    @Override
+    public void update() {
+        if (widgetUpdater != null) {
+            widgetUpdater.update();
+        }
     }
 }

@@ -2,8 +2,12 @@ package com.ittianyu.relight.widget.native_;
 
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.widget.TextView;
@@ -29,6 +33,10 @@ public class BaseTextWidget<V extends TextView, T extends BaseTextWidget> extend
         return text((CharSequence) text);
     }
 
+    public CharSequence text() {
+        return view.getText();
+    }
+
     public T gravity(Integer gravity) {
         view.setGravity(gravity);
         return self();
@@ -51,6 +59,11 @@ public class BaseTextWidget<V extends TextView, T extends BaseTextWidget> extend
 
     public T textSize(Double sp) {
         return textSize(sp.floatValue());
+    }
+
+    public T singleLine(boolean singleLine) {
+        view.setSingleLine(singleLine);
+        return self();
     }
 
     public T lines(Integer lines) {
@@ -128,6 +141,23 @@ public class BaseTextWidget<V extends TextView, T extends BaseTextWidget> extend
 
     public T ellipsize(TextUtils.TruncateAt ellipsize) {
         view.setEllipsize(ellipsize);
+        return self();
+    }
+
+    public T setTextAppearance(int resId) {
+        if (VERSION.SDK_INT >= VERSION_CODES.M) {
+            view.setTextAppearance(resId);
+        }
+        return self();
+    }
+
+    public T typeface(@Nullable Typeface tf) {
+        view.setTypeface(tf);
+        return self();
+    }
+
+    public T typeface(@Nullable Typeface tf, int style) {
+        view.setTypeface(tf, style);
         return self();
     }
 
