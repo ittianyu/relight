@@ -55,7 +55,7 @@ public class RelativeWidget extends ViewGroupWidget<RelativeLayout, RelativeWidg
         }
 
         for (Widget widget : children) {
-            if (widget instanceof ContainerWidget) {
+            while (widget instanceof ContainerWidget) {
                 widget = ((ContainerWidget) widget).getInnerWidget();
             }
             if (widget instanceof BaseAndroidWidget) {

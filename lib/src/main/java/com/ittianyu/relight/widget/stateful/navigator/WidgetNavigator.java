@@ -14,7 +14,9 @@ import com.ittianyu.relight.thread.Runnable1;
 import com.ittianyu.relight.utils.ContextUtils;
 import com.ittianyu.relight.utils.DensityUtils;
 import com.ittianyu.relight.view.ActivityDelegationManager;
+import com.ittianyu.relight.widget.ContainerWidget;
 import com.ittianyu.relight.widget.Widget;
+import com.ittianyu.relight.widget.native_.BaseAndroidWidget;
 import com.ittianyu.relight.widget.native_.FrameWidget;
 import com.ittianyu.relight.widget.stateful.navigator.route.Route;
 import java.util.Stack;
@@ -63,7 +65,16 @@ public class WidgetNavigator extends Navigator {
                 Widget topWidget = stack.peek();
                 widget.addChild(topWidget);
                 View view = topWidget.render();
-                view.setOnClickListener(EMPTY_CLICK_LISTENER);
+                BaseAndroidWidget topAndroidWidget = null;
+                while (topWidget instanceof ContainerWidget) {
+                    topWidget = ((ContainerWidget) topWidget).getInnerWidget();
+                }
+                if (topWidget instanceof BaseAndroidWidget) {
+                    topAndroidWidget = (BaseAndroidWidget) topWidget;
+                }
+                if (topAndroidWidget != null && topAndroidWidget.onClick() == null) {
+                    view.setOnClickListener(EMPTY_CLICK_LISTENER);
+                }
                 if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
                     view.setElevation(DensityUtils.dip2px(context, ELEVATION * (size() - 1)));
                 }
@@ -233,6 +244,10 @@ public class WidgetNavigator extends Navigator {
 
     public static <T> void push(String name, Route route, Runnable1<T> callback) {
         getNavigator(name).push(route, callback);
+    }
+
+    public static <T> void push(String name, Route route, Integer animRes, Runnable1<T> callback) {
+        getNavigator(name).push(route, animRes, callback);
     }
 
     public static <T> boolean pop(String name, Integer animRes, T data) {

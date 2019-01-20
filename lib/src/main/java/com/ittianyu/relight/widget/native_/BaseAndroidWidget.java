@@ -19,6 +19,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.view.View.OnAttachStateChangeListener;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -48,6 +49,7 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
     public Integer height = wrapContent;
     public Integer layoutGravity;
     public Integer weight;
+    private OnClickListener onClick;
     private RelativeLayout.LayoutParams relativeParams;
     private boolean addOnAttachListener;
     private OnAttachStateChangeListener onAttachStateChangeListener = new OnAttachStateChangeListener() {
@@ -309,7 +311,12 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
         return onClickListener(onClickListener);
     }
 
+    public OnClickListener onClick() {
+        return onClick;
+    }
+
     public T onClickListener(View.OnClickListener onClickListener) {
+        this.onClick = onClickListener;
         view.setOnClickListener(onClickListener);
         return self();
     }
