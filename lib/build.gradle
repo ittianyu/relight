@@ -29,9 +29,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    compileOnly "com.android.support:appcompat-v7:$support_version"
-    compileOnly "com.android.support:design:$support_version"
-    compileOnly "android.arch.lifecycle:runtime:$lifecycle_version"
+    implementation "com.android.support:appcompat-v7:$support_version"
+    implementation "com.android.support:design:$support_version"
+    implementation "android.arch.lifecycle:runtime:$lifecycle_version"
 
     compileOnly 'com.google.code.gson:gson:2.8.5'
 }
