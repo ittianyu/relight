@@ -22,6 +22,14 @@ public abstract class BaseLinearWidget<V extends LinearLayout, T extends BaseLin
         return self();
     }
 
+    public T vertical() {
+        return orientation(vertical);
+    }
+
+    public T horizontal() {
+        return orientation(horizontal);
+    }
+
     public T gravity(Integer gravity) {
         view.setGravity(gravity);
         return self();

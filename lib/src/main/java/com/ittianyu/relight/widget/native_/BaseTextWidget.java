@@ -33,6 +33,16 @@ public class BaseTextWidget<V extends TextView, T extends BaseTextWidget> extend
         return text((CharSequence) text);
     }
 
+    public T append(CharSequence text) {
+        view.append(text);
+        return self();
+    }
+
+    public T append(CharSequence text, int start, int end) {
+        view.append(text, start, end);
+        return self();
+    }
+
     public CharSequence text() {
         return view.getText();
     }

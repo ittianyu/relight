@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
+import android.util.Log;
 import com.ittianyu.relight.thread.ThreadPool;
 import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.WidgetUpdater;
@@ -13,12 +14,16 @@ import com.ittianyu.relight.widget.stateful.state.strategy.FilterStrategy;
 import com.ittianyu.relight.widget.stateful.state.strategy.NotRepeatFilterStrategy;
 import com.ittianyu.relight.widget.stateful.state.task.AsyncTask;
 import com.ittianyu.relight.widget.stateful.state.task.CacheAsyncTask;
+import com.ittianyu.relight.widget.stateful.state.task.CountAsyncTask;
+import com.ittianyu.relight.widget.stateful.state.task.FutureSet;
+import com.ittianyu.relight.widget.stateful.state.task.TaskSet;
 import com.ittianyu.relight.widget.stateful.state.task.UpdateTask;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * call in order:
@@ -31,6 +36,7 @@ import java.util.concurrent.Future;
  * You can call dispose to stop the state operations and release resources.
  */
 public abstract class State<T extends Widget> implements SetState {
+    private static final String TAG = "State";
     public static FilterStrategy defaultFilterStrategy = new NotRepeatFilterStrategy();
     private static Class<? extends CacheStrategy> defaultCacheStrategy = CacheThenTaskStrategy.class;
     private Handler handler = new Handler(Looper.getMainLooper());
@@ -125,6 +131,27 @@ public abstract class State<T extends Widget> implements SetState {
         AsyncTask task = new AsyncTask(handler, func, updateTask);
         Future<?> result = ThreadPool.get().submit(task);
         updateStateMap.put(func, result);
+    }
+
+    @Override
+    public void setStateAsync(Runnable... tasks) {
+        if (tasks == null || tasks.length == 0) {
+            return;
+        }
+        TaskSet taskSet = new TaskSet(tasks);
+        if (shouldIgnored(taskSet)) {
+            return;
+        }
+
+        willUpdate();
+        AtomicInteger count = new AtomicInteger(tasks.length);
+        FutureSet futureSet = new FutureSet();
+        for (Runnable task : tasks) {
+            CountAsyncTask countAsyncTask = new CountAsyncTask(handler, task, updateTask, count);
+            Future<?> result = ThreadPool.get().submit(countAsyncTask);
+            futureSet.add(result);
+        }
+        updateStateMap.put(taskSet, futureSet);
     }
 
     @Override

@@ -58,13 +58,17 @@ public abstract class StatefulWidget<V extends View, T extends Widget<V>> extend
     }
 
     @Override
+    public void setStateAsync(Runnable... tasks) {
+        state.setStateAsync(tasks);
+    }
+
+    @Override
     public void setStateAsyncWithCache(Runnable cacheFunc, Runnable func) {
         state.setStateAsyncWithCache(cacheFunc, func);
     }
 
     @Override
-    public void setStateAsyncWithCache(CacheStrategy cacheStrategy, Runnable cacheFunc,
-                                       Runnable func) {
+    public void setStateAsyncWithCache(CacheStrategy cacheStrategy, Runnable cacheFunc, Runnable func) {
         state.setStateAsyncWithCache(cacheStrategy, cacheFunc, func);
     }
 

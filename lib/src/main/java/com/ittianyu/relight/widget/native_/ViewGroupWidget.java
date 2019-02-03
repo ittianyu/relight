@@ -5,13 +5,11 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ittianyu.relight.widget.ContainerWidget;
 import com.ittianyu.relight.widget.Widget;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 public abstract class ViewGroupWidget<V extends ViewGroup, T extends ViewGroupWidget>
         extends BaseAndroidWidget<V, T> {

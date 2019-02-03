@@ -437,6 +437,26 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
         return self();
     }
 
+    public T verticalScrollBarEnabled(boolean enabled) {
+        view.setVerticalScrollBarEnabled(enabled);
+        return self();
+    }
+
+    public T horizontalScrollBarEnabled(boolean enabled) {
+        view.setHorizontalScrollBarEnabled(enabled);
+        return self();
+    }
+
+    public T verticalFadingEdgeEnabled(boolean enabled) {
+        view.setVerticalFadingEdgeEnabled(enabled);
+        return self();
+    }
+
+    public T horizontalFadingEdgeEnabled(boolean enabled) {
+        view.setHorizontalFadingEdgeEnabled(enabled);
+        return self();
+    }
+
     protected void mergeLayoutParams() {
         ViewGroup.LayoutParams lp = view.getLayoutParams();
         if (!(lp instanceof RelativeLayout.LayoutParams)) {

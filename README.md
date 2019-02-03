@@ -421,6 +421,8 @@ addChildren -> updateChildrenProps -> updateProps
 - [x] ToolbarWidget
 - [x] EditWidget
 - [x] FloatingActionButtonWidget
+- [x] ScrollWidget
+- [x] HorizontalScrollWidget
 - [ ] DrawerWidget
 
 #### 高级控件 ####
@@ -428,7 +430,8 @@ addChildren -> updateChildrenProps -> updateProps
 - [x] LceeWidget
 - [x] LceermWidget
 - [x] RmWidget
-- [ ] List
+- [x] ListWidget
+- [x] HorizontalListWidget
 - [x] Route、Navigator
 
 #### 主题控件 ####
@@ -462,11 +465,4 @@ addChildren -> updateChildrenProps -> updateProps
 ## 版权 ##
 
 [Apache License 2.0](https://github.com/ittianyu/relight/blob/master/LICENSE)
-
-## 名字由来 ##
-
-- 直译：重新点燃
-- 寓意：重新找到希望
-- 寄语：生活很难，我能做的，是在你最灰暗的时刻，劝你不要放弃希望。
-- 结束语：如果你体会不了寄语，说明你过得很幸福，愿你永远不要明白。 但或许不远的将来，如果你也会懂得，希望你能记起这句话。
 

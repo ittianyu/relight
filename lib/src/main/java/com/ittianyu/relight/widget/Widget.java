@@ -15,8 +15,7 @@ import com.ittianyu.relight.view.ActivityDelegation;
 import com.ittianyu.relight.view.ActivityDelegationManager;
 import com.ittianyu.relight.view.AndroidLifecycle;
 
-public abstract class Widget<V extends View>
-        implements ActivityDelegation, WidgetUpdater, AndroidLifecycle {
+public abstract class Widget<V extends View> implements ActivityDelegation, WidgetUpdater, AndroidLifecycle, Render<V> {
     protected final Context context;
     protected final Lifecycle lifecycle;
     protected boolean hasRegisterActivityResultDelegation;
@@ -26,8 +25,6 @@ public abstract class Widget<V extends View>
         this.context = context;
         this.lifecycle = lifecycle;
     }
-
-    public abstract V render();
 
     protected Widget<V> startActivity(Intent intent) {
         return startActivity(intent, null);

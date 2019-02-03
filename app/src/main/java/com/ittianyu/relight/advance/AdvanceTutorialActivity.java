@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import com.ittianyu.relight.R;
-import com.ittianyu.relight.advance._1.activity.WidgetActivity;
 
 public class AdvanceTutorialActivity extends AppCompatActivity {
 
@@ -20,6 +19,9 @@ public class AdvanceTutorialActivity extends AppCompatActivity {
         switch (v.getId()) {
             case R.id._1_Navigator:
                 start(com.ittianyu.relight.advance._1.WidgetActivity.class);
+                break;
+            case R.id._2_SetStateAsyncConcurrent:
+                start(com.ittianyu.relight.advance._2.WidgetActivity.class);
                 break;
 
         }

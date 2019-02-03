@@ -17,6 +17,14 @@
             android:textAllCaps="false"
             android:text="1. Navigator" />
 
+        <Button
+            android:id="@+id/_2_SetStateAsyncConcurrent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:textAllCaps="false"
+            android:text="2. SetStateAsyncConcurrent" />
+
     </LinearLayout>
 
 </ScrollView>
