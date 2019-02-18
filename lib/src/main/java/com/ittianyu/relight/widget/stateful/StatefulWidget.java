@@ -19,7 +19,7 @@ public abstract class StatefulWidget<V extends View, T extends Widget<V>> extend
         super(context, lifecycle);
     }
 
-    abstract protected State<T> createState(Context context);
+    abstract protected State<T> createState(Context context, Lifecycle lifecycle);
 
     @Override
     public V render() {
@@ -27,11 +27,11 @@ public abstract class StatefulWidget<V extends View, T extends Widget<V>> extend
             return widget.render();
         }
 
-        state = createState(context);
+        state = createState(context, lifecycle);
         if (state == null)
             throw new IllegalStateException("can't create state");
         state.init();
-        widget = state.build(context);
+        widget = state.build(context, lifecycle);
         if (widget == null)
             throw new IllegalStateException("can't build widget");
         state.setOnUpdateListener(this);

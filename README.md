@@ -38,7 +38,7 @@ public class StatefulUserWidget extends StatefulWidget<View, UserWidget> {
     }
 
     @Override
-    protected State<UserWidget> createState(Context context) {
+    protected State<UserWidget> createState(Context context, Lifecycle lifecycle) {
         return StateUtils.create(new UserWidget(context, lifecycle, user));
     }
 
@@ -333,7 +333,7 @@ onDestroy -> dispose
 ```
 
 #### StatefulWidget ####
-需要实现一个 `State<T> createState(Context context)` 方法 来构建一个 `State` 对象
+需要实现一个 `State<T> createState(Context context, Lifecycle lifecycle)` 方法 来构建一个 `State` 对象
 
 ```
 render(first call) -> createState -> state.init -> state.build -> widget.render -> initWidget

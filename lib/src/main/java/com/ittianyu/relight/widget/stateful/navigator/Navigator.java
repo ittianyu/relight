@@ -4,15 +4,16 @@ import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.widget.FrameLayout;
+
 import com.ittianyu.relight.utils.StateUtils;
 import com.ittianyu.relight.widget.native_.FrameWidget;
 import com.ittianyu.relight.widget.stateful.StatefulWidget;
 import com.ittianyu.relight.widget.stateful.navigator.route.Route;
 import com.ittianyu.relight.widget.stateful.state.State;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
-import javax.security.auth.callback.Callback;
 
 public abstract class Navigator extends StatefulWidget<FrameLayout, FrameWidget> {
     protected static final Map<String, Navigator> map = new WeakHashMap<>();
@@ -65,7 +66,7 @@ public abstract class Navigator extends StatefulWidget<FrameLayout, FrameWidget>
     }
 
     @Override
-    protected State<FrameWidget> createState(Context context) {
+    protected State<FrameWidget> createState(Context context, Lifecycle lifecycle) {
         return StateUtils.create(new FrameWidget(context, lifecycle));
     }
 

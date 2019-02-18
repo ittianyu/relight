@@ -78,7 +78,7 @@ public abstract class LceermWidget extends StatefulWidget<FrameLayout, FrameWidg
     }
 
     @Override
-    protected State<FrameWidget> createState(Context context) {
+    protected State<FrameWidget> createState(Context context, Lifecycle lifecycle) {
         return StateUtils.create(new FrameWidget(context, lifecycle));
     }
 

@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerViewAccessibilityDelegate;
 import android.view.View;
 import android.view.animation.Interpolator;
 
+import com.ittianyu.relight.widget.WidgetUpdater;
+
 public class RecyclerWidget<V extends RecyclerView.Adapter> extends BaseAndroidWidget<RecyclerView, RecyclerWidget> {
     public V adapter;
 
@@ -31,6 +33,12 @@ public class RecyclerWidget<V extends RecyclerView.Adapter> extends BaseAndroidW
 
     @Override
     protected void initProps() {
+    }
+
+    @Override
+    public RecyclerWidget<V> onUpdate(WidgetUpdater widgetUpdater) {
+        super.onUpdate(widgetUpdater);
+        return self();
     }
 
     public RecyclerWidget<V> layoutManager(RecyclerView.LayoutManager layoutManager) {

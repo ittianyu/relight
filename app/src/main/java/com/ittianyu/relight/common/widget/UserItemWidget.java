@@ -19,7 +19,7 @@ public class UserItemWidget extends StatelessWidget<LinearLayout, LinearWidget> 
     }
 
     @Override
-    protected LinearWidget build(Context context) {
+    protected LinearWidget build(Context context, Lifecycle lifecycle) {
         twId = new TextWidget(context, lifecycle);
         twName = new TextWidget(context, lifecycle);
         return new LinearWidget(context, lifecycle, twId, twName);

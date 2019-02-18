@@ -31,7 +31,7 @@ public class CommonEmptyWidget extends StatelessWidget<FrameLayout, FrameWidget>
     }
 
     @Override
-    protected FrameWidget build(Context context) {
+    protected FrameWidget build(Context context, Lifecycle lifecycle) {
         textWidget = new TextWidget(context, lifecycle);
         return new FrameWidget(context, lifecycle, textWidget);
     }

@@ -60,7 +60,7 @@ public class CacheWidget extends StatefulWidget<LinearLayout, LinearWidget> impl
     }
 
     @Override
-    protected State<LinearWidget> createState(Context context) {
+    protected State<LinearWidget> createState(Context context, Lifecycle lifecycle) {
         tvResult = new TextWidget(context, lifecycle);
         LinearWidget widget = new LinearWidget(context, lifecycle,
                 new TextWidget(context, lifecycle).text("CacheThenTaskStrategy").marginTop(16.0f),

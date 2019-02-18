@@ -2,7 +2,6 @@ package com.ittianyu.relight.medium._4;
 
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,8 +17,8 @@ import com.ittianyu.relight.widget.native_.FloatingActionButtonWidget;
 import com.ittianyu.relight.widget.native_.FrameWidget;
 import com.ittianyu.relight.widget.native_.RecyclerWidget;
 import com.ittianyu.relight.widget.native_.SwipeRefreshWidget;
-import com.ittianyu.relight.widget.stateful.rm.RmWidget;
 import com.ittianyu.relight.widget.stateful.rm.RmStatus;
+import com.ittianyu.relight.widget.stateful.rm.RmWidget;
 
 import java.util.Collections;
 import java.util.List;
@@ -45,7 +44,7 @@ public class UserRmWidget extends RmWidget<FrameLayout, FrameWidget> {
     }
 
     @Override
-    protected FrameWidget build(Context context) {
+    protected FrameWidget build(Context context, Lifecycle lifecycle) {
         srw = new SwipeRefreshWidget(context, lifecycle,
             renderRecycler()
         ).matchParent();
@@ -67,7 +66,7 @@ public class UserRmWidget extends RmWidget<FrameLayout, FrameWidget> {
                 width = matchParent;
                 height = matchParent;
                 layoutManager(new LinearLayoutManager(context));
-                adapter = new UserItemAdapter(lifecycle);
+                adapter(new UserItemAdapter(lifecycle));
 
                 // load more
                 view.addOnScrollListener(new RecyclerView.OnScrollListener() {

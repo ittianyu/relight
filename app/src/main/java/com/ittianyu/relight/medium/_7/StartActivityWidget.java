@@ -27,7 +27,7 @@ public class StartActivityWidget extends StatelessWidget<LinearLayout, LinearWid
     }
 
     @Override
-    protected LinearWidget build(Context context) {
+    protected LinearWidget build(Context context, Lifecycle lifecycle) {
         btnStartActivity = new ButtonWidget(context, lifecycle).text("startActivity").allCaps(false);
         btnStartActivityForResult = new ButtonWidget(context, lifecycle).text("startActivityForResult").allCaps(false);
         edtNote = new EditWidget(context, lifecycle)

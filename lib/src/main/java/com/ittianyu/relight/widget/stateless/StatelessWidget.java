@@ -16,7 +16,7 @@ public abstract class StatelessWidget<V extends View, T extends Widget<V>>
         super(context, lifecycle);
     }
 
-    protected abstract T build(Context context);
+    protected abstract T build(Context context, Lifecycle lifecycle);
 
     @Override
     public V render() {
@@ -24,7 +24,7 @@ public abstract class StatelessWidget<V extends View, T extends Widget<V>>
             return widget.render();
         }
 
-        widget = build(context);
+        widget = build(context, lifecycle);
         if (widget == null)
             throw new IllegalStateException("can't build widget");
         V view = widget.render();

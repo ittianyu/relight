@@ -17,7 +17,7 @@ public class CommonLoadingWidget extends StatelessWidget<FrameLayout, FrameWidge
     }
 
     @Override
-    protected FrameWidget build(Context context) {
+    protected FrameWidget build(Context context, Lifecycle lifecycle) {
         return new FrameWidget(context, lifecycle,
                 buildLoadingWidget()
         );

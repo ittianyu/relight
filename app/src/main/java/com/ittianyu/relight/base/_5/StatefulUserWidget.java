@@ -23,7 +23,7 @@ public class StatefulUserWidget extends StatefulWidget<FrameLayout, FrameWidget>
     }
 
     @Override
-    protected State<FrameWidget> createState(Context context) {
+    protected State<FrameWidget> createState(Context context, Lifecycle lifecycle) {
         twId = new TextWidget(context, lifecycle);
         twName = new TextWidget(context, lifecycle);
         FrameWidget root = new FrameWidget(context, lifecycle, twId, twName);

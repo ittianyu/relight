@@ -3,18 +3,15 @@ package com.ittianyu.relight.advance._2;
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.text.TextUtils;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-import com.ittianyu.relight.base._2.UserWidget;
+
 import com.ittianyu.relight.common.bean.UserBean;
 import com.ittianyu.relight.common.datasource.UserDataSource;
 import com.ittianyu.relight.utils.StateUtils;
 import com.ittianyu.relight.widget.native_.BaseLinearWidget;
 import com.ittianyu.relight.widget.native_.ButtonWidget;
 import com.ittianyu.relight.widget.native_.LinearWidget;
-import com.ittianyu.relight.widget.native_.ListWidget;
 import com.ittianyu.relight.widget.native_.ScrollWidget;
 import com.ittianyu.relight.widget.native_.TextWidget;
 import com.ittianyu.relight.widget.stateful.StatefulWidget;
@@ -32,7 +29,7 @@ public class SetStateAsyncWidget extends StatefulWidget<LinearLayout, LinearWidg
     private UserBean[] users = new UserBean[100];
 
     @Override
-    protected State<LinearWidget> createState(Context context) {
+    protected State<LinearWidget> createState(Context context, Lifecycle lifecycle) {
         twLog = new TextWidget(context, lifecycle)
             .widthMatchAndHeightWrap();
         LinearWidget root = new LinearWidget(context, lifecycle,

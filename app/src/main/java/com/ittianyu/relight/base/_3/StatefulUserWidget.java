@@ -20,7 +20,7 @@ public class StatefulUserWidget extends StatefulWidget<TextView, TextWidget> {
     }
 
     @Override
-    protected State<TextWidget> createState(Context context) {
+    protected State<TextWidget> createState(Context context, Lifecycle lifecycle) {
         return StateUtils.create(new TextWidget(context, lifecycle));
     }
 

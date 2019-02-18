@@ -3,7 +3,6 @@ package com.ittianyu.relight.medium._1;
 import android.accounts.NetworkErrorException;
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.Gravity;
 import android.view.View;
@@ -66,29 +65,20 @@ public class UserLceeWidget extends LceeWidget {
     }
 
     private RecyclerWidget renderRecycler() {
-        return new RecyclerWidget<UserItemAdapter>(context, lifecycle) {
-            @Override
-            protected void initProps() {
-                width = matchParent;
-                height = matchParent;
-                layoutManager(new LinearLayoutManager(context));
-                adapter = new UserItemAdapter(lifecycle);
-            }
-
-            @Override
-            public void update() {
-                super.update();
-                adapter.setData(data);
-            }
-        };
+        final UserItemAdapter userItemAdapter = new UserItemAdapter(lifecycle);
+        return new RecyclerWidget<UserItemAdapter>(context, lifecycle)
+                .adapter(userItemAdapter)
+                .matchParent()
+                .layoutManager(new LinearLayoutManager(context))
+                .onUpdate(() -> userItemAdapter.setData(data));
     }
 
     private BaseAndroidWidget renderFab() {
         return new FloatingActionButtonWidget(context, lifecycle)
-            .wrapContent()
-            .layoutGravity(Gravity.END | Gravity.BOTTOM)
-            .margin(16.f)
-            .onClick(reload);
+                .wrapContent()
+                .layoutGravity(Gravity.END | Gravity.BOTTOM)
+                .margin(16.f)
+                .onClick(reload);
     }
 
 }

@@ -1,10 +1,10 @@
 package com.ittianyu.relight.widget.stateful.state;
 
+import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
-import android.util.Log;
 import com.ittianyu.relight.thread.ThreadPool;
 import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.WidgetUpdater;
@@ -75,7 +75,7 @@ public abstract class State<T extends Widget> implements SetState {
 
     public void init() {}
 
-    public abstract T build(Context context);
+    public abstract T build(Context context, Lifecycle lifecycle);
 
     public void willUpdate() {}
 

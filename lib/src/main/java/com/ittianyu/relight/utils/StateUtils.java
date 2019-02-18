@@ -23,7 +23,7 @@ public class StateUtils {
             private AndroidWidget<V> widget;
 
             @Override
-            public AndroidWidget<V> build(Context context) {
+            public AndroidWidget<V> build(Context context, Lifecycle lifecycle) {
                 widget = WidgetUtils.createAndroidWidget(context, androidRender, lifecycle);
                 return widget;
             }
@@ -37,7 +37,7 @@ public class StateUtils {
     public static <V extends View, T extends Widget<V>> State<T> create(final T widget, FilterStrategy updateStateStrategy) {
         return new State<T>(updateStateStrategy) {
             @Override
-            public T build(Context context) {
+            public T build(Context context, Lifecycle lifecycle) {
                 return widget;
             }
         };

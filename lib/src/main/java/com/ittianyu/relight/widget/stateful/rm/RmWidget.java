@@ -39,11 +39,11 @@ public abstract class RmWidget<V extends View, T extends Widget<V>> extends Stat
     }
 
     @Override
-    protected State<T> createState(Context context) {
-        return StateUtils.create(build(context));
+    protected State<T> createState(Context context, Lifecycle lifecycle) {
+        return StateUtils.create(build(context, lifecycle));
     }
 
-    protected abstract T build(Context context);
+    protected abstract T build(Context context, Lifecycle lifecycle);
 
     @Override
     public void update() {

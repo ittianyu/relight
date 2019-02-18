@@ -3,7 +3,6 @@ package com.ittianyu.relight.medium._3;
 import android.accounts.NetworkErrorException;
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -124,10 +123,9 @@ public class UserLceermWidget extends LceermWidget {
         return new RecyclerWidget<UserItemAdapter>(context, lifecycle) {
             @Override
             protected void initProps() {
-                width = matchParent;
-                height = matchParent;
-                layoutManager(new LinearLayoutManager(context));
-                adapter = new UserItemAdapter(lifecycle);
+                layoutManager(new LinearLayoutManager(context))
+                    .adapter(new UserItemAdapter(lifecycle))
+                    .matchParent();
 
                 // load more
                 view.addOnScrollListener(new RecyclerView.OnScrollListener() {

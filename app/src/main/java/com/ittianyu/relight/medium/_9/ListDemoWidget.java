@@ -20,7 +20,7 @@ public class ListDemoWidget extends StatelessWidget<LinearLayout, LinearWidget> 
     }
 
     @Override
-    protected LinearWidget build(Context context) {
+    protected LinearWidget build(Context context, Lifecycle lifecycle) {
         return new LinearWidget(context, lifecycle,
             renderList(false),
             renderList(true)

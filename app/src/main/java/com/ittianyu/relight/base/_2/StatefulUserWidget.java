@@ -18,7 +18,7 @@ public class StatefulUserWidget extends StatefulWidget<View, UserWidget> {
     }
 
     @Override
-    protected State<UserWidget> createState(Context context) {
+    protected State<UserWidget> createState(Context context, Lifecycle lifecycle) {
         return StateUtils.create(new UserWidget(context, lifecycle, user));
     }
 

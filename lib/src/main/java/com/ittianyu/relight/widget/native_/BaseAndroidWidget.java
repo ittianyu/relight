@@ -27,6 +27,7 @@ import android.widget.RelativeLayout.LayoutParams;
 
 import com.ittianyu.relight.utils.DensityUtils;
 import com.ittianyu.relight.utils.ViewUtils;
+import com.ittianyu.relight.widget.WidgetUpdater;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.ParameterizedType;
@@ -573,4 +574,9 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
         return null;
     }
 
+    @Override
+    public T onUpdate(WidgetUpdater widgetUpdater) {
+        super.onUpdate(widgetUpdater);
+        return self();
+    }
 }
