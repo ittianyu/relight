@@ -39,6 +39,7 @@ public class CommonEmptyWidget extends StatelessWidget<FrameLayout, FrameWidget>
     @Override
     public void initWidget(FrameWidget widget) {
         textWidget.text(text)
+                .wrapContent()
                 .textSize(16.0f)
                 .textColor(Color.BLACK)
                 .layoutGravity(Gravity.CENTER)
