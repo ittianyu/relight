@@ -52,7 +52,6 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
     public Integer weight;
     private OnClickListener onClick;
     private RelativeLayout.LayoutParams relativeParams;
-    private boolean addOnAttachListener;
     private OnAttachStateChangeListener onAttachStateChangeListener = new OnAttachStateChangeListener() {
         @Override
         public void onViewAttachedToWindow(View v) {
@@ -71,17 +70,10 @@ public abstract class BaseAndroidWidget<V extends View, T extends BaseAndroidWid
 
     public BaseAndroidWidget(Context context, Lifecycle lifecycle) {
         super(context, lifecycle);
+        view.addOnAttachStateChangeListener(onAttachStateChangeListener);
     }
 
     protected abstract void initProps();
-
-    @Override
-    public void onStart() {
-        if (!addOnAttachListener) {
-            addOnAttachListener = true;
-            view.addOnAttachStateChangeListener(onAttachStateChangeListener);
-        }
-    }
 
     @Override
     public void onDestroy() {
