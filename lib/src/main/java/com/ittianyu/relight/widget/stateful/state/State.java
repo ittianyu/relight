@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.ittianyu.relight.thread.MainHandler;
 import com.ittianyu.relight.thread.ThreadPool;
 import com.ittianyu.relight.widget.Widget;
 import com.ittianyu.relight.widget.WidgetUpdater;
@@ -39,7 +40,7 @@ public abstract class State<T extends Widget> implements SetState {
     private static final String TAG = "State";
     public static FilterStrategy defaultFilterStrategy = new NotRepeatFilterStrategy();
     private static Class<? extends CacheStrategy> defaultCacheStrategy = CacheThenTaskStrategy.class;
-    private Handler handler = new Handler(Looper.getMainLooper());
+    private static Handler handler = new MainHandler(Looper.getMainLooper());
     private WidgetUpdater widgetUpdater;
     private FilterStrategy filterStrategy;
     private UpdateTask updateTask = new UpdateTask(this);
@@ -93,10 +94,9 @@ public abstract class State<T extends Widget> implements SetState {
         for (Future future : updateStateMap.values()) {
             if (future.isDone())
                 continue;
-            future.cancel(true);
+            future.cancel(false);
         }
         updateStateMap = null;
-        handler = null;
     }
 
     public boolean isDisposed() {
